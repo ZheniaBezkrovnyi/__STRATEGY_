@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MyTerrain : MonoBehaviour
 {
+    [SerializeField] private JSON json;
     private int[,] setMap; // не сохранять, но при восстановлении зданий с ними вместе end визивать
     [SerializeField] private List<Vector2Int> pointsMap;
     public static int xMin, xMax,zMin,zMax;
@@ -12,7 +13,6 @@ public class MyTerrain : MonoBehaviour
     [SerializeField] private Field field;
     public static int sizeOneCell;
     [SerializeField] private int SizeOneCell;
-    //public List<string> l;
     private void Awake()
     {
         sizeOneCell = SizeOneCell;
@@ -31,7 +31,7 @@ public class MyTerrain : MonoBehaviour
             Debug.LogError("не заполнени точки карти"); 
         }
         setMap = new int[xMax - xMin, zMax - zMin];
-        takeObjects = new TakeObjects(setMap);
+        takeObjects = new TakeObjects(setMap,json);
         field.CreateField();
     }
     void Update()
@@ -48,7 +48,7 @@ public class MyTerrain : MonoBehaviour
         }
         */
     }
-    public void TakeHouse(House house, ButtonChange buttonChange)
+    public void TakeHouse(House house, ButtonChange buttonChange) // вісить на AddListener при створенні кнопок у Shop
     {
         takeObjects.TakeHouse(house,buttonChange);
     }
@@ -56,15 +56,17 @@ public class MyTerrain : MonoBehaviour
 
 public class TakeObjects : MonoBehaviour
 {
+    private static JSON json;
     public static House _house;
     private static int[,] _setMap;
     private House myHouse;
     private bool canPut = true;
     private int SizeOneCell;
-    public TakeObjects(int[,] _setMap_)
+    public TakeObjects(int[,] _setMap_, JSON _json)
     {
         _setMap = _setMap_;
         SizeOneCell = MyTerrain.sizeOneCell;
+        json = _json;
     }
     public void TakeHouse(House house,ButtonChange buttonChange) // при взятии переносить камеру на видимую зону обьекта чрез интерполяцию
     { 
@@ -80,9 +82,7 @@ public class TakeObjects : MonoBehaviour
         myHouse.stateHouse = StateHouse.IsActive;
         myHouse.startMove = true;
         myHouse.InitColor(StateColor.Norm);
-        myHouse.dataTextOnButton.buttonChange = buttonChange; // закинув для смени текста на кнопках
-        //Debug.Log(myHouse.dataTextOnButton.textTimeBuild);
-        //Debug.Log(x +" "+z);
+        myHouse.houseTextOnButton.buttonChange = buttonChange; // закинув для смени текста на кнопках, треба тільки на тих шо беру
     }
     private int x;
     private int _Px;
@@ -196,6 +196,9 @@ public class TakeObjects : MonoBehaviour
                 _house.posOnMap[1, dX, dZ] = z;
             }
         }
+        _house.dataHouse.posit = new Posit(X,Z);
+        ReturnAllOnStart.allData.allDataHouses[_house.dataHouse.myIndexOnSave].dataHouse.posit = _house.dataHouse.posit;
+        json.Save(ReturnAllOnStart.allData);
     }
     private void ZeroCell()
     {

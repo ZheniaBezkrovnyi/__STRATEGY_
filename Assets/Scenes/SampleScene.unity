@@ -416,9 +416,6 @@ MonoBehaviour:
   - {fileID: 3355637756002620365, guid: 8a363d8e445b94744afe5666f19765bc, type: 3}
   - {fileID: 7284652209040663927, guid: c0c21ab8ac6aa0040a23d3ffdd09c441, type: 3}
   - {fileID: 3366863431143028285, guid: f2edd9b00aa38474e94df48a6a80d537, type: 3}
-  - {fileID: 7284652209040663927, guid: c0c21ab8ac6aa0040a23d3ffdd09c441, type: 3}
-  - {fileID: 3355637756002620365, guid: 8a363d8e445b94744afe5666f19765bc, type: 3}
-  - {fileID: 3366863431143028285, guid: f2edd9b00aa38474e94df48a6a80d537, type: 3}
   terrain: {fileID: 850528394}
 --- !u!1 &705507993
 GameObject:
@@ -700,6 +697,7 @@ GameObject:
   - component: {fileID: 963194230}
   - component: {fileID: 963194229}
   - component: {fileID: 963194231}
+  - component: {fileID: 963194232}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -815,6 +813,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transformThis: {fileID: 963194228}
   possibleMove: 1
+--- !u!114 &963194232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b95555671d0496a429b542b732fb18c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shop: {fileID: 699185502}
 --- !u!1 &1127359016
 GameObject:
   m_ObjectHideFlags: 0

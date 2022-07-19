@@ -23,7 +23,7 @@ public class Shop : MonoBehaviour
     [SerializeField] private RectTransform buttonPrefab;
     [SerializeField] private Text textOnButton;
     [SerializeField] private List<NameHouse> listShop;
-    [SerializeField] private List<House> listHouse;
+    [SerializeField] public List<House> listHouse;
     [SerializeField] private MyTerrain terrain;
     private ShopButtonInterface shopInterface;
     private void Awake()
@@ -49,7 +49,7 @@ public class Shop : MonoBehaviour
         void CreateButton(int I)
         {
             House _house = listHouse[I];
-            if((NameHouse)I != _house.NameThisHouse) { return; } 
+            if((NameHouse)I != _house.dataHouse.NameThisHouse) { return; } 
 
             RectTransform button = Instantiate(buttonPrefab);
             Button _button = button.GetComponent<Button>();

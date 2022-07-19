@@ -16,11 +16,11 @@ public enum StateColor
 }
 public class House : Touch, IPointerClickHandler, IPointerDownHandler
 {
-    public NameHouse NameThisHouse { get { return nameThisHouse; } }
-    [SerializeField] private NameHouse nameThisHouse;
+    [SerializeField] private JSON json;
+    public DataHouse dataHouse;
+    public int[,,] posOnMap;
     [SerializeField] private Vector2Int sides;
     public Vector2Int Sides { get { return sides; } }
-    public int[,,] posOnMap;//save
 
     private ColorsObjects colorsObjects;
     [SerializeField] private Color clickColor;
@@ -37,7 +37,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     [SerializeField] private int MaxCountBuild;
     [SerializeField] private Vector4 timeBuild;
 
-    public DataHouseTextOnButton dataTextOnButton;
+    public HouseTextOnButton houseTextOnButton;
     private bool ChangeColor
     {
         get
@@ -75,7 +75,22 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
                 if (!existOrNot)
                 {
                     Debug.Log("Add");
-                    dataTextOnButton.buttonChange.AddCurrentBuildThisHouse(NameThisHouse);
+                    houseTextOnButton.buttonChange.AddCurrentBuildThisHouse(dataHouse.NameThisHouse);
+
+                    AllDataHouse allDataHouse = new AllDataHouse()
+                    {
+                        dataHouse = new DataHouse()
+                        {
+                            NameThisHouse = dataHouse.NameThisHouse,
+                            myIndexOnSave = ReturnAllOnStart.allData.allDataHouses.Count
+                        },
+                        dataHouseChangeOnText = new DataHouseChangeOnText()
+                        {
+                            currentBuildThisHouse = houseTextOnButton.dataHouseChangeOnText.currentBuildThisHouse,
+                        }
+                    };
+                    ReturnAllOnStart.allData.allDataHouses.Add(allDataHouse);
+                    json.Save(ReturnAllOnStart.allData);
                 }
                 endMove = true; //тепер перейде виконувати End
                 stateHouse = StateHouse.NotActive;
@@ -96,12 +111,12 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
                 }
                 TakeObjects._house = null;
             }
-            Debug.Log(dataTextOnButton.buttonChange);
+            Debug.Log(houseTextOnButton.buttonChange);
         }
     }
     public void InitData()
     {
-        dataTextOnButton = new DataHouseTextOnButton(
+        houseTextOnButton = new HouseTextOnButton(
             MaxCountBuild,
             new TimeBuild((int)timeBuild.x, (int)timeBuild.y, (int)timeBuild.z, (int)timeBuild.w)
         );
@@ -113,7 +128,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
         transform.position = new Vector3(_x_* MyTerrain.sizeOneCell, transform.position.y,_z_* MyTerrain.sizeOneCell);
 
 
-        Debug.Log(posOnMap[0, 0, 0] + (int)(sides.x / 2) + " : " + posOnMap[1, 0, 0] + (int)sides.y / 2);
+        //Debug.Log(dataHouse.posOnMap[0, 0, 0] + (int)(sides.x / 2) + " : " + posOnMap[1, 0, 0] + (int)sides.y / 2);
         TakeObjects.End(posOnMap[0, 0, 0] + (int)(sides.x / 2), posOnMap[1, 0, 0] + (int)(sides.y / 2), this);
     }
     #region Colors
@@ -158,16 +173,21 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
         }
     }
     #endregion
+    ~House()
+    {
+        Debug.Log("ending");
+    }
 }
 
-public class DataHouseTextOnButton //дание для кнопок в магазине
+public class HouseTextOnButton //дание для кнопок в магазине
 {
-    public int currentBuildThisHouse = 0;
+    public DataHouseChangeOnText dataHouseChangeOnText;
     public int MaxCountBuild;
     public TimeBuild TimeBuild;
     public ButtonChange buttonChange;
-    public DataHouseTextOnButton(int maxCountBuild, TimeBuild timeBuild)
+    public HouseTextOnButton(int maxCountBuild, TimeBuild timeBuild)
     {
+        dataHouseChangeOnText = new DataHouseChangeOnText();
         MaxCountBuild = maxCountBuild;
         TimeBuild = timeBuild;
     }
