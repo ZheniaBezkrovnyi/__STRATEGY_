@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public enum InShop
+public enum NameHouse
 {
     A,
     B,
@@ -22,7 +22,7 @@ public class Shop : MonoBehaviour
     [SerializeField] private CameraMove cameraMove;
     [SerializeField] private RectTransform buttonPrefab;
     [SerializeField] private Text textOnButton;
-    [SerializeField] private List<InShop> listShop;
+    [SerializeField] private List<NameHouse> listShop;
     [SerializeField] private List<House> listHouse;
     [SerializeField] private MyTerrain terrain;
     private ShopButtonInterface shopInterface;

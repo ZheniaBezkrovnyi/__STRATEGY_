@@ -25,37 +25,43 @@ public class ShopButtonInterface : MonoBehaviour
     }
     public void InitialiseTexts(Button button,House house)
     {
+        ButtonChange buttonChange = button.GetComponent<ButtonChange>();
+
         RectTransform rectButton = button.GetComponent<RectTransform>();
         float diffX = rectButton.rect.width / 2;
         float diffY = -rectButton.rect.height / 2;
+
+        house.InitData();
+        buttonChange.data = house.dataTextOnButton;
+
         for (int i = 0; i < listPosText.Length; i++)
         {
-            typeText = (TypeTextOnButton)i;
+            CreateText(i);          
+        }
+
+
+        void CreateText(int I)
+        {
+            typeText = (TypeTextOnButton)I;
             Text _text = Instantiate(text);
             _text.gameObject.SetActive(true);
 
             RectTransform rectText = _text.rectTransform;
             rectText.SetParent(button.transform);
+            rectText.position = new Vector3(rectButton.rect.width - rectText.rect.width / 2 - diffX - listPosText[I].x, -rectButton.rect.height + rectText.rect.height / 2 - diffY + listPosText[I].y, 0);
 
-            house.InitData();
-            SwithEnumBetweenText(typeText, house.dataTextOnButton, _text);
-            rectText.position = new Vector3(rectButton.rect.width - rectText.rect.width / 2 - diffX - listPosText[i].x, -rectButton.rect.height + rectText.rect.height / 2 - diffY + listPosText[i].y, 0);
+            SwithEnumBetweenText(typeText, buttonChange, _text);
         }
 
-        void SwithEnumBetweenText(TypeTextOnButton type, DataHouseTextOnButton data,Text Text)
+        void SwithEnumBetweenText(TypeTextOnButton type, ButtonChange _buttonChange, Text Text)
         {
             switch (type)
             {
                 case TypeTextOnButton.CountHouse:
-                    //Debug.Log(data.MaxCountBuild);
-                    Text.text = "0 / " + data.MaxCountBuild.ToString();
+                    _buttonChange.InitTextCurrent(Text);
                         break;
                 case TypeTextOnButton.TimeBuild:
-                    string day = data.TimeBuild.days != 0 ? data.TimeBuild.days.ToString() + "d" : null;
-                    string hour = data.TimeBuild.hours != 0 ? data.TimeBuild.hours.ToString() + "h" : null;
-                    string minute = data.TimeBuild.minutes != 0 ? data.TimeBuild.minutes.ToString() + "m" : null;
-                    string second = data.TimeBuild.seconds != 0 ? data.TimeBuild.seconds.ToString() + "s" : null;
-                    Text.text = day + hour + minute + second;
+                    _buttonChange.InitTextTimeBuild(Text);
                     break;
             }
         }

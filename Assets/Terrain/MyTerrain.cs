@@ -80,6 +80,7 @@ public class TakeObjects : MonoBehaviour
         myHouse.stateHouse = StateHouse.IsActive;
         myHouse.startMove = true;
         myHouse.InitColor(StateColor.Norm);
+        //Debug.Log(myHouse.dataTextOnButton.textTimeBuild);
         //Debug.Log(x +" "+z);
     }
     private int x;

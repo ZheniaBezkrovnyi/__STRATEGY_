@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 public enum StateHouse
 {
@@ -15,6 +16,7 @@ public enum StateColor
 }
 public class House : Touch, IPointerClickHandler, IPointerDownHandler
 {
+    [SerializeField] protected NameHouse nameThisHouse;
     [SerializeField] private Vector2Int sides;
     public Vector2Int Sides { get { return sides; } }
     public int[,,] posOnMap;//save
@@ -35,7 +37,6 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     [SerializeField] private Vector4 timeBuild;
 
     public DataHouseTextOnButton dataTextOnButton;
-    //[SerializeField] private Vector4 timeBuildCheck;
     private bool ChangeColor
     {
         get
@@ -52,6 +53,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     }
     private void OnEnable()
     {
+        InitData();
         neParniX = sides.x % 2 == 1 ? 1 : 0;
         neParniZ = sides.y % 2 == 1 ? 1 : 0;
         colorsObjects = new ColorsObjects();
@@ -62,7 +64,6 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     {
         if (ChangeColor)
         {
-            //Debug.Log(currentColor);
             _currentColor = currentColor;
             InitColor(_currentColor);
         }
@@ -70,6 +71,11 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
         {
             if (currentColor == StateColor.Norm)
             {
+                if (!existOrNot)
+                {
+                    Debug.Log("Add");
+                    //dataTextOnButton.AddCurrentBuildThisHouse(nameThisHouse);
+                }
                 endMove = true; //тепер перейде виконувати End
                 stateHouse = StateHouse.NotActive;
                 TakeObjects._house = null;
@@ -154,11 +160,13 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
 
 public class DataHouseTextOnButton
 {
+    public int currentBuildThisHouse = 0;
     public int MaxCountBuild;
     public TimeBuild TimeBuild;
 
     public DataHouseTextOnButton(int maxCountBuild, TimeBuild timeBuild)
     {
+        //Debug.Log(MaxCountBuild.ToString() + " " + maxCountBuild);
         MaxCountBuild = maxCountBuild;
         TimeBuild = timeBuild;
     }
@@ -220,3 +228,4 @@ public class ColorsObjects
         }
     }
 }
+
