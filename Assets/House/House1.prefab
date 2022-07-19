@@ -141,6 +141,7 @@ MonoBehaviour:
   startMove: 0
   endMove: 0
   stateHouse: 0
+  nameThisHouse: 1
   sides: {x: 3, y: 3}
   clickColor: {r: 0, g: 0.7169812, b: 0.098891445, a: 0}
   redColor: {r: 1, g: 0.21854474, b: 0.0047169924, a: 0}

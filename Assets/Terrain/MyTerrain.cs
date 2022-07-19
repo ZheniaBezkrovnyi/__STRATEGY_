@@ -48,9 +48,9 @@ public class MyTerrain : MonoBehaviour
         }
         */
     }
-    public void TakeHouse(House house)
+    public void TakeHouse(House house, ButtonChange buttonChange)
     {
-        takeObjects.TakeHouse(house);
+        takeObjects.TakeHouse(house,buttonChange);
     }
 }
 
@@ -66,7 +66,7 @@ public class TakeObjects : MonoBehaviour
         _setMap = _setMap_;
         SizeOneCell = MyTerrain.sizeOneCell;
     }
-    public void TakeHouse(House house) // при взятии переносить камеру на видимую зону обьекта чрез интерполяцию
+    public void TakeHouse(House house,ButtonChange buttonChange) // при взятии переносить камеру на видимую зону обьекта чрез интерполяцию
     { 
         if (_house != null) Destroy(_house.gameObject);
 
@@ -80,6 +80,7 @@ public class TakeObjects : MonoBehaviour
         myHouse.stateHouse = StateHouse.IsActive;
         myHouse.startMove = true;
         myHouse.InitColor(StateColor.Norm);
+        myHouse.dataTextOnButton.buttonChange = buttonChange; // закинув для смени текста на кнопках
         //Debug.Log(myHouse.dataTextOnButton.textTimeBuild);
         //Debug.Log(x +" "+z);
     }

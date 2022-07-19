@@ -16,7 +16,8 @@ public enum StateColor
 }
 public class House : Touch, IPointerClickHandler, IPointerDownHandler
 {
-    [SerializeField] protected NameHouse nameThisHouse;
+    public NameHouse NameThisHouse { get { return nameThisHouse; } }
+    [SerializeField] private NameHouse nameThisHouse;
     [SerializeField] private Vector2Int sides;
     public Vector2Int Sides { get { return sides; } }
     public int[,,] posOnMap;//save
@@ -74,7 +75,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
                 if (!existOrNot)
                 {
                     Debug.Log("Add");
-                    //dataTextOnButton.AddCurrentBuildThisHouse(nameThisHouse);
+                    dataTextOnButton.buttonChange.AddCurrentBuildThisHouse(NameThisHouse);
                 }
                 endMove = true; //тепер перейде виконувати End
                 stateHouse = StateHouse.NotActive;
@@ -95,6 +96,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
                 }
                 TakeObjects._house = null;
             }
+            Debug.Log(dataTextOnButton.buttonChange);
         }
     }
     public void InitData()
@@ -158,15 +160,14 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     #endregion
 }
 
-public class DataHouseTextOnButton
+public class DataHouseTextOnButton //дание для кнопок в магазине
 {
     public int currentBuildThisHouse = 0;
     public int MaxCountBuild;
     public TimeBuild TimeBuild;
-
+    public ButtonChange buttonChange;
     public DataHouseTextOnButton(int maxCountBuild, TimeBuild timeBuild)
     {
-        //Debug.Log(MaxCountBuild.ToString() + " " + maxCountBuild);
         MaxCountBuild = maxCountBuild;
         TimeBuild = timeBuild;
     }

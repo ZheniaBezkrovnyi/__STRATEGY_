@@ -40,40 +40,51 @@ public class Shop : MonoBehaviour
         content.anchorMax = new Vector2(DiffContent,1);
         for (int i = 0; i < listShop.Count; i++)
         {
+            CreateButton(i);
+        }
+
+
+
+
+        void CreateButton(int I)
+        {
+            House _house = listHouse[I];
+            if((NameHouse)I != _house.NameThisHouse) { return; } 
+
             RectTransform button = Instantiate(buttonPrefab);
             Button _button = button.GetComponent<Button>();
+            ButtonChange buttonChange = _button.GetComponent<ButtonChange>();
 
-            House _house = listHouse[i];
-            shopInterface.InitialiseTexts(_button, _house);
+            shopInterface.InitialiseTexts(_button, _house, buttonChange);
 
             void OnButton()
             {
-                terrain.TakeHouse(_house);
+                terrain.TakeHouse(_house, buttonChange);
                 scrollRect.gameObject.SetActive(false);
                 cameraMove.possibleMove = true;
             }
             _button.onClick.AddListener(OnButton);
             Text text = button?.GetChild(0).GetComponent<Text>();
-            text.text = listShop[i].ToString();
+            text.text = listShop[I].ToString();
 
             button.gameObject.SetActive(true);
             button.SetParent(content);
-            button.position = new Vector3(diffX + 50 + i * (button.rect.width + 30), diffY - button.rect.height/2 - heihtPadding(),0);
+            button.position = new Vector3(diffX + 50 + I * (button.rect.width + 30), diffY - button.rect.height / 2 - heihtPadding(button), 0);
 
+        }
 
-            float heihtPadding()
+        float heihtPadding(RectTransform button)
+        {
+            float heightContent = content.rect.height;
+            //Debug.Log(heightContent);
+            if (heightContent - button.rect.height > 0)
             {
-                float heightContent = content.rect.height;
-                //Debug.Log(heightContent);
-                if (heightContent - button.rect.height > 0)
-                {
-                    float dif = (heightContent - button.rect.height)/2 * 0.8f;
-                    return dif;
-                }
-                else
-                {
-                    return 0;
-                }
+                float dif = (heightContent - button.rect.height) / 2 * 0.8f;
+                return dif;
+            }
+            else
+            {
+                return 0;
             }
         }
     }

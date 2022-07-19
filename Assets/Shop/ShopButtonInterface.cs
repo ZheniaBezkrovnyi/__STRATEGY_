@@ -23,10 +23,8 @@ public class ShopButtonInterface : MonoBehaviour
         text = _text;
 
     }
-    public void InitialiseTexts(Button button,House house)
+    public void InitialiseTexts(Button button,House house,ButtonChange buttonChange)
     {
-        ButtonChange buttonChange = button.GetComponent<ButtonChange>();
-
         RectTransform rectButton = button.GetComponent<RectTransform>();
         float diffX = rectButton.rect.width / 2;
         float diffY = -rectButton.rect.height / 2;

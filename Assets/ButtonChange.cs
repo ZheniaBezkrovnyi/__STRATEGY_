@@ -37,6 +37,22 @@ public class ButtonChange : MonoBehaviour
             ++data.currentBuildThisHouse;
             //PlayerPr.InitInt("count" + name.ToString(), ++currentBuildThisHouse);
             GoStringCountBuild();
+            if(data.currentBuildThisHouse == data.MaxCountBuild)
+            {
+                GetComponent<Button>().interactable = false;
+            }
+        }
+        else
+        {
+            Debug.LogError("карент больше максимум зданий");
+        }
+    }
+
+    public void CheckUpdate() //визвать при обновлении MaxCount
+    {
+        if (data.currentBuildThisHouse != data.MaxCountBuild)
+        {
+            GetComponent<Button>().interactable = true;
         }
     }
 }
