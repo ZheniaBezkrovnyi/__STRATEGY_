@@ -74,7 +74,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
                 if (!existOrNot)
                 {
                     Debug.Log("Add");
-                    houseTextOnButton.buttonChange.AddCurrentBuildThisHouse(dataHouse.NameThisHouse);
+                    houseTextOnButton.buttonChange.AddCurrentBuildThisHouse(dataHouse.NameThisHouse); //треба саму в себе, шоб сохранить і в себе, houseTextOnButton
 
                     AllDataHouse allDataHouse = new AllDataHouse()
                     {
@@ -88,6 +88,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
                             currentBuildThisHouse = houseTextOnButton.dataHouseChangeOnText.currentBuildThisHouse,
                         }
                     };
+                    dataHouse = allDataHouse.dataHouse;
                     ReturnAllOnStart.allData.allDataHouses.Add(allDataHouse);
                     ReturnAllOnStart.json.Save(ReturnAllOnStart.allData);
                 }
@@ -110,7 +111,6 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
                 }
                 TakeObjects._house = null;
             }
-            Debug.Log(houseTextOnButton.buttonChange);
         }
     }
     public void InitData()

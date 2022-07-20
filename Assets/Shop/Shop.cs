@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System.Linq;
 
 public enum NameHouse
 {
@@ -23,7 +23,7 @@ public class Shop : MonoBehaviour
     [SerializeField] private RectTransform buttonPrefab;
     [SerializeField] private Text textOnButton;
     [SerializeField] private List<NameHouse> listShop;
-    [SerializeField] public List<House> listHouse;
+    [SerializeField] private ReturnAllOnStart returnAllStart;
     [SerializeField] private MyTerrain terrain;
     private ShopButtonInterface shopInterface;
     private void Awake()
@@ -48,8 +48,20 @@ public class Shop : MonoBehaviour
 
         void CreateButton(int I)
         {
-            House _house = listHouse[I];
-            if((NameHouse)I != _house.dataHouse.NameThisHouse) { return; } 
+            House _house = null;
+            for (int i = 0; i < returnAllStart.listHouse.Count; i++)
+            {
+                if (listShop[I] == returnAllStart.listHouse[i].dataHouse.NameThisHouse)
+                {
+                    _house = returnAllStart.listHouse[i];
+                    break;
+                }
+                if( i == returnAllStart.listHouse.Count - 1)
+                {
+                    Debug.Log("not exist " + listShop[I]);
+                    return;
+                }
+            }
 
             RectTransform button = Instantiate(buttonPrefab);
             Button _button = button.GetComponent<Button>();

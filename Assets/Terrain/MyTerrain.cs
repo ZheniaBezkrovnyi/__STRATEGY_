@@ -31,7 +31,7 @@ public class MyTerrain : MonoBehaviour
             Debug.LogError("не заполнени точки карти"); 
         }
         setMap = new int[xMax - xMin, zMax - zMin];
-        takeObjects = new TakeObjects(setMap,json);
+        takeObjects = new TakeObjects(setMap);
         field.CreateField();
     }
     void Update()
@@ -61,7 +61,7 @@ public class TakeObjects : MonoBehaviour
     private House myHouse;
     private bool canPut = true;
     private int SizeOneCell;
-    public TakeObjects(int[,] _setMap_, JSON _json)
+    public TakeObjects(int[,] _setMap_)
     {
         _setMap = _setMap_;
         SizeOneCell = MyTerrain.sizeOneCell;
@@ -222,30 +222,30 @@ public class TakeObjects : MonoBehaviour
         {
             if (i < iMax/5)
             {
-                Debug.Log(1);
+                //Debug.Log(1);
                 randomX = Random.Range(MyTerrain.xMin / 2, 0);
                 randomZ = Random.Range(MyTerrain.zMin / 2, 0);}
             else if(i < iMax*2/5)
             {
-                Debug.Log(2);
+                //Debug.Log(2);
                 randomX = Random.Range(MyTerrain.xMin, 0);
                 randomZ = Random.Range(MyTerrain.zMin, 0);
             }
             else if (i < iMax*3/5)
             {
-                Debug.Log(3);
+                //Debug.Log(3);
                 randomX = Random.Range(MyTerrain.xMin, 0);
                 randomZ = Random.Range(0, MyTerrain.zMax);
             }
             else if (i < iMax * 4 / 5)
             {
-                Debug.Log(4);
+                //Debug.Log(4);
                 randomX = Random.Range(0, MyTerrain.xMax);
                 randomZ = Random.Range(MyTerrain.zMin, 0);
             }
             else
             {
-                Debug.Log(5);
+                //Debug.Log(5);
                 randomX = Random.Range(0, MyTerrain.xMax);
                 randomZ = Random.Range(0, MyTerrain.zMax);
             }

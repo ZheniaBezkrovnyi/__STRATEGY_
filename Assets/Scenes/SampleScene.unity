@@ -410,12 +410,8 @@ MonoBehaviour:
   cameraMove: {fileID: 963194231}
   buttonPrefab: {fileID: 1127359017}
   textOnButton: {fileID: 2112497505}
-  listShop: 00000000010000000200000003000000040000000500000006000000
-  listHouse:
-  - {fileID: 7957490201646680267, guid: 602fd5e5d4978f24eb6dcf19b8cc29c2, type: 3}
-  - {fileID: 3355637756002620365, guid: 8a363d8e445b94744afe5666f19765bc, type: 3}
-  - {fileID: 7284652209040663927, guid: c0c21ab8ac6aa0040a23d3ffdd09c441, type: 3}
-  - {fileID: 3366863431143028285, guid: f2edd9b00aa38474e94df48a6a80d537, type: 3}
+  listShop: 00000000010000000200000003000000000000000100000002000000
+  returnAllStart: {fileID: 963194232}
   terrain: {fileID: 850528394}
 --- !u!1 &705507993
 GameObject:
@@ -598,10 +594,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed5de61b0aacf2a4586a7406d1ea0294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  json: {fileID: 11400000, guid: d7eef9663b8fa134f9b73af65f424ae2, type: 2}
   pointsMap:
-  - {x: -22, y: -22}
-  - {x: 22, y: 22}
+  - {x: -7, y: -7}
+  - {x: 7, y: 7}
   zatychki: {fileID: 8606414305439931372, guid: eeff0849c5d41b94bbceda47e14faf33,
     type: 3}
   field: {fileID: 11400000, guid: 7cb2352fc7affad4bbabe412074015ae, type: 2}
@@ -826,8 +821,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b95555671d0496a429b542b732fb18c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shop: {fileID: 699185502}
-  json: {fileID: 11400000, guid: d7eef9663b8fa134f9b73af65f424ae2, type: 2}
+  listHouse:
+  - {fileID: 7957490201646680267, guid: 602fd5e5d4978f24eb6dcf19b8cc29c2, type: 3}
+  - {fileID: 3355637756002620365, guid: 8a363d8e445b94744afe5666f19765bc, type: 3}
+  - {fileID: 7284652209040663927, guid: c0c21ab8ac6aa0040a23d3ffdd09c441, type: 3}
+  - {fileID: 3366863431143028285, guid: f2edd9b00aa38474e94df48a6a80d537, type: 3}
+  checkAllData: []
+  posX: 0
+  posZ: 0
 --- !u!1 &1127359016
 GameObject:
   m_ObjectHideFlags: 0

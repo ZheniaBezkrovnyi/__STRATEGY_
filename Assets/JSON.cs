@@ -14,19 +14,26 @@ public class JSON
     public string fileJSON;
     public JSON()
     {
-        //fileJSON = Path.Combine(Application.dataPath + "/Resources" + "/jsonJSON.json");
+        string application;
+
+#if UNITY_ANDROID
+        application = Application.persistentDataPath;
+#endif
+#if UNITY_EDITOR
+        application = Application.dataPath;
+#endif
+        fileJSON = Path.Combine(application + "/JSON.json.txt");
     }
     public void Save(AllData allData)
-    {/*
+    {
         var json = JsonUtility.ToJson(allData);
         using (var writer = new StreamWriter(fileJSON))
         {
             writer.WriteLine(json);
-        }*/
+        }
     }
     public AllData Load()
     {
-        return null;/*
         string json = "";
         using (var reader = new StreamReader(fileJSON))
         {
@@ -39,7 +46,7 @@ public class JSON
         {
             return null;
         }
-        return JsonUtility.FromJson<AllData>(json);*/
+        return JsonUtility.FromJson<AllData>(json);
     }
 }
 
@@ -71,7 +78,7 @@ public class DataHouseChangeOnText
 {
     public int currentBuildThisHouse;  //**** коли ставлю
 }
-
+[Serializable]
 public class Posit
 {
     public int x, z;
