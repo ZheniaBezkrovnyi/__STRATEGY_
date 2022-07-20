@@ -26,7 +26,7 @@ public class Shop : MonoBehaviour
     [SerializeField] private ReturnAllOnStart returnAllStart;
     [SerializeField] private MyTerrain terrain;
     private ShopButtonInterface shopInterface;
-    private void Awake()
+    private void Start()
     {
         shopInterface = new ShopButtonInterface(textOnButton);
         InitializeShop();
@@ -38,6 +38,9 @@ public class Shop : MonoBehaviour
 
         float DiffContent = (diffX + 50 + (listShop.Count - 1) * (buttonPrefab.rect.width + 30) + buttonPrefab.rect.width/2) / (canvas.rect.width * (scrollRect.anchorMax.y - scrollRect.anchorMin.y));
         content.anchorMax = new Vector2(DiffContent,1);
+
+        List<AllDataHouse> allDataHouse = ReturnAllOnStart.allData.allDataHouses;
+
         for (int i = 0; i < listShop.Count; i++)
         {
             CreateButton(i);
@@ -45,15 +48,15 @@ public class Shop : MonoBehaviour
 
 
 
-
         void CreateButton(int I)
         {
             House _house = null;
-            for (int i = 0; i < returnAllStart.listHouse.Count; i++)
+            for (int i = 0; i < returnAllStart.listHouse.Count; i++) //з енама витягується, все норм тут, але в майбутньому оптимізувати
             {
                 if (listShop[I] == returnAllStart.listHouse[i].dataHouse.NameThisHouse)
                 {
                     _house = returnAllStart.listHouse[i];
+                    _house.InitData(); // зразу створюю те що в наступному циклі змінюватиму
                     break;
                 }
                 if( i == returnAllStart.listHouse.Count - 1)
@@ -62,12 +65,25 @@ public class Shop : MonoBehaviour
                     return;
                 }
             }
-
+            for (int i = allDataHouse.Count - 1; i >= 0; i--)
+            {
+                if (_house.dataHouse.NameThisHouse == allDataHouse[i].dataHouse.NameThisHouse) //по імені бо треба вибрати для самого типу будівлі, і беру останній такий, бо зберігав додаючи до нових будів
+                {
+                    _house.houseTextOnButton.dataHouseChangeOnText = allDataHouse[i].dataHouseChangeOnText; // далі даєтьмся ссилка на хаус і він передає ссилку свою на кнопку)))
+                    break;
+                }
+                if (i == 0)
+                {
+                    Debug.Log("не знайшов по імені хаус, тому дані для кнопки не дав");
+                }
+            }
             RectTransform button = Instantiate(buttonPrefab);
             Button _button = button.GetComponent<Button>();
             ButtonChange buttonChange = _button.GetComponent<ButtonChange>();
 
+
             shopInterface.InitialiseTexts(_button, _house, buttonChange);
+
 
             void OnButton()
             {

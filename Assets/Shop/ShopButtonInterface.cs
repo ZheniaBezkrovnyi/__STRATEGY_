@@ -29,7 +29,6 @@ public class ShopButtonInterface : MonoBehaviour
         float diffX = rectButton.rect.width / 2;
         float diffY = -rectButton.rect.height / 2;
 
-        house.InitData();
         buttonChange.houseTextOnButton = house.houseTextOnButton;
 
         for (int i = 0; i < listPosText.Length; i++)

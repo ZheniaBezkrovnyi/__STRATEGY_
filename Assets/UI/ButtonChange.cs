@@ -30,7 +30,7 @@ public class ButtonChange : MonoBehaviour
         string second = houseTextOnButton.TimeBuild.seconds != 0 ? houseTextOnButton.TimeBuild.seconds.ToString() + "s" : null;
         textTimeBuild.text = day + hour + minute + second;
     }
-    public void AddCurrentBuildThisHouse(NameHouse name)
+    public void AddCurrentBuildThisHouse()
     {
         if (houseTextOnButton.dataHouseChangeOnText.currentBuildThisHouse + 1 <= houseTextOnButton.MaxCountBuild)
         {

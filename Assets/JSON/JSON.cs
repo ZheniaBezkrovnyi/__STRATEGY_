@@ -22,7 +22,7 @@ public class JSON
 #if UNITY_EDITOR
         application = Application.dataPath;
 #endif
-        fileJSON = Path.Combine(application + "/JSON.json.txt");
+        fileJSON = Path.Combine(application + "/JSON/JSON.json.txt");
     }
     public void Save(AllData allData)
     {

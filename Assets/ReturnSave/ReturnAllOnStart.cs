@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum StartProject
+{
+    Start,
+    Continue
+}
 public class ReturnAllOnStart : MonoBehaviour
 {
     public List<House> listHouse;
-    [SerializeField] public static JSON json;
+    public static JSON json;
+    public StartProject startProject;
     public static AllData allData;
     public List<AllDataHouse> checkAllData;
     public int posX;
@@ -16,12 +22,14 @@ public class ReturnAllOnStart : MonoBehaviour
         //NullJSON();
         if (json.Load() != null)
         {
+            startProject = StartProject.Continue;
             //Debug.Log("считал вродеби");
             allData = json.Load();
             CreateReturnHouse();
         }
         else
         {
+            startProject = StartProject.Start;
             allData = new AllData()
             {
                 allDataHouses = new List<AllDataHouse>(),
@@ -72,4 +80,5 @@ public class ReturnAllOnStart : MonoBehaviour
             }
         }
     }
+
 }
