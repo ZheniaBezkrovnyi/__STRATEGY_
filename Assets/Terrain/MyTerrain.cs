@@ -56,7 +56,6 @@ public class MyTerrain : MonoBehaviour
 
 public class TakeObjects : MonoBehaviour
 {
-    private static JSON json;
     public static House _house;
     private static int[,] _setMap;
     private House myHouse;
@@ -66,7 +65,6 @@ public class TakeObjects : MonoBehaviour
     {
         _setMap = _setMap_;
         SizeOneCell = MyTerrain.sizeOneCell;
-        json = _json;
     }
     public void TakeHouse(House house,ButtonChange buttonChange) // при взятии переносить камеру на видимую зону обьекта чрез интерполяцию
     { 
@@ -198,7 +196,7 @@ public class TakeObjects : MonoBehaviour
         }
         _house.dataHouse.posit = new Posit(X,Z);
         ReturnAllOnStart.allData.allDataHouses[_house.dataHouse.myIndexOnSave].dataHouse.posit = _house.dataHouse.posit;
-        json.Save(ReturnAllOnStart.allData);
+        ReturnAllOnStart.json.Save(ReturnAllOnStart.allData);
     }
     private void ZeroCell()
     {

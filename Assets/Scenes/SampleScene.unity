@@ -598,6 +598,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed5de61b0aacf2a4586a7406d1ea0294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  json: {fileID: 11400000, guid: d7eef9663b8fa134f9b73af65f424ae2, type: 2}
   pointsMap:
   - {x: -22, y: -22}
   - {x: 22, y: 22}
@@ -826,6 +827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shop: {fileID: 699185502}
+  json: {fileID: 11400000, guid: d7eef9663b8fa134f9b73af65f424ae2, type: 2}
 --- !u!1 &1127359016
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,7 +16,6 @@ public enum StateColor
 }
 public class House : Touch, IPointerClickHandler, IPointerDownHandler
 {
-    [SerializeField] private JSON json;
     public DataHouse dataHouse;
     public int[,,] posOnMap;
     [SerializeField] private Vector2Int sides;
@@ -90,7 +89,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
                         }
                     };
                     ReturnAllOnStart.allData.allDataHouses.Add(allDataHouse);
-                    json.Save(ReturnAllOnStart.allData);
+                    ReturnAllOnStart.json.Save(ReturnAllOnStart.allData);
                 }
                 endMove = true; //тепер перейде виконувати End
                 stateHouse = StateHouse.NotActive;
@@ -128,7 +127,6 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
         transform.position = new Vector3(_x_* MyTerrain.sizeOneCell, transform.position.y,_z_* MyTerrain.sizeOneCell);
 
 
-        //Debug.Log(dataHouse.posOnMap[0, 0, 0] + (int)(sides.x / 2) + " : " + posOnMap[1, 0, 0] + (int)sides.y / 2);
         TakeObjects.End(posOnMap[0, 0, 0] + (int)(sides.x / 2), posOnMap[1, 0, 0] + (int)(sides.y / 2), this);
     }
     #region Colors

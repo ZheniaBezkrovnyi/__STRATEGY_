@@ -9,24 +9,24 @@ public enum TypeSave
     House,
 
 }
-[CreateAssetMenu]
-public class JSON : ScriptableObject
+public class JSON
 {
     public string fileJSON;
     public JSON()
     {
-        //fileJSON = Application.persistentDataPath + "/save.json";
+        //fileJSON = Path.Combine(Application.dataPath + "/Resources" + "/jsonJSON.json");
     }
     public void Save(AllData allData)
-    {
+    {/*
         var json = JsonUtility.ToJson(allData);
         using (var writer = new StreamWriter(fileJSON))
         {
             writer.WriteLine(json);
-        }
+        }*/
     }
     public AllData Load()
     {
+        return null;/*
         string json = "";
         using (var reader = new StreamReader(fileJSON))
         {
@@ -39,7 +39,7 @@ public class JSON : ScriptableObject
         {
             return null;
         }
-        return JsonUtility.FromJson<AllData>(json);
+        return JsonUtility.FromJson<AllData>(json);*/
     }
 }
 

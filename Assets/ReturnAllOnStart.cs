@@ -5,10 +5,11 @@ using UnityEngine;
 public class ReturnAllOnStart : MonoBehaviour
 {
     [SerializeField] private Shop shop;
-    [SerializeField] private JSON json;
+    [SerializeField] public static JSON json;
     public static AllData allData;
     void Awake()
     {
+        json = new JSON();
         if (json.Load() != null)
         {
             allData = json.Load();
