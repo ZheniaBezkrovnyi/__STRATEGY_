@@ -13,6 +13,7 @@ public class MyTerrain : MonoBehaviour
     [SerializeField] private Field field;
     public static int sizeOneCell;
     [SerializeField] private int SizeOneCell;
+    [SerializeField] private Canvas canvasWindowsForHouse;
     private void Awake()
     {
         sizeOneCell = SizeOneCell;
@@ -50,7 +51,7 @@ public class MyTerrain : MonoBehaviour
     }
     public void TakeHouse(House house, ButtonChange buttonChange) // вісить на AddListener при створенні кнопок у Shop
     {
-        takeObjects.TakeHouse(house,buttonChange);
+        takeObjects.TakeHouse(house,buttonChange,canvasWindowsForHouse);
     }
 }
 
@@ -66,11 +67,12 @@ public class TakeObjects : MonoBehaviour
         _setMap = _setMap_;
         SizeOneCell = MyTerrain.sizeOneCell;
     }
-    public void TakeHouse(House house,ButtonChange buttonChange) // при взятии переносить камеру на видимую зону обьекта чрез интерполяцию
+    public void TakeHouse(House house,ButtonChange buttonChange,Canvas canvasOnWindows) // при взятии переносить камеру на видимую зону обьекта чрез интерполяцию
     { 
         if (_house != null) Destroy(_house.gameObject);
 
         _house = Instantiate(house);
+        _house.canvasWindows = canvasOnWindows;
         myHouse = _house;
         x = 0;
         z = 0;
@@ -80,7 +82,7 @@ public class TakeObjects : MonoBehaviour
         myHouse.stateHouse = StateHouse.IsActive;
         myHouse.startMove = true;
         myHouse.InitColor(StateColor.Norm);
-        myHouse.houseTextOnButton.buttonChange = buttonChange; // закинув для смени текста на кнопках, треба тільки на тих шо беру
+        myHouse.houseTextOnShop.buttonChange = buttonChange; // закинув для смени текста на кнопках, треба тільки на тих шо беру
     }
     private int x;
     private int _Px;
@@ -258,7 +260,7 @@ public class TakeObjects : MonoBehaviour
             }
             else
             {
-                Debug.Log(randomX + " " + randomZ + " prosto " + i);
+                //Debug.Log(randomX + " " + randomZ + " prosto " + i);
             }
         }
         randomX = Random.Range(MyTerrain.xMin / 2, 0);

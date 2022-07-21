@@ -16,7 +16,11 @@ public enum StateColor
 }
 public class House : Touch, IPointerClickHandler, IPointerDownHandler
 {
+    public DataTextOnHouse dataTextOnHouse;
+    public HouseTextOnShop houseTextOnShop;
     public DataHouse dataHouse;
+
+    [HideInInspector] public Canvas canvasWindows;
     public int[,,] posOnMap;
     [SerializeField] private Vector2Int sides;
     public Vector2Int Sides { get { return sides; } }
@@ -33,10 +37,6 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     public int NeParniX { get { return neParniX; } }
     private int neParniZ;
     public int NeParniZ { get { return neParniZ; } }
-    [SerializeField] private int MaxCountBuild;
-    [SerializeField] private Vector4 timeBuild;
-
-    public HouseTextOnButton houseTextOnButton;
     private bool ChangeColor
     {
         get
@@ -53,7 +53,6 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     }
     private void OnEnable()
     {
-        InitData();
         neParniX = sides.x % 2 == 1 ? 1 : 0;
         neParniZ = sides.y % 2 == 1 ? 1 : 0;
         colorsObjects = new ColorsObjects();
@@ -76,7 +75,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
                     Debug.Log("Add");
                     //Debug.Log(houseTextOnButton.buttonChange.houseTextOnButton.dataHouseChangeOnText.currentBuildThisHouse + " check");
 
-                    houseTextOnButton.buttonChange.AddCurrentBuildThisHouse(); // по ссилкам все норм, при взятті, даю сюди ссилку на buttonChange кнопки на якій це пишеться і маю тут її дані, і у неї змінюю і свої і її
+                    houseTextOnShop.buttonChange.AddCurrentBuildThisHouse(); // по ссилкам все норм, при взятті, даю сюди ссилку на buttonChange кнопки на якій це пишеться і маю тут її дані, і у неї змінюю і свої і її
                     //Debug.Log(houseTextOnButton.buttonChange.houseTextOnButton.dataHouseChangeOnText.currentBuildThisHouse + " check");
                     AllDataHouse allDataHouse = new AllDataHouse()
                     {
@@ -87,7 +86,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
                         },
                         dataHouseChangeOnText = new DataHouseChangeOnText()
                         {
-                            currentBuildThisHouse = houseTextOnButton.buttonChange.houseTextOnButton.dataHouseChangeOnText.currentBuildThisHouse,
+                            currentBuildThisHouse = houseTextOnShop.buttonChange.houseTextOnShop.dataHouseChangeOnText.currentBuildThisHouse,
                         }
                     }; // тут початок запису для цього обьекту бо я його тут ставлю, тому норм що зразу новий allDataHouse
                     dataHouse = allDataHouse.dataHouse;
@@ -98,6 +97,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
                 stateHouse = StateHouse.NotActive;
                 TakeObjects._house = null;
                 ReturnOrInitColor();
+                CloseCanvasHouse(canvasWindows);
             }
             else if (currentColor == StateColor.Red)
             {
@@ -115,12 +115,34 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
             }
         }
     }
-    public void InitData()
+    private void OpenCanvasHouse(Canvas canvasHouse)
     {
-        houseTextOnButton = new HouseTextOnButton(
-            MaxCountBuild,
-            new TimeBuild((int)timeBuild.x, (int)timeBuild.y, (int)timeBuild.z, (int)timeBuild.w)
-        );
+        canvasWindows.gameObject.SetActive(true);
+        for(int i = 0; i < canvasWindows.gameObject.transform.childCount; i++)
+        {
+            if(canvasWindows.gameObject.transform.GetChild(i).name == "Improve")
+            {
+                WriteText(canvasWindows.gameObject.transform.GetChild(i),"Price", dataTextOnHouse.priceImprove.ToString());
+            }
+        }
+
+
+        void WriteText(Transform childCanvas,string name,string data)
+        {
+            for (int j = 0; j < childCanvas.childCount; j++)
+            {
+                if (childCanvas.GetChild(j).name == name)
+                {
+                    Text text = childCanvas.GetChild(j).GetComponent<Text>();
+                    text.text = data;
+                    break;
+                }
+            }
+        }
+    }
+    private void CloseCanvasHouse(Canvas canvasHouse)
+    {
+        canvasHouse.gameObject.SetActive(false);
     }
     private void ReturnCell() //позиція у масиві точки це її початок зліва
     {
@@ -155,6 +177,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
         TakeObjects._house = this; //через те що дом буде активним при тому коли його беруть
         if (stateHouse == StateHouse.NotActive)
         {
+            OpenCanvasHouse(canvasWindows);
             startMove = true;
             stateHouse = StateHouse.IsActive;
             colorsObjects.InitColor(clickColor);
@@ -176,20 +199,6 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     ~House()
     {
         Debug.Log("ending");
-    }
-}
-
-public class HouseTextOnButton //дание для кнопок в магазине
-{
-    public DataHouseChangeOnText dataHouseChangeOnText;
-    public int MaxCountBuild;
-    public TimeBuild TimeBuild;
-    public ButtonChange buttonChange;
-    public HouseTextOnButton(int maxCountBuild, TimeBuild timeBuild)
-    {
-        dataHouseChangeOnText = new DataHouseChangeOnText();
-        MaxCountBuild = maxCountBuild;
-        TimeBuild = timeBuild;
     }
 }
 

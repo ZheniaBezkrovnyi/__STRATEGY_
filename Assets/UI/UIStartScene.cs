@@ -8,7 +8,7 @@ public class UIStartScene : MonoBehaviour
     [SerializeField] private CameraMove cameraMove;
     [SerializeField] private Button buttonShop;
     [SerializeField] private Button buttonBackShop;
-    [SerializeField] private RectTransform shop;
+    [SerializeField] private Canvas shopCanvas;
     private void Awake()
     {
         ActiveOrNotShop(buttonShop,true);
@@ -17,7 +17,7 @@ public class UIStartScene : MonoBehaviour
     private void ActiveOrNotShop(Button button,bool _bool)
     {
         button.onClick.AddListener(() => {
-            shop.gameObject.SetActive(_bool);
+            shopCanvas.gameObject.SetActive(_bool);
             cameraMove.possibleMove = !_bool;
         });
     }

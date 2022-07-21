@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System;
 public enum TypeTextOnButton
 {
     CountHouse,
@@ -17,8 +17,8 @@ public class ShopButtonInterface : MonoBehaviour
     public ShopButtonInterface(Text _text) // тепер можу просто вписувать значення і правильно добавиться, значення ставити, від правого нижного куту кнопок,однакова послідовність з енамом
     {
         listPosText = new Vector2[2] {
-            new Vector2(5,5),
-            new Vector2(145,5),
+            new Vector2(20,14),
+            new Vector2(330,14),
         };
         text = _text;
 
@@ -29,11 +29,11 @@ public class ShopButtonInterface : MonoBehaviour
         float diffX = rectButton.rect.width / 2;
         float diffY = -rectButton.rect.height / 2;
 
-        buttonChange.houseTextOnButton = house.houseTextOnButton;
+        buttonChange.houseTextOnShop = house.houseTextOnShop;
 
         for (int i = 0; i < listPosText.Length; i++)
         {
-            CreateText(i);          
+            CreateText(i);
         }
 
 
@@ -55,15 +55,18 @@ public class ShopButtonInterface : MonoBehaviour
             switch (type)
             {
                 case TypeTextOnButton.CountHouse:
+                    Text.alignment = TextAnchor.MiddleRight;
                     _buttonChange.InitTextCurrent(Text);
                         break;
                 case TypeTextOnButton.TimeBuild:
+                    Text.alignment = TextAnchor.MiddleLeft;
                     _buttonChange.InitTextTimeBuild(Text);
                     break;
             }
         }
     }
 }
+[Serializable]
 public class TimeBuild
 {
     public int days,hours,minutes,seconds;
@@ -83,4 +86,6 @@ public class TimeBuild
         if (_seconds < 0) _seconds = 0;
         seconds = _seconds;
     }
+
+
 }

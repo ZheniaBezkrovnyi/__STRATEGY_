@@ -10,14 +10,14 @@ public enum NameHouse
     B,
     C,
     D,
-    E,
+    Wall,
     F,
     G
 }
 public class Shop : MonoBehaviour
 {
     [SerializeField] private RectTransform content;
-    [SerializeField] private RectTransform scrollRect; // процент влияет на pos
+    [SerializeField] private Canvas canvasShop; // процент влияет на pos
     [SerializeField] private RectTransform canvas;
     [SerializeField] private CameraMove cameraMove;
     [SerializeField] private RectTransform buttonPrefab;
@@ -26,17 +26,23 @@ public class Shop : MonoBehaviour
     [SerializeField] private ReturnAllOnStart returnAllStart;
     [SerializeField] private MyTerrain terrain;
     private ShopButtonInterface shopInterface;
+    [SerializeField] private Text textNotification;
     private void Start()
     {
+        localScaleCanvas = canvas.localScale;
         shopInterface = new ShopButtonInterface(textOnButton);
         InitializeShop();
     }
+    private Vector3 localScaleCanvas;
     private void InitializeShop()
     {
-        float diffX = canvas.rect.width * scrollRect.anchorMin.y + buttonPrefab.rect.width / 2; ;
-        float diffY = canvas.rect.height * scrollRect.anchorMax.y;
-
-        float DiffContent = (diffX + 50 + (listShop.Count - 1) * (buttonPrefab.rect.width + 30) + buttonPrefab.rect.width/2) / (canvas.rect.width * (scrollRect.anchorMax.y - scrollRect.anchorMin.y));
+        float heightCanvas = canvas.rect.height * canvas.localScale.y;
+        float widthCanvas = canvas.rect.width * canvas.localScale.x;
+        float heightContent = heightCanvas * 0.9f;
+        float widthContent = widthCanvas * 0.9f;
+        float diffX = widthCanvas * 0.05f;
+        float diffY = heightCanvas * 0.95f;
+        float DiffContent = (50*2 + buttonPrefab.rect.width * canvas.localScale.x + (listShop.Count - 1) * (buttonPrefab.rect.width * canvas.localScale.x + 30))/ widthContent;
         content.anchorMax = new Vector2(DiffContent,1);
 
         List<AllDataHouse> allDataHouse = ReturnAllOnStart.allData.allDataHouses;
@@ -56,7 +62,6 @@ public class Shop : MonoBehaviour
                 if (listShop[I] == returnAllStart.listHouse[i].dataHouse.NameThisHouse)
                 {
                     _house = returnAllStart.listHouse[i];
-                    _house.InitData(); // зразу створюю те що в наступному циклі змінюватиму
                     break;
                 }
                 if( i == returnAllStart.listHouse.Count - 1)
@@ -78,9 +83,30 @@ public class Shop : MonoBehaviour
 
             void OnButton()
             {
-                terrain.TakeHouse(_house, buttonChange);
-                scrollRect.gameObject.SetActive(false);
-                cameraMove.possibleMove = true;
+                if(_button.image.color == new Color(1, 1, 1, 1))
+                {
+                    terrain.TakeHouse(_house, buttonChange);
+                    canvasShop.gameObject.SetActive(false);
+                    cameraMove.possibleMove = true;
+                }
+                else
+                {
+                    StartCoroutine(alpha());
+                    IEnumerator alpha() // переписать, бо пздц, поки зробив шоб було,textNotification нормально зробить, перенести в UI
+                    {
+                        for (int i = 1; i <= 10; i++)
+                        {
+                            textNotification.color = new Color(textNotification.color.r, textNotification.color.g, textNotification.color.b, i);
+                            yield return new WaitForSeconds(1f / 50);
+                        }
+                        textNotification.text = "максимальное количество зданий уже построено";
+                        for (int i = 0; i < 10; i++)
+                        {
+                            textNotification.color = new Color(textNotification.color.r, textNotification.color.g, textNotification.color.b, 9-i);
+                            yield return new WaitForSeconds(1f / 5);
+                        }
+                    }
+                }
             }
             _button.onClick.AddListener(OnButton);
             Text text = button?.GetChild(0).GetComponent<Text>();
@@ -88,17 +114,16 @@ public class Shop : MonoBehaviour
 
             button.gameObject.SetActive(true);
             button.SetParent(content);
-            button.position = new Vector3(diffX + 50 + I * (button.rect.width + 30), diffY - button.rect.height / 2 - heihtPadding(button), 0);
-
+            button.position = new Vector3(50 + diffX + button.rect.width / 2 * canvas.localScale.x + I*(button.rect.width * canvas.localScale.x + 30), diffY - button.rect.height / 2*canvas.localScale.y - heihtPadding(button), 0);
+            button.localScale = new Vector3(1, 1, 1);
         }
 
         float heihtPadding(RectTransform button)
         {
-            float heightContent = content.rect.height;
             //Debug.Log(heightContent);
-            if (heightContent - button.rect.height > 0)
+            if (heightContent - button.rect.height * canvas.localScale.y / 2 > 0)
             {
-                float dif = (heightContent - button.rect.height) / 2 * 0.8f;
+                float dif = (heightContent - button.rect.height * canvas.localScale.y) / 2 * 0.85f;
                 return dif;
             }
             else

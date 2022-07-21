@@ -7,7 +7,7 @@ public class ButtonChange : MonoBehaviour
 {
     public Text textCurrent;
     public Text textTimeBuild;
-    public HouseTextOnButton houseTextOnButton;
+    public HouseTextOnShop houseTextOnShop;
     public void InitTextCurrent(Text _textCurrentBuild)
     {
         textCurrent = _textCurrentBuild;
@@ -15,7 +15,7 @@ public class ButtonChange : MonoBehaviour
     }
     public void GoStringCountBuild()
     {
-        textCurrent.text = houseTextOnButton.dataHouseChangeOnText.currentBuildThisHouse.ToString() + " / " + houseTextOnButton.MaxCountBuild.ToString();
+        textCurrent.text = houseTextOnShop.dataHouseChangeOnText.currentBuildThisHouse.ToString() + " / " + houseTextOnShop.MaxCountBuild.ToString();
     }
     public void InitTextTimeBuild(Text _textTimeBuild)
     {
@@ -24,19 +24,19 @@ public class ButtonChange : MonoBehaviour
     }
     private void GoStringTimeBuild()
     {
-        string day = houseTextOnButton.TimeBuild.days != 0 ? houseTextOnButton.TimeBuild.days.ToString() + "d" : null;
-        string hour = houseTextOnButton.TimeBuild.hours != 0 ? houseTextOnButton.TimeBuild.hours.ToString() + "h" : null;
-        string minute = houseTextOnButton.TimeBuild.minutes != 0 ? houseTextOnButton.TimeBuild.minutes.ToString() + "m" : null;
-        string second = houseTextOnButton.TimeBuild.seconds != 0 ? houseTextOnButton.TimeBuild.seconds.ToString() + "s" : null;
+        string day = houseTextOnShop.TimeBuildStart.days != 0 ? houseTextOnShop.TimeBuildStart.days.ToString() + "d" : null;
+        string hour = houseTextOnShop.TimeBuildStart.hours != 0 ? houseTextOnShop.TimeBuildStart.hours.ToString() + "h" : null;
+        string minute = houseTextOnShop.TimeBuildStart.minutes != 0 ? houseTextOnShop.TimeBuildStart.minutes.ToString() + "m" : null;
+        string second = houseTextOnShop.TimeBuildStart.seconds != 0 ? houseTextOnShop.TimeBuildStart.seconds.ToString() + "s" : null;
         textTimeBuild.text = day + hour + minute + second;
     }
     public void AddCurrentBuildThisHouse()
     {
-        if (houseTextOnButton.dataHouseChangeOnText.currentBuildThisHouse + 1 <= houseTextOnButton.MaxCountBuild)
+        if (houseTextOnShop.dataHouseChangeOnText.currentBuildThisHouse + 1 <= houseTextOnShop.MaxCountBuild)
         {
-            ++houseTextOnButton.dataHouseChangeOnText.currentBuildThisHouse;
+            ++houseTextOnShop.dataHouseChangeOnText.currentBuildThisHouse;
             GoStringCountBuild();
-            if(houseTextOnButton.dataHouseChangeOnText.currentBuildThisHouse == houseTextOnButton.MaxCountBuild)
+            if(houseTextOnShop.dataHouseChangeOnText.currentBuildThisHouse == houseTextOnShop.MaxCountBuild)
             {
                 GetComponent<Button>().interactable = false;
             }
@@ -49,13 +49,13 @@ public class ButtonChange : MonoBehaviour
 
     public void CheckUpdate() //визвать при обновлении MaxCount и входе в игру 
     {
-        if (houseTextOnButton.dataHouseChangeOnText.currentBuildThisHouse != houseTextOnButton.MaxCountBuild)
+        if (houseTextOnShop.dataHouseChangeOnText.currentBuildThisHouse != houseTextOnShop.MaxCountBuild)
         {
-            GetComponent<Button>().interactable = true;
+            GetComponent<Button>().image.color = new Color(1, 1, 1, 1);
         }
         else
         {
-            GetComponent<Button>().interactable = false;
+            GetComponent<Button>().image.color = new Color(0.6f, 0.6f, 0.6f, 1f);
         }
     }
 }
