@@ -47,7 +47,7 @@ public class ButtonChange : MonoBehaviour
         }
     }
 
-    public void CheckUpdate() //визвать при обновлении MaxCount
+    public void CheckUpdate() //визвать при обновлении MaxCount и входе в игру 
     {
         if (houseTextOnButton.dataHouseChangeOnText.currentBuildThisHouse != houseTextOnButton.MaxCountBuild)
         {

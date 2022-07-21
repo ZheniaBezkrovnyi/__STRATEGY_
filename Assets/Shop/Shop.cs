@@ -65,25 +65,16 @@ public class Shop : MonoBehaviour
                     return;
                 }
             }
-            for (int i = allDataHouse.Count - 1; i >= 0; i--)
-            {
-                if (_house.dataHouse.NameThisHouse == allDataHouse[i].dataHouse.NameThisHouse) //по імені бо треба вибрати для самого типу будівлі, і беру останній такий, бо зберігав додаючи до нових будів
-                {
-                    _house.houseTextOnButton.dataHouseChangeOnText = allDataHouse[i].dataHouseChangeOnText; // далі даєтьмся ссилка на хаус і він передає ссилку свою на кнопку)))
-                    break;
-                }
-                if (i == 0)
-                {
-                    Debug.Log("не знайшов по імені хаус, тому дані для кнопки не дав");
-                }
-            }
+
+            returnAllStart.ReturnChangeTextOnButton(_house, allDataHouse);
+
             RectTransform button = Instantiate(buttonPrefab);
             Button _button = button.GetComponent<Button>();
             ButtonChange buttonChange = _button.GetComponent<ButtonChange>();
 
 
             shopInterface.InitialiseTexts(_button, _house, buttonChange);
-
+            buttonChange.CheckUpdate(); // для interactable
 
             void OnButton()
             {

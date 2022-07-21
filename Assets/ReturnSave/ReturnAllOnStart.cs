@@ -65,7 +65,7 @@ public class ReturnAllOnStart : MonoBehaviour
             {
                 if(allData.allDataHouses[I].dataHouse.NameThisHouse == listHouse[i].dataHouse.NameThisHouse)
                 {
-                    Debug.Log(allData.allDataHouses[I].dataHouse.NameThisHouse);
+                    //Debug.Log(allData.allDataHouses[I].dataHouse.NameThisHouse);
                     House house = Instantiate(listHouse[i]);
                     house.dataHouse.myIndexOnSave = I;
                     int x = allData.allDataHouses[I].dataHouse.posit.x;
@@ -77,6 +77,21 @@ public class ReturnAllOnStart : MonoBehaviour
                     house.stateHouse = StateHouse.NotActive;
                     return;
                 }
+            }
+        }
+    }
+    public void ReturnChangeTextOnButton(House _house, List<AllDataHouse> _allDataHouse)
+    {
+        for (int i = _allDataHouse.Count - 1; i >= 0; i--)
+        {
+            if (_house.dataHouse.NameThisHouse == _allDataHouse[i].dataHouse.NameThisHouse) //по імені бо треба вибрати для самого типу будівлі, і беру останній такий, бо зберігав додаючи до нових будів
+            {
+                _house.houseTextOnButton.dataHouseChangeOnText = _allDataHouse[i].dataHouseChangeOnText; // далі дається ссилка на хаус і він передає ссилку свою на кнопку)))
+                break;
+            }
+            if (i == 0)
+            {
+                Debug.Log("не знайшов по імені хаус, тому дані для кнопки не дав");
             }
         }
     }
