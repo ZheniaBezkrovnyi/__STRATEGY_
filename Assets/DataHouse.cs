@@ -18,6 +18,7 @@ public class DataTextOnHouse
     public int priceImprove;
     public TimeBuild timeImprove;
     public Info info;
+    [HideInInspector] public bool openCanvas;
 }
 
 public class Info

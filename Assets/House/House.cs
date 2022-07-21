@@ -66,54 +66,6 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
             _currentColor = currentColor;
             InitColor(_currentColor);
         }
-        if(stateHouse == StateHouse.IsActive && Input.touchCount != 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-        {
-            if (currentColor == StateColor.Norm)
-            {
-                if (!existOrNot)
-                {
-                    Debug.Log("Add");
-                    //Debug.Log(houseTextOnButton.buttonChange.houseTextOnButton.dataHouseChangeOnText.currentBuildThisHouse + " check");
-
-                    houseTextOnShop.buttonChange.AddCurrentBuildThisHouse(); // по ссилкам все норм, при взятті, даю сюди ссилку на buttonChange кнопки на якій це пишеться і маю тут її дані, і у неї змінюю і свої і її
-                    //Debug.Log(houseTextOnButton.buttonChange.houseTextOnButton.dataHouseChangeOnText.currentBuildThisHouse + " check");
-                    AllDataHouse allDataHouse = new AllDataHouse()
-                    {
-                        dataHouse = new DataHouse()
-                        {
-                            NameThisHouse = dataHouse.NameThisHouse,
-                            myIndexOnSave = ReturnAllOnStart.allData.allDataHouses.Count
-                        },
-                        dataHouseChangeOnText = new DataHouseChangeOnText()
-                        {
-                            currentBuildThisHouse = houseTextOnShop.buttonChange.houseTextOnShop.dataHouseChangeOnText.currentBuildThisHouse,
-                        }
-                    }; // тут початок запису для цього обьекту бо я його тут ставлю, тому норм що зразу новий allDataHouse
-                    dataHouse = allDataHouse.dataHouse;
-                    ReturnAllOnStart.allData.allDataHouses.Add(allDataHouse);
-                    ReturnAllOnStart.json.Save(ReturnAllOnStart.allData);
-                }
-                endMove = true; //тепер перейде виконувати End
-                stateHouse = StateHouse.NotActive;
-                TakeObjects._house = null;
-                ReturnOrInitColor();
-                CloseCanvasHouse(canvasWindows);
-            }
-            else if (currentColor == StateColor.Red)
-            {
-                if (existOrNot)
-                {
-                    ReturnOrInitColor();
-                    ReturnCell();
-                    stateHouse = StateHouse.NotActive;
-                }
-                else
-                {
-                    Destroy(gameObject);
-                }
-                TakeObjects._house = null;
-            }
-        }
     }
     private void OpenCanvasHouse(Canvas canvasHouse)
     {
@@ -140,11 +92,11 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
             }
         }
     }
-    private void CloseCanvasHouse(Canvas canvasHouse)
+    public void CloseCanvasHouse(Canvas canvasHouse)
     {
         canvasHouse.gameObject.SetActive(false);
     }
-    private void ReturnCell() //позиція у масиві точки це її початок зліва
+    public void ReturnCell() //позиція у масиві точки це її початок зліва
     {
         float _x_ = posOnMap[0, 0, 0] + MyTerrain.xMin + sides.x / 2 + (float)(neParniX) / 2f;
         float _z_ = posOnMap[1, 0, 0] + MyTerrain.zMin + sides.y / 2 + (float)(neParniZ) / 2f;
@@ -154,9 +106,8 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
         TakeObjects.End(posOnMap[0, 0, 0] + (int)(sides.x / 2), posOnMap[1, 0, 0] + (int)(sides.y / 2), this);
     }
     #region Colors
-    private void ReturnOrInitColor()
+    public void ReturnOrInitColor()
     {
-
         colorsObjects.ReturnOrInitColor(this.transform);
     }
     public void InitColor(StateColor stateColor)
@@ -173,7 +124,6 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     #region Pointers
     public void OnPointerClick(PointerEventData eventData)
     {
-        //Debug.Log("Click");
         TakeObjects._house = this; //через те що дом буде активним при тому коли його беруть
         if (stateHouse == StateHouse.NotActive)
         {
