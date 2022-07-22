@@ -38,7 +38,7 @@ public class ButtonChange : MonoBehaviour
             GoStringCountBuild();
             if(houseTextOnShop.dataHouseChangeOnText.currentBuildThisHouse == houseTextOnShop.MaxCountBuild)
             {
-                GetComponent<Button>().interactable = false;
+                GetComponent<Button>().image.color = new Color(0.6f, 0.6f, 0.6f, 1f);
             }
         }
         else

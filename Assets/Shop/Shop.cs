@@ -77,13 +77,6 @@ public class Shop : MonoBehaviour
             Button _button = button.GetComponent<Button>();
             ButtonChange buttonChange = _button.GetComponent<ButtonChange>();
 
-            if(returnAllStart.startProject == StartProject.Start)
-            {
-                _house.houseTextOnShop.dataHouseChangeOnText = new DataHouseChangeOnText()
-                {
-                    currentBuildThisHouse = 0,
-                };
-            }
 
             shopInterface.InitialiseTexts(_button, _house, buttonChange);
             buttonChange.CheckUpdate(); // для interactable

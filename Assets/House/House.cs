@@ -7,12 +7,16 @@ public enum StateHouse
 {
     IsActive,
     NotActive,
-    Neytral
+    Neytral,
+    InBlue
 }
 public enum StateColor
 {
-    Norm,
-    Red
+    Default,
+    Normal,
+    Green,
+    Red,
+    Blue
 }
 public class House : Touch, IPointerClickHandler, IPointerDownHandler
 {
@@ -28,15 +32,15 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     private ColorsObjects colorsObjects;
     [SerializeField] private Color clickColor;
     [SerializeField] private Color redColor;
-    [HideInInspector] public StateColor currentColor;
-    private StateColor _currentColor;
 
-    [HideInInspector]  public bool existOrNot;
-
+    [HideInInspector] public bool existOrNot; // тільки шоб добавить в список на збереження раз
     private int neParniX;
     public int NeParniX { get { return neParniX; } }
     private int neParniZ;
     public int NeParniZ { get { return neParniZ; } }
+
+    [HideInInspector] public StateColor currentColor;
+    private StateColor _currentColor = StateColor.Default;
     private bool ChangeColor
     {
         get
@@ -53,11 +57,12 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     }
     private void OnEnable()
     {
+        __house = this;
+        stateHouse = StateHouse.NotActive;
+        currentColor = StateColor.Normal;
         neParniX = sides.x % 2 == 1 ? 1 : 0;
         neParniZ = sides.y % 2 == 1 ? 1 : 0;
         colorsObjects = new ColorsObjects();
-        _currentColor = currentColor = StateColor.Norm;
-        ReturnOrInitColor();
     }
     private void Update()
     {
@@ -66,6 +71,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
             _currentColor = currentColor;
             InitColor(_currentColor);
         }
+        Upd();
     }
     private void OpenCanvasHouse(Canvas canvasHouse)
     {
@@ -106,18 +112,21 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
         TakeObjects.End(posOnMap[0, 0, 0] + (int)(sides.x / 2), posOnMap[1, 0, 0] + (int)(sides.y / 2), this);
     }
     #region Colors
-    public void ReturnOrInitColor()
+    private void InitColor(StateColor stateColor)
     {
-        colorsObjects.ReturnOrInitColor(this.transform);
-    }
-    public void InitColor(StateColor stateColor)
-    {
-        if (stateColor == StateColor.Norm)
+        if (stateColor == StateColor.Green)
         {
             colorsObjects.InitColor(clickColor);
         }else if(stateColor == StateColor.Red)
         {
             colorsObjects.InitColor(redColor);
+        }
+        else if (stateColor == StateColor.Blue)
+        {
+            colorsObjects.InitColor(new Color(0,0,1));
+        }else if(stateColor == StateColor.Normal)
+        {
+            colorsObjects.ReturnOrInitColor(this.transform);
         }
     }
     #endregion
@@ -127,20 +136,21 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
         TakeObjects._house = this; //через те що дом буде активним при тому коли його беруть
         if (stateHouse == StateHouse.NotActive)
         {
+            Debug.Log("TakeHouse");
+            TakeObjects.ZeroCell(this);
             OpenCanvasHouse(canvasWindows);
-            startMove = true;
-            stateHouse = StateHouse.IsActive;
-            colorsObjects.InitColor(clickColor);
+            stateHouse = StateHouse.InBlue;
+            currentColor = StateColor.Blue;
         }
         if (stateHouse == StateHouse.Neytral)
         {
-            stateHouse = StateHouse.IsActive;
+            stateHouse = StateHouse.InBlue;
         }
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        //Debug.Log("Down");
-        if(stateHouse == StateHouse.IsActive)
+        Debug.Log("Down");
+        if(stateHouse == StateHouse.InBlue)
         {
             stateHouse = StateHouse.Neytral;
         }

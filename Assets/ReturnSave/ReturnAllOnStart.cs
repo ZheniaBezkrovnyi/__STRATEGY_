@@ -85,6 +85,13 @@ public class ReturnAllOnStart : MonoBehaviour
                 Debug.Log("не знайшов по імені хаус, тому дані для кнопки не дав");
             }
         }
+        if (startProject == StartProject.Start) // змінні тексти не стираються, бо залишаються в префабах, треба їх стирати
+        {
+            _house.houseTextOnShop.dataHouseChangeOnText = new DataHouseChangeOnText()
+            {
+                currentBuildThisHouse = 0,
+            };
+        }
     }
 
 }

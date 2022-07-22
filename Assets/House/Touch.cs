@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Touch : MonoBehaviour, IEndDragHandler,IDragHandler
+public class Touch : MonoBehaviour,IDragHandler
 {
     public bool Drag { get { return drag; } }
 
@@ -11,13 +11,34 @@ public class Touch : MonoBehaviour, IEndDragHandler,IDragHandler
     [HideInInspector] public bool startMove;
     [HideInInspector] public bool endMove;
     [HideInInspector] public StateHouse stateHouse;
+    protected House __house;
     public void OnDrag(PointerEventData eventData)
     {
         drag = true;
     }
-    public void OnEndDrag(PointerEventData eventData)
+    protected void Upd()
     {
-        stateHouse = StateHouse.IsActive;
-        drag =  false;
+        if (drag)
+        {
+            if(Input.touchCount == 0)
+            {
+                drag = false;
+                //Debug.Log("qwerty");
+                if (__house.currentColor == StateColor.Green)
+                {
+                    Put();
+                }
+                else if (__house.currentColor == StateColor.Red)
+                {
+                    Put();
+                    __house.ReturnCell();
+                }
+                void Put()
+                {
+                    stateHouse = StateHouse.InBlue;
+                    __house.currentColor = StateColor.Blue;
+                }
+            } 
+        }
     }
 }
