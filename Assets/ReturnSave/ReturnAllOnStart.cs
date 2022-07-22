@@ -62,7 +62,7 @@ public class ReturnAllOnStart : MonoBehaviour
                         house.transform.localScale.y / 2, 
                         z * MyTerrain.sizeOneCell + MyTerrain.zMin * MyTerrain.sizeOneCell + (float)house.NeParniZ / 2f * MyTerrain.sizeOneCell
                     );
-                    TakeObjects.End(x,z,house);
+                    TakeObjects.End(x,z,house,false);
                     house.existOrNot = true;
                     house.dataHouse.posit = new Posit(x,z);
                     house.stateHouse = StateHouse.NotActive;

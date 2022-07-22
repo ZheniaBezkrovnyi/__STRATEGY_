@@ -87,7 +87,7 @@ public class Shop : MonoBehaviour
                 {
                     terrain.TakeHouse(_house, buttonChange);
                     canvasShop.gameObject.SetActive(false);
-                    cameraMove.possibleMove = true;
+                    CameraMove.possibleMove = true;
                 }
                 else
                 {

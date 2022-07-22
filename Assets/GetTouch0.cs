@@ -22,25 +22,34 @@ public class GetTouch0 : MonoBehaviour
     }
     void Update()
     {
+        if (TakeObjects._house == null) { return; }
         house = TakeObjects._house;
-        if (house == null) { return; }
-        
-        if (Input.touchCount == 1)
+        Debug.Log(timeDrag);
+        if (Input.touchCount > 0)
         {
-            if (true)
-            {
 
+
+            if(Input.GetTouch(0).phase == TouchPhase.Ended)
+            {
+                if(timeDrag <= 0.3f)
+                {
+                    ActionIfOneTap();
+                }
             }
             timeDrag += Input.GetTouch(0).deltaTime;
-            if (timeDrag > 0.1f)
-            {
-                ActionIfDrag();
-            }
-            if(house.currentColor == StateColor.Blue || house.currentColor == StateColor.Red)
-            {
-                //ActionIfOneTap();
-            }
         }
+        else
+        {
+            timeDrag = 0;
+        }
+
+
+
+
+
+
+
+
 
         void ActionIfDrag()
         {
@@ -48,25 +57,22 @@ public class GetTouch0 : MonoBehaviour
         }
         void ActionIfOneTap()
         {
-            if (house.stateHouse != StateHouse.Neytral) {
-                Debug.Log("oneTap");
+            if (!house.onDown) {
                 if (house.currentColor == StateColor.Blue)
                 {
-                    house.stateHouse = StateHouse.NotActive;
-                    house.currentColor = StateColor.Normal;
-                    house.CloseCanvasHouse(house.canvasWindows);
                     house.endMove = true;
                     TakeObjects._house = null;
                 }
                 else if (house.currentColor == StateColor.Red)
                 {
-                    house.stateHouse = StateHouse.NotActive;
-                    house.currentColor = StateColor.Normal;
-                    house.CloseCanvasHouse(house.canvasWindows);
                     house.ReturnCell();
                     house.endMove = true;
                     TakeObjects._house = null;
                 }
+            }
+            else
+            {
+                house.onDown = false;
             }
         }
     }

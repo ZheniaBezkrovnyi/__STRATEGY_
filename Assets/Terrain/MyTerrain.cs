@@ -70,6 +70,7 @@ public class TakeObjects : MonoBehaviour
         z = 0;
         CheckPosTakeHouse(ref x, ref z);
         Debug.Log(x + " "+ z + "startPos");
+        _house.dataHouse.posit = new Posit(x,z);
         myHouse.transform.position += new Vector3(x * SizeOneCell + MyTerrain.xMin * SizeOneCell + (float)myHouse.NeParniX / 2f* SizeOneCell, myHouse.transform.localScale.y / 2, z * SizeOneCell + MyTerrain.zMin * SizeOneCell + (float)myHouse.NeParniZ / 2f * SizeOneCell);
         myHouse.stateHouse = StateHouse.InBlue;
         myHouse.currentColor = StateColor.Blue;
@@ -151,10 +152,16 @@ public class TakeObjects : MonoBehaviour
         }
         if (_house == null && myHouse != null && myHouse.endMove)
         {
+            Debug.Log("oneTap");
+            if(myHouse.currentColor == StateColor.Green)
+            {
+                End(x, z, myHouse);
+            }
+            myHouse.stateHouse = StateHouse.NotActive;
+            myHouse.currentColor = StateColor.Normal;
+            myHouse.CloseCanvasHouse(myHouse.canvasWindows);
             Debug.Log("end");
-            Debug.Log(x + " / " + z);
             myHouse.endMove = false;
-            End(x, z,myHouse);
             if (!myHouse.existOrNot)
             {
                 saveInJSON.SaveThisHouseInList(myHouse);
@@ -192,7 +199,7 @@ public class TakeObjects : MonoBehaviour
         }
         return true;
     }
-    public static void End(int X, int Z,House _house)
+    public static void End(int X, int Z,House _house,bool save = true)
     {
         _house.posOnMap = new int[2, _house.Sides.x, _house.Sides.y];
         for (int x = X - _house.Sides.x / 2, dX = 0; x < X + _house.Sides.x / 2 + _house.NeParniX; x++,dX++)
@@ -206,8 +213,11 @@ public class TakeObjects : MonoBehaviour
             }
         }
         _house.dataHouse.posit = new Posit(X,Z);
-        ReturnAllOnStart.allData.allDataHouses[_house.dataHouse.myIndexOnSave].dataHouse.posit = _house.dataHouse.posit;
-        ReturnAllOnStart.json.Save(ReturnAllOnStart.allData);
+        if (save)
+        {
+            ReturnAllOnStart.allData.allDataHouses[_house.dataHouse.myIndexOnSave].dataHouse.posit = _house.dataHouse.posit;
+            ReturnAllOnStart.json.Save(ReturnAllOnStart.allData);
+        }
     }
 
     public static void ZeroCell(House _house_)

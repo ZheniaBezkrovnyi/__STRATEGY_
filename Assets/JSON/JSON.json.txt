@@ -1,1 +1,1 @@
-{"allDataHouses":[{"dataHouse":{"NameThisHouse":1,"posit":{"x":10,"z":11},"myIndexOnSave":0},"dataHouseChangeOnText":{"currentBuildThisHouse":1}}]}
+{"allDataHouses":[{"dataHouse":{"NameThisHouse":1,"posit":{"x":0,"z":0},"myIndexOnSave":0},"dataHouseChangeOnText":{"currentBuildThisHouse":1}}]}

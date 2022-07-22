@@ -27,7 +27,7 @@ public class UIStartScene : MonoBehaviour
     {
         button.onClick.AddListener(() => {
             canvas.gameObject.SetActive(_bool);
-            cameraMove.possibleMove = !_bool;
+            CameraMove.possibleMove = !_bool;
         });
     }
 

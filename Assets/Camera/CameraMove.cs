@@ -11,7 +11,7 @@ public class CameraMove : MonoBehaviour
     private bool boolTouch;
     private int yMax,yMin;
     private int SizeCell;
-    public bool possibleMove = true;
+    public static bool possibleMove = true;
     private void Awake()
     {
         angleY = transform.rotation.eulerAngles.y;

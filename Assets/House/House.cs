@@ -66,6 +66,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     }
     private void Update()
     {
+        Debug.Log(Drag);
         if (ChangeColor)
         {
             _currentColor = currentColor;
@@ -131,28 +132,22 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     }
     #endregion
     #region Pointers
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        TakeObjects._house = this; //через те що дом буде активним при тому коли його беруть
-        if (stateHouse == StateHouse.NotActive)
-        {
-            Debug.Log("TakeHouse");
-            TakeObjects.ZeroCell(this);
-            OpenCanvasHouse(canvasWindows);
-            stateHouse = StateHouse.InBlue;
-            currentColor = StateColor.Blue;
-        }
-        if (stateHouse == StateHouse.Neytral)
-        {
-            stateHouse = StateHouse.InBlue;
-        }
-    }
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("Down");
-        if(stateHouse == StateHouse.InBlue)
+        onDown = true;
+    }
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.delta.magnitude == 0)
         {
-            stateHouse = StateHouse.Neytral;
+            TakeObjects._house = this; //через те що дом буде активним при тому коли його беруть
+            if (stateHouse == StateHouse.NotActive)
+            {
+                TakeObjects.ZeroCell(this);
+                OpenCanvasHouse(canvasWindows);
+                stateHouse = StateHouse.InBlue;
+                currentColor = StateColor.Blue;
+            }
         }
     }
     #endregion
@@ -195,6 +190,7 @@ public class ColorsObjects
                 {
                     if (emptyList)
                     {
+                        //Debug.Log("AddList");
                         listStartColor.Add(_trnsf.GetChild(i).GetComponent<Renderer>().material.color);
                     }
                     else

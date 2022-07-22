@@ -11,6 +11,7 @@ public class Touch : MonoBehaviour,IDragHandler
     [HideInInspector] public bool startMove;
     [HideInInspector] public bool endMove;
     [HideInInspector] public StateHouse stateHouse;
+    public bool onDown;
     protected House __house;
     public void OnDrag(PointerEventData eventData)
     {
@@ -23,21 +24,8 @@ public class Touch : MonoBehaviour,IDragHandler
             if(Input.touchCount == 0)
             {
                 drag = false;
-                //Debug.Log("qwerty");
-                if (__house.currentColor == StateColor.Green)
-                {
-                    Put();
-                }
-                else if (__house.currentColor == StateColor.Red)
-                {
-                    Put();
-                    __house.ReturnCell();
-                }
-                void Put()
-                {
-                    stateHouse = StateHouse.InBlue;
-                    __house.currentColor = StateColor.Blue;
-                }
+                onDown = false;
+                //TakeObjects.End(); //налаштувати тут це і буде зберігатись шоб не верталось до того як синім стало,взять формулу з TakeHouse
             } 
         }
     }

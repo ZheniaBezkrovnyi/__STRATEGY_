@@ -1724,7 +1724,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04b7cffd49095d546aa4d6042d09530d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraMove: {fileID: 963194231}
+  cameraMove: {fileID: 0}
   buttonShop: {fileID: 1904098248}
   buttonBackShop: {fileID: 1539606656}
   rectCanvas: {fileID: 1139755759}
