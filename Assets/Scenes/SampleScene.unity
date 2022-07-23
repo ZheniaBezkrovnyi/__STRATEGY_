@@ -1053,8 +1053,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointsMap:
-  - {x: -22, y: -22}
-  - {x: 22, y: 22}
+  - {x: -7, y: -7}
+  - {x: 7, y: 7}
   zatychki: {fileID: 8606414305439931372, guid: eeff0849c5d41b94bbceda47e14faf33,
     type: 3}
   field: {fileID: 11400000, guid: 7cb2352fc7affad4bbabe412074015ae, type: 2}
@@ -1732,6 +1732,7 @@ MonoBehaviour:
   buttonImprove: {fileID: 807567337}
   buttonInfo: {fileID: 2095059092}
   buttonBackPanel: {fileID: 1811240857}
+  getTouch0: {fileID: 2021051346}
 --- !u!1 &1185825025
 GameObject:
   m_ObjectHideFlags: 0
@@ -2598,6 +2599,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 143342521133d7446bb10a5eb9c31f43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiStartScene: {fileID: 1139755760}
+  panel: {fileID: 1117375746}
+  STOP: 0
 --- !u!4 &2021051347
 Transform:
   m_ObjectHideFlags: 0

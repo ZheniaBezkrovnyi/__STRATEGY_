@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class GetTouch0 : MonoBehaviour
 {
+    [SerializeField] private UIStartScene uiStartScene;
+    [SerializeField] private Canvas panel;
     House house;
     private bool drag = false;
     private float timeDrag;
+    public bool STOP;
     private bool ChangeDragNow
     {
         get
@@ -37,7 +40,7 @@ public class GetTouch0 : MonoBehaviour
 
             if(Input.GetTouch(0).phase == TouchPhase.Ended)
             {
-                if(timeDrag <= 0.3f)
+                if(timeDrag <= 0.3f  && !STOP && !uiStartScene.boolPosButton(Input.GetTouch(0).position))
                 {
                     ActionIfOneTap();
                 }
