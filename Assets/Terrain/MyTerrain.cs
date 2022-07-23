@@ -14,6 +14,7 @@ public class MyTerrain : MonoBehaviour
     public static int sizeOneCell;
     [SerializeField] private int SizeOneCell;
     [SerializeField] private Canvas canvasWindowsForHouse;
+    //public List<string> list;
     private void Awake()
     {
         sizeOneCell = SizeOneCell;
@@ -38,6 +39,19 @@ public class MyTerrain : MonoBehaviour
     void Update()
     {
         takeObjects.MoveHouse(xMin,zMin);
+
+        /*CheckCell();
+        void CheckCell()
+        {
+            list = new List<string>();
+            for (int x = 0; x < 4; x++)
+            {
+                for (int z = 0; z < 4; z++)
+                {
+                    list.Add(x + " / " + z + " / " + setMap[x, z]);
+                }
+            }
+        }*/
     }
     public void TakeHouse(House house, ButtonChange buttonChange) // вісить на AddListener при створенні кнопок у Shop
     {
@@ -49,7 +63,7 @@ public class TakeObjects : MonoBehaviour
 {
     public static House _house;
     private static int[,] _setMap;
-    private House myHouse;
+    private static House myHouse;
     private bool canPut = true;
     private int SizeOneCell;
     private SaveInJSON saveInJSON;
@@ -62,7 +76,6 @@ public class TakeObjects : MonoBehaviour
     public void TakeHouse(House house,ButtonChange buttonChange,Canvas canvasOnWindows) // при взятии переносить камеру на видимую зону обьекта чрез интерполяцию
     { 
         if (_house != null) Destroy(_house.gameObject);
-
         _house = Instantiate(house);
         _house.canvasWindows = canvasOnWindows;
         myHouse = _house;
@@ -70,11 +83,14 @@ public class TakeObjects : MonoBehaviour
         z = 0;
         CheckPosTakeHouse(ref x, ref z);
         Debug.Log(x + " "+ z + "startPos");
-        _house.dataHouse.posit = new Posit(x,z);
+        myHouse.dataHouse.posit = new Posit(x,z);
         myHouse.transform.position += new Vector3(x * SizeOneCell + MyTerrain.xMin * SizeOneCell + (float)myHouse.NeParniX / 2f* SizeOneCell, myHouse.transform.localScale.y / 2, z * SizeOneCell + MyTerrain.zMin * SizeOneCell + (float)myHouse.NeParniZ / 2f * SizeOneCell);
         myHouse.stateHouse = StateHouse.InBlue;
         myHouse.currentColor = StateColor.Blue;
+        myHouse.OpenCanvasHouse(myHouse.canvasWindows);
         myHouse.houseTextOnShop.buttonChange = buttonChange; // закинув для смени текста на кнопках, треба тільки на тих шо беру
+        _house = myHouse;
+        //End(x,z,myHouse,false);
     }
     private int x;
     private int _Px;
@@ -103,6 +119,9 @@ public class TakeObjects : MonoBehaviour
             {
                 x = _house.dataHouse.posit.x;
                 z = _house.dataHouse.posit.z;
+                _Px = x;
+                _Pz = z;
+                canPut = true;
                 myHouse = _house;
             }
             if (_house.Drag && _house.stateHouse != StateHouse.NotActive)
@@ -114,7 +133,7 @@ public class TakeObjects : MonoBehaviour
                     Vector3 worldPos = ray.GetPoint(position);
                     x = Mathf.RoundToInt(worldPos.x / SizeOneCell) - _xMin;
                     z = Mathf.RoundToInt(worldPos.z / SizeOneCell) - _zMin;
-                    myHouse.transform.position = new Vector3((x + (float)myHouse.NeParniX / 2f + _xMin) * SizeOneCell, myHouse.transform.position.y, (z + (float)myHouse.NeParniZ / 2f + _xMin) * SizeOneCell);
+                    myHouse.transform.position = new Vector3(Posit.InitInPosit(x,z,myHouse).x, myHouse.transform.position.y, Posit.InitInPosit(x, z, myHouse).y);
                 }
             }
         }
@@ -126,6 +145,7 @@ public class TakeObjects : MonoBehaviour
 
                 if (ChangePos)
                 {
+                    
                     _Px = x;
                     _Pz = z;
                     canPut = CanPut(x, z);
@@ -150,26 +170,7 @@ public class TakeObjects : MonoBehaviour
                 }
             }
         }
-        if (_house == null && myHouse != null && myHouse.endMove)
-        {
-            Debug.Log("oneTap");
-            if(myHouse.currentColor == StateColor.Green)
-            {
-                End(x, z, myHouse);
-            }
-            myHouse.stateHouse = StateHouse.NotActive;
-            myHouse.currentColor = StateColor.Normal;
-            myHouse.CloseCanvasHouse(myHouse.canvasWindows);
-            Debug.Log("end");
-            myHouse.endMove = false;
-            if (!myHouse.existOrNot)
-            {
-                saveInJSON.SaveThisHouseInList(myHouse);
-            }
-            myHouse.existOrNot = true;
-            myHouse = null;
-        }
-        else if (myHouse != null && _house == null)
+        if (myHouse != null && _house == null)
         {
             Debug.Log("nullMyHouse");
             myHouse = null;
@@ -185,7 +186,6 @@ public class TakeObjects : MonoBehaviour
             {
                 if (x >= 0 && z >= 0 && x < _setMap.GetLength(0) && z < _setMap.GetLength(1))
                 {
-                    //Debug.Log(x + " " + z);
                     if (_setMap[x, z] == 1)
                     {
                         return false;
@@ -199,37 +199,57 @@ public class TakeObjects : MonoBehaviour
         }
         return true;
     }
-    public static void End(int X, int Z,House _house,bool save = true)
+    public static void End(int X, int Z,House _house__, bool fullEndNotSave, bool saveJson = true)
     {
-        _house.posOnMap = new int[2, _house.Sides.x, _house.Sides.y];
-        for (int x = X - _house.Sides.x / 2, dX = 0; x < X + _house.Sides.x / 2 + _house.NeParniX; x++,dX++)
+        if (fullEndNotSave)
         {
-            for (int z = Z - _house.Sides.y / 2, dZ = 0; z < Z + _house.Sides.y / 2 + _house.NeParniZ; z++,dZ++)
+            if (_house__.currentColor == StateColor.Red)
+            {
+                _house__.ReturnCell(_house__);
+                X = Posit.DesWithPosit(_house__.transform.position.x, _house__.transform.position.z, _house__).x;
+                Z = Posit.DesWithPosit(_house__.transform.position.x, _house__.transform.position.z, _house__).y;
+            }
+            _house__.stateHouse = StateHouse.NotActive;
+            _house__.currentColor = StateColor.Normal;
+            _house__.CloseCanvasHouse(_house__.canvasWindows);
+            _house = null;
+            myHouse = null;
+        }
+        else
+        {
+            if (_house__.currentColor == StateColor.Red)
+            {
+                return;
+            }
+        }
+        _house__.dataHouse.posit = new Posit(X, Z);
+        for (int x = X - _house__.Sides.x / 2; x < X + _house__.Sides.x / 2 + _house__.NeParniX; x++)
+        {
+            for (int z = Z - _house__.Sides.y / 2; z < Z + _house__.Sides.y / 2 + _house__.NeParniZ; z++)
             {
                 Debug.Log(x + " " + z + "end");
                 _setMap[x, z] = 1;
-                _house.posOnMap[0, dX, dZ] = x;
-                _house.posOnMap[1, dX, dZ] = z;
             }
         }
-        _house.dataHouse.posit = new Posit(X,Z);
-        if (save)
+        if (saveJson)
         {
-            ReturnAllOnStart.allData.allDataHouses[_house.dataHouse.myIndexOnSave].dataHouse.posit = _house.dataHouse.posit;
+            ReturnAllOnStart.allData.allDataHouses[_house__.dataHouse.myIndexOnSave].dataHouse.posit = _house__.dataHouse.posit;
             ReturnAllOnStart.json.Save(ReturnAllOnStart.allData);
         }
     }
 
     public static void ZeroCell(House _house_)
     {
-        if (_house_.posOnMap != null)
+        int X = _house_.dataHouse.posit.x;
+        int Z = _house_.dataHouse.posit.z;
+        if (_house_.dataHouse.posit != null)
         {
-            for (int i = 0; i < _house_.posOnMap.GetLength(1); i++)
+            for (int x = X - _house_.Sides.x / 2; x < X + _house_.Sides.x / 2 + _house_.NeParniX; x++)
             {
-                for (int j = 0; j < _house_.posOnMap.GetLength(2); j++)
+                for (int z = Z - _house_.Sides.y / 2; z < Z + _house_.Sides.y / 2 + _house_.NeParniZ; z++)
                 {
-                    Debug.Log(_house_.posOnMap[0, i, j] + " " + _house_.posOnMap[1, i, j] + "zero");
-                    _setMap[_house_.posOnMap[0, i, j], _house_.posOnMap[1, i, j]] = 0;
+                    Debug.Log(x + " " + z + "zero");
+                    _setMap[x, z] = 0;
                 }
             }
         }
@@ -273,7 +293,7 @@ public class TakeObjects : MonoBehaviour
             }
             if (CanPut(randomX - MyTerrain.xMin, randomZ - MyTerrain.zMin))
             {
-                Debug.Log(randomX + " " + randomZ + " First " + i);
+                Debug.Log(" First " + i);
                 X += randomX - MyTerrain.xMin;
                 Z += randomZ - MyTerrain.zMin;
                 return true;

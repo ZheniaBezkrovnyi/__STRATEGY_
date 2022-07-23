@@ -15,6 +15,7 @@ public class SaveInJSON : MonoBehaviour
                 dataHouse = new DataHouse()
                 {
                     NameThisHouse = house.dataHouse.NameThisHouse,
+                    posit = new Posit(house.dataHouse.posit.x, house.dataHouse.posit.z),
                     myIndexOnSave = ReturnAllOnStart.allData.allDataHouses.Count
                 },
                 dataHouseChangeOnText = new DataHouseChangeOnText()

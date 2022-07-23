@@ -1053,8 +1053,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointsMap:
-  - {x: -12, y: -12}
-  - {x: 12, y: 12}
+  - {x: -22, y: -22}
+  - {x: 22, y: 22}
   zatychki: {fileID: 8606414305439931372, guid: eeff0849c5d41b94bbceda47e14faf33,
     type: 3}
   field: {fileID: 11400000, guid: 7cb2352fc7affad4bbabe412074015ae, type: 2}
@@ -1267,7 +1267,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transformThis: {fileID: 963194228}
-  possibleMove: 1
 --- !u!114 &963194232
 MonoBehaviour:
   m_ObjectHideFlags: 0

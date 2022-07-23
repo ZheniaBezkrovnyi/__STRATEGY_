@@ -25,7 +25,6 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     public DataHouse dataHouse;
 
     [HideInInspector] public Canvas canvasWindows;
-    public int[,,] posOnMap;
     [SerializeField] private Vector2Int sides;
     public Vector2Int Sides { get { return sides; } }
 
@@ -33,7 +32,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     [SerializeField] private Color clickColor;
     [SerializeField] private Color redColor;
 
-    [HideInInspector] public bool existOrNot; // тільки шоб добавить в список на збереження раз
+    [HideInInspector] public bool existOrNot; // тільки шоб добавить в список на збереження раз і привзятті тач відкинути
     private int neParniX;
     public int NeParniX { get { return neParniX; } }
     private int neParniZ;
@@ -57,16 +56,15 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     }
     private void OnEnable()
     {
+        colorsObjects = new ColorsObjects();
         __house = this;
+        InitColor(StateColor.Normal);
         stateHouse = StateHouse.NotActive;
-        currentColor = StateColor.Normal;
         neParniX = sides.x % 2 == 1 ? 1 : 0;
         neParniZ = sides.y % 2 == 1 ? 1 : 0;
-        colorsObjects = new ColorsObjects();
     }
     private void Update()
     {
-        Debug.Log(Drag);
         if (ChangeColor)
         {
             _currentColor = currentColor;
@@ -74,7 +72,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
         }
         Upd();
     }
-    private void OpenCanvasHouse(Canvas canvasHouse)
+    public void OpenCanvasHouse(Canvas canvasHouse)
     {
         canvasWindows.gameObject.SetActive(true);
         for(int i = 0; i < canvasWindows.gameObject.transform.childCount; i++)
@@ -103,28 +101,27 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     {
         canvasHouse.gameObject.SetActive(false);
     }
-    public void ReturnCell() //позиція у масиві точки це її початок зліва
+    public void ReturnCell(House _house) //позиція у масиві точки це її початок зліва
     {
-        float _x_ = posOnMap[0, 0, 0] + MyTerrain.xMin + sides.x / 2 + (float)(neParniX) / 2f;
-        float _z_ = posOnMap[1, 0, 0] + MyTerrain.zMin + sides.y / 2 + (float)(neParniZ) / 2f;
-        transform.position = new Vector3(_x_* MyTerrain.sizeOneCell, transform.position.y,_z_* MyTerrain.sizeOneCell);
-
-
-        TakeObjects.End(posOnMap[0, 0, 0] + (int)(sides.x / 2), posOnMap[1, 0, 0] + (int)(sides.y / 2), this);
+        transform.position = new Vector3(
+            Posit.InitInPosit(_house.dataHouse.posit.x, _house.dataHouse.posit.z, _house).x,
+            _house.transform.position.y,
+            Posit.InitInPosit(_house.dataHouse.posit.x, _house.dataHouse.posit.z, _house).y
+        );
     }
     #region Colors
     private void InitColor(StateColor stateColor)
     {
         if (stateColor == StateColor.Green)
         {
-            colorsObjects.InitColor(clickColor);
+            colorsObjects.InitColor(clickColor,this);
         }else if(stateColor == StateColor.Red)
         {
-            colorsObjects.InitColor(redColor);
+            colorsObjects.InitColor(redColor, this);
         }
         else if (stateColor == StateColor.Blue)
         {
-            colorsObjects.InitColor(new Color(0,0,1));
+            colorsObjects.InitColor(new Color(0,0,1), this);
         }else if(stateColor == StateColor.Normal)
         {
             colorsObjects.ReturnOrInitColor(this.transform);
@@ -138,12 +135,17 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.delta.magnitude == 0)
+        if (eventData.delta.magnitude == 0 && !Drag)
         {
-            TakeObjects._house = this; //через те що дом буде активним при тому коли його беруть
+            //TakeObjects._house = this;
+            if (TakeObjects._house != null)
+            {
+                Debug.Log("хаус при кліку");
+                TakeObjects.End(TakeObjects._house.dataHouse.posit.x, TakeObjects._house.dataHouse.posit.z, TakeObjects._house, true);
+            }
+            TakeObjects._house = this;
             if (stateHouse == StateHouse.NotActive)
             {
-                TakeObjects.ZeroCell(this);
                 OpenCanvasHouse(canvasWindows);
                 stateHouse = StateHouse.InBlue;
                 currentColor = StateColor.Blue;
@@ -153,7 +155,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     #endregion
     ~House()
     {
-        Debug.Log("ending");
+        //Debug.Log("ending");
     }
 }
 
@@ -169,9 +171,9 @@ public class ColorsObjects
     {
         InitializeOrReturnColor(trnsf, Color.white);
     }
-    public void InitColor(Color _clickColor)
+    public void InitColor(Color _clickColor,House house)
     {
-        InitializeOrReturnColor(TakeObjects._house.transform, _clickColor);
+        InitializeOrReturnColor(house.transform, _clickColor);
     }
     private void InitializeOrReturnColor(Transform trnsf, Color _color)
     {

@@ -24,7 +24,13 @@ public class GetTouch0 : MonoBehaviour
     {
         if (TakeObjects._house == null) { return; }
         house = TakeObjects._house;
-        Debug.Log(timeDrag);
+        if (!house.existOrNot) // щоб не відпрацьовував тач при взятті хауса, далі можна з exist зробити enum, якшо треба буде відслідковувати перше взяття з переносами
+        {
+            SaveInJSON saveInJSON = new SaveInJSON();
+            saveInJSON.SaveThisHouseInList(house);
+            house.existOrNot = true;
+            return;
+        }
         if (Input.touchCount > 0)
         {
 
@@ -45,12 +51,6 @@ public class GetTouch0 : MonoBehaviour
 
 
 
-
-
-
-
-
-
         void ActionIfDrag()
         {
             
@@ -58,17 +58,14 @@ public class GetTouch0 : MonoBehaviour
         void ActionIfOneTap()
         {
             if (!house.onDown) {
-                if (house.currentColor == StateColor.Blue)
-                {
-                    house.endMove = true;
-                    TakeObjects._house = null;
-                }
-                else if (house.currentColor == StateColor.Red)
-                {
-                    house.ReturnCell();
-                    house.endMove = true;
-                    TakeObjects._house = null;
-                }
+                Debug.Log("актіон");
+                TakeObjects.End(
+                    Posit.DesWithPosit(house.transform.position.x, house.transform.position.z,house).x, 
+                    Posit.DesWithPosit(house.transform.position.x, house.transform.position.z, house).y,
+                    house,
+                    true
+                );
+                TakeObjects._house = null;
             }
             else
             {

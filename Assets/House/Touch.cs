@@ -9,23 +9,36 @@ public class Touch : MonoBehaviour,IDragHandler
 
     [SerializeField] private bool drag; //сховать
     [HideInInspector] public bool startMove;
-    [HideInInspector] public bool endMove;
+    //[HideInInspector] public bool endMove;
     [HideInInspector] public StateHouse stateHouse;
     public bool onDown;
     protected House __house;
-    public void OnDrag(PointerEventData eventData)
+    public void OnDrag(PointerEventData eventData) // відповідає за те коли переходить з синього на активний
     {
         drag = true;
+        if (!zeroCell)
+        {
+            zeroCell = true;
+            TakeObjects.ZeroCell(__house);
+        }
     }
+    private bool zeroCell;  // чтоб только раз виполнить
     protected void Upd()
     {
         if (drag)
         {
-            if(Input.touchCount == 0)
+            if(Input.touchCount == 0) // з активного на синій
             {
+                zeroCell = false;
                 drag = false;
                 onDown = false;
-                //TakeObjects.End(); //налаштувати тут це і буде зберігатись шоб не верталось до того як синім стало,взять формулу з TakeHouse
+                Debug.Log("0 тачей");
+                TakeObjects.End(
+                    Posit.DesWithPosit(__house.transform.position.x, __house.transform.position.z, __house).x,
+                    Posit.DesWithPosit(__house.transform.position.x, __house.transform.position.z, __house).y,
+                    __house, 
+                    false
+                );
             } 
         }
     }

@@ -64,7 +64,7 @@ public class AllDataHouse
 public class DataHouse
 {
     public NameHouse NameThisHouse; //**** коли ставлю
-    [HideInInspector] public Posit posit; //*** при End
+    [HideInInspector] public Posit posit;
     [HideInInspector] public int myIndexOnSave;  //**** коли ставлю
 }
 
@@ -81,5 +81,17 @@ public class Posit
     {
         x = _x;
         z = _z;
+    }
+    public static Vector2 InitInPosit(int x,int z,House house)
+    {
+        float X = (x + (float)house.NeParniX / 2f + MyTerrain.xMin) * MyTerrain.sizeOneCell;
+        float Z = (z + (float)house.NeParniZ / 2f + MyTerrain.zMin) * MyTerrain.sizeOneCell;
+        return new Vector2(X,Z);
+    }
+    public static Vector2Int DesWithPosit(float x, float z, House house)
+    {
+        int X = Mathf.RoundToInt( x / MyTerrain.sizeOneCell - MyTerrain.xMin - (float)house.NeParniX / 2f);
+        int Z = Mathf.RoundToInt(z / MyTerrain.sizeOneCell - MyTerrain.xMin - (float)house.NeParniZ / 2f);
+        return new Vector2Int(X, Z);
     }
 }

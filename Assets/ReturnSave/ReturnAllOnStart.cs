@@ -58,13 +58,12 @@ public class ReturnAllOnStart : MonoBehaviour
                     int x = allData.allDataHouses[I].dataHouse.posit.x;
                     int z = allData.allDataHouses[I].dataHouse.posit.z;
                     house.transform.position = new Vector3(
-                        x * MyTerrain.sizeOneCell + MyTerrain.xMin * MyTerrain.sizeOneCell + (float)house.NeParniX / 2f * MyTerrain.sizeOneCell, 
-                        house.transform.localScale.y / 2, 
-                        z * MyTerrain.sizeOneCell + MyTerrain.zMin * MyTerrain.sizeOneCell + (float)house.NeParniZ / 2f * MyTerrain.sizeOneCell
+                        Posit.InitInPosit(x, z, house).x, 
+                        house.transform.localScale.y / 2,
+                        Posit.InitInPosit(x, z, house).y
                     );
-                    TakeObjects.End(x,z,house,false);
+                    TakeObjects.End(x,z,house, false,false);
                     house.existOrNot = true;
-                    house.dataHouse.posit = new Posit(x,z);
                     house.stateHouse = StateHouse.NotActive;
                     return;
                 }
