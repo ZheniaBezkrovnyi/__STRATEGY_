@@ -24,7 +24,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     public HouseTextOnShop houseTextOnShop;
     public DataHouse dataHouse;
 
-    [HideInInspector] public Canvas canvasWindows;
+    [HideInInspector] public Canvas canvasWindows; // при взятии здания присваивается
     [SerializeField] private Vector2Int sides;
     public Vector2Int Sides { get { return sides; } }
 
@@ -140,7 +140,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
             //TakeObjects._house = this;
             if (TakeObjects._house != null)
             {
-                Debug.Log("хаус при кліку");
+                //Debug.Log("хаус при кліку");
                 TakeObjects.End(TakeObjects._house.dataHouse.posit.x, TakeObjects._house.dataHouse.posit.z, TakeObjects._house, true);
             }
             TakeObjects._house = this;

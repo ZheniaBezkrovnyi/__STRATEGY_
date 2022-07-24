@@ -66,6 +66,7 @@ public class DataHouse
     public NameHouse NameThisHouse; //**** коли ставлю
     [HideInInspector] public Posit posit;
     [HideInInspector] public int myIndexOnSave;  //**** коли ставлю
+    public int levelHouse;  //**** коли ставлю
 }
 
 [Serializable]

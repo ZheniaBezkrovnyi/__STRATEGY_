@@ -9,13 +9,14 @@ public enum StartProject
 }
 public class ReturnAllOnStart : MonoBehaviour
 {
-    public List<House> listHouse;
+    public AllHousePrefab allHousePrefab;
     public static JSON json;
-    public StartProject startProject;
+    [HideInInspector] public StartProject startProject;
     public static AllData allData;
     [SerializeField] private Canvas canvasWindowsForHouse;
     void Awake()
     {
+        allHousePrefab.FillInList();
         json = new JSON();
         //NullJSON();
         if (json.Load() != null)
@@ -47,12 +48,12 @@ public class ReturnAllOnStart : MonoBehaviour
         }
         void ReturnHouse(int I)
         {
-            for(int i = 0; i < listHouse.Count; i++)
+            for(int i = 0; i < allHousePrefab.listHouse.Count; i++)
             {
-                if(allData.allDataHouses[I].dataHouse.NameThisHouse == listHouse[i].dataHouse.NameThisHouse)
+                if (allData.allDataHouses[I].dataHouse.NameThisHouse == allHousePrefab.listHouse[i][0].dataHouse.NameThisHouse)
                 {
                     //Debug.Log(allData.allDataHouses[I].dataHouse.NameThisHouse);
-                    House house = Instantiate(listHouse[i]);
+                    House house = Instantiate(allHousePrefab.listHouse[i][allData.allDataHouses[I].dataHouse.levelHouse]);
                     house.canvasWindows = canvasWindowsForHouse;
                     house.dataHouse.myIndexOnSave = I;
                     int x = allData.allDataHouses[I].dataHouse.posit.x;
@@ -70,13 +71,13 @@ public class ReturnAllOnStart : MonoBehaviour
             }
         }
     }
-    public void ReturnChangeTextOnButton(House _house, List<AllDataHouse> _allDataHouse)
+    public void ReturnChangeTextOnButton(House _house)
     {
-        for (int i = _allDataHouse.Count - 1; i >= 0; i--)
+        for (int i = allHousePrefab.listHouse.Count - 1; i >= 0; i--)
         {
-            if (_house.dataHouse.NameThisHouse == _allDataHouse[i].dataHouse.NameThisHouse) //по імені бо треба вибрати для самого типу будівлі, і беру останній такий, бо зберігав додаючи до нових будів
+            if (_house.dataHouse.NameThisHouse == allHousePrefab.listHouse[i][0].dataHouse.NameThisHouse)
             {
-                _house.houseTextOnShop.dataHouseChangeOnText = _allDataHouse[i].dataHouseChangeOnText; // далі дається ссилка на хаус і він передає ссилку свою на кнопку)))
+                _house.houseTextOnShop.dataHouseChangeOnText = allHousePrefab.listHouse[i][0].houseTextOnShop.dataHouseChangeOnText; // далі дається ссилка на хаус і він передає ссилку свою на кнопку)))
                 break;
             }
             if (i == 0)
@@ -86,10 +87,7 @@ public class ReturnAllOnStart : MonoBehaviour
         }
         if (startProject == StartProject.Start) // змінні тексти не стираються, бо залишаються в префабах, треба їх стирати
         {
-            _house.houseTextOnShop.dataHouseChangeOnText = new DataHouseChangeOnText()
-            {
-                currentBuildThisHouse = 0,
-            };
+            _house.houseTextOnShop.dataHouseChangeOnText = new DataHouseChangeOnText();
         }
     }
 

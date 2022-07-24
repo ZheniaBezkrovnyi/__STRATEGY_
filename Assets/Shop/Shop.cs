@@ -26,7 +26,7 @@ public class Shop : MonoBehaviour
     [SerializeField] private ReturnAllOnStart returnAllStart;
     [SerializeField] private MyTerrain terrain;
     private ShopButtonInterface shopInterface;
-    [SerializeField] private Text textNotification;
+    [SerializeField] private Notification notification;
     private void Start()
     {
         localScaleCanvas = canvas.localScale;
@@ -45,8 +45,6 @@ public class Shop : MonoBehaviour
         float DiffContent = (50*2 + buttonPrefab.rect.width * canvas.localScale.x + (listShop.Count - 1) * (buttonPrefab.rect.width * canvas.localScale.x + 30))/ widthContent;
         content.anchorMax = new Vector2(DiffContent,1);
 
-        List<AllDataHouse> allDataHouse = ReturnAllOnStart.allData.allDataHouses;
-
         for (int i = 0; i < listShop.Count; i++)
         {
             CreateButton(i);
@@ -57,21 +55,21 @@ public class Shop : MonoBehaviour
         void CreateButton(int I)
         {
             House _house = null;
-            for (int i = 0; i < returnAllStart.listHouse.Count; i++) //з енама витягується, все норм тут, але в майбутньому оптимізувати
+            for (int i = 0; i < returnAllStart.allHousePrefab.listHouse.Count; i++) //з енама витягується, все норм тут, але в майбутньому оптимізувати
             {
-                if (listShop[I] == returnAllStart.listHouse[i].dataHouse.NameThisHouse)
+                if (listShop[I] == returnAllStart.allHousePrefab.listHouse[i][0].dataHouse.NameThisHouse)
                 {
-                    _house = returnAllStart.listHouse[i];
+                    _house = returnAllStart.allHousePrefab.listHouse[i][0]; 
                     break;
                 }
-                if( i == returnAllStart.listHouse.Count - 1)
+                if( i == returnAllStart.allHousePrefab.listHouse.Count - 1)
                 {
                     Debug.Log("not exist " + listShop[I]);
                     return;
                 }
             }
 
-            returnAllStart.ReturnChangeTextOnButton(_house, allDataHouse);
+            returnAllStart.ReturnChangeTextOnButton(_house);
 
             RectTransform button = Instantiate(buttonPrefab);
             Button _button = button.GetComponent<Button>();
@@ -91,21 +89,7 @@ public class Shop : MonoBehaviour
                 }
                 else
                 {
-                    StartCoroutine(alpha());
-                    IEnumerator alpha() // переписать, бо пздц, поки зробив шоб було,textNotification нормально зробить, перенести в UI
-                    {
-                        for (int i = 1; i <= 10; i++)
-                        {
-                            textNotification.color = new Color(textNotification.color.r, textNotification.color.g, textNotification.color.b, i);
-                            yield return new WaitForSeconds(1f / 50);
-                        }
-                        textNotification.text = "максимальное количество зданий уже построено";
-                        for (int i = 0; i < 10; i++)
-                        {
-                            textNotification.color = new Color(textNotification.color.r, textNotification.color.g, textNotification.color.b, 9-i);
-                            yield return new WaitForSeconds(1f / 5);
-                        }
-                    }
+                    notification.CallNotification("максимальное количество зданий уже построено");
                 }
             }
             _button.onClick.AddListener(OnButton);

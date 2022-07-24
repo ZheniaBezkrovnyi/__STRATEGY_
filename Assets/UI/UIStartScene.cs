@@ -32,6 +32,7 @@ public class UIStartScene : MonoBehaviour
                 if (_bool)
                 {
                     getTouch0.STOP = _bool;
+                    GetDtaForPanel(button);
                 }
                 else
                 {
@@ -48,6 +49,17 @@ public class UIStartScene : MonoBehaviour
         }
     }
 
+    private void GetDtaForPanel(Button _button)
+    {
+        switch (_button.name)
+        {
+            case "Info": panelCanvas.GetComponent<PanelCanvasHouse>().GiveBackData(InfoImprove.Info);
+                break;
+            case "Improve":
+                panelCanvas.GetComponent<PanelCanvasHouse>().GiveBackData(InfoImprove.Improve);
+                break;
+        }
+    }
 
     public bool boolPosButton(Vector2 pos)
     {

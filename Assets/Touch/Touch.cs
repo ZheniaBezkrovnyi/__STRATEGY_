@@ -32,7 +32,7 @@ public class Touch : MonoBehaviour,IDragHandler
                 zeroCell = false;
                 drag = false;
                 onDown = false;
-                Debug.Log("0 тачей");
+                //Debug.Log("0 тачей");
                 TakeObjects.End(
                     Posit.DesWithPosit(__house.transform.position.x, __house.transform.position.z, __house).x,
                     Posit.DesWithPosit(__house.transform.position.x, __house.transform.position.z, __house).y,

@@ -61,7 +61,7 @@ public class GetTouch0 : MonoBehaviour
         void ActionIfOneTap()
         {
             if (!house.onDown) {
-                Debug.Log("актіон");
+                //Debug.Log("актіон");
                 TakeObjects.End(
                     Posit.DesWithPosit(house.transform.position.x, house.transform.position.z,house).x, 
                     Posit.DesWithPosit(house.transform.position.x, house.transform.position.z, house).y,

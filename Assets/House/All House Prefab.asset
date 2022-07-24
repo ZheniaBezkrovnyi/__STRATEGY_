@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: All House Prefab
+  m_EditorClassIdentifier: Assembly-CSharp::AllHousePrefab
+  list0:
+  - {fileID: 7957490201646680267, guid: 602fd5e5d4978f24eb6dcf19b8cc29c2, type: 3}
+  list1:
+  - {fileID: 3355637756002620365, guid: 8a363d8e445b94744afe5666f19765bc, type: 3}
+  list2:
+  - {fileID: 7284652209040663927, guid: c0c21ab8ac6aa0040a23d3ffdd09c441, type: 3}
+  list3:
+  - {fileID: 3366863431143028285, guid: f2edd9b00aa38474e94df48a6a80d537, type: 3}
+  list4:
+  - {fileID: 6392613369290271473, guid: 392e41456d1183e4e891fdada22bd7c6, type: 3}
