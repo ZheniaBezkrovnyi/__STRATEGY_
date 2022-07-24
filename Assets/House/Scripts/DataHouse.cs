@@ -17,13 +17,14 @@ public class DataTextOnHouse
 {
     public int priceImprove;
     public TimeBuild timeImprove;
+    public TypeHouse typeHouse;
     public Info info;
-    [HideInInspector] public bool openCanvas;
 }
 
+[Serializable]
 public class Info
 {
-    public Image imageHouse;
+    public Sprite spriteHouse;
 }
 
 
@@ -66,7 +67,7 @@ public class DataHouse
     public NameHouse NameThisHouse; //**** коли ставлю
     [HideInInspector] public Posit posit;
     [HideInInspector] public int myIndexOnSave;  //**** коли ставлю
-    public int levelHouse;  //**** коли ставлю
+    public int levelHouse;
 }
 
 [Serializable]

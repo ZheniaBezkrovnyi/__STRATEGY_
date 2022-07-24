@@ -18,13 +18,19 @@ public enum StateColor
     Red,
     Blue
 }
+public enum TypeHouse
+{
+    JustHouse,
+    Defence,
+    Resources,
+}
 public class House : Touch, IPointerClickHandler, IPointerDownHandler
 {
     public DataTextOnHouse dataTextOnHouse;
     public HouseTextOnShop houseTextOnShop;
     public DataHouse dataHouse;
 
-    [HideInInspector] public Canvas canvasWindows; // при взятии здания присваивается
+    [HideInInspector] public CanvasHouse canvasHouse; 
     [SerializeField] private Vector2Int sides;
     public Vector2Int Sides { get { return sides; } }
 
@@ -72,35 +78,6 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
         }
         Upd();
     }
-    public void OpenCanvasHouse(Canvas canvasHouse)
-    {
-        canvasWindows.gameObject.SetActive(true);
-        for(int i = 0; i < canvasWindows.gameObject.transform.childCount; i++)
-        {
-            if(canvasWindows.gameObject.transform.GetChild(i).name == "Improve")
-            {
-                WriteText(canvasWindows.gameObject.transform.GetChild(i),"Price", dataTextOnHouse.priceImprove.ToString());
-            }
-        }
-
-
-        void WriteText(Transform childCanvas,string name,string data)
-        {
-            for (int j = 0; j < childCanvas.childCount; j++)
-            {
-                if (childCanvas.GetChild(j).name == name)
-                {
-                    Text text = childCanvas.GetChild(j).GetComponent<Text>();
-                    text.text = data;
-                    break;
-                }
-            }
-        }
-    }
-    public void CloseCanvasHouse(Canvas canvasHouse)
-    {
-        canvasHouse.gameObject.SetActive(false);
-    }
     public void ReturnCell(House _house) //позиція у масиві точки це її початок зліва
     {
         transform.position = new Vector3(
@@ -146,7 +123,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
             TakeObjects._house = this;
             if (stateHouse == StateHouse.NotActive)
             {
-                OpenCanvasHouse(canvasWindows);
+                canvasHouse.OpenCanvasHouse(this);
                 stateHouse = StateHouse.InBlue;
                 currentColor = StateColor.Blue;
             }

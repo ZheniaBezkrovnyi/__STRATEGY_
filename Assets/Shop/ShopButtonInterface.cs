@@ -86,6 +86,13 @@ public class TimeBuild
         if (_seconds < 0) _seconds = 0;
         seconds = _seconds;
     }
-
+    public static string GoStringTimeBuild(TimeBuild timeBuild)
+    {
+        string day = timeBuild.days != 0 ? timeBuild.days.ToString() + "d" : null;
+        string hour = timeBuild.hours != 0 ? timeBuild.hours.ToString() + "h" : null;
+        string minute = timeBuild.minutes != 0 ? timeBuild.minutes.ToString() + "m" : null;
+        string second = timeBuild.seconds != 0 ? timeBuild.seconds.ToString() + "s" : null;
+        return day + hour + minute + second;
+    }
 
 }

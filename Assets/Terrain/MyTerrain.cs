@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MyTerrain : MonoBehaviour
 {
-    [SerializeField] private JSON json;
     private int[,] setMap; // не сохранять, но при восстановлении зданий с ними вместе end визивать
     [SerializeField] private List<Vector2Int> pointsMap;
     public static int xMin, xMax,zMin,zMax;
@@ -13,7 +12,6 @@ public class MyTerrain : MonoBehaviour
     [SerializeField] private Field field;
     public static int sizeOneCell;
     [SerializeField] private int SizeOneCell;
-    [SerializeField] private Canvas canvasWindowsForHouse;
     //public List<string> list;
     private void Awake()
     {
@@ -55,7 +53,7 @@ public class MyTerrain : MonoBehaviour
     }
     public void TakeHouse(House house, ButtonChange buttonChange) // вісить на AddListener при створенні кнопок у Shop
     {
-        takeObjects.TakeHouse(house,buttonChange,canvasWindowsForHouse);
+        takeObjects.TakeHouse(house,buttonChange);
     }
 }
 
@@ -73,11 +71,10 @@ public class TakeObjects : MonoBehaviour
         _setMap = _setMap_;
         SizeOneCell = MyTerrain.sizeOneCell;
     }
-    public void TakeHouse(House house,ButtonChange buttonChange,Canvas canvasOnWindows) // при взятии переносить камеру на видимую зону обьекта чрез интерполяцию
+    public void TakeHouse(House house,ButtonChange buttonChange) // при взятии переносить камеру на видимую зону обьекта чрез интерполяцию
     { 
         if (_house != null) Destroy(_house.gameObject);
         _house = Instantiate(house);
-        _house.canvasWindows = canvasOnWindows;
         myHouse = _house;
         x = 0;
         z = 0;
@@ -87,7 +84,7 @@ public class TakeObjects : MonoBehaviour
         myHouse.transform.position += new Vector3(x * SizeOneCell + MyTerrain.xMin * SizeOneCell + (float)myHouse.NeParniX / 2f* SizeOneCell, myHouse.transform.localScale.y / 2, z * SizeOneCell + MyTerrain.zMin * SizeOneCell + (float)myHouse.NeParniZ / 2f * SizeOneCell);
         myHouse.stateHouse = StateHouse.InBlue;
         myHouse.currentColor = StateColor.Blue;
-        myHouse.OpenCanvasHouse(myHouse.canvasWindows);
+        myHouse.canvasHouse.OpenCanvasHouse(myHouse);
         myHouse.houseTextOnShop.buttonChange = buttonChange; // закинув для смени текста на кнопках, треба тільки на тих шо беру
         _house = myHouse;
         //End(x,z,myHouse,false);
@@ -211,7 +208,7 @@ public class TakeObjects : MonoBehaviour
             }
             _house__.stateHouse = StateHouse.NotActive;
             _house__.currentColor = StateColor.Normal;
-            _house__.CloseCanvasHouse(_house__.canvasWindows);
+            _house__.canvasHouse.CloseCanvasHouse();
             _house = null;
             myHouse = null;
         }

@@ -13,7 +13,7 @@ public class ReturnAllOnStart : MonoBehaviour
     public static JSON json;
     [HideInInspector] public StartProject startProject;
     public static AllData allData;
-    [SerializeField] private Canvas canvasWindowsForHouse;
+    [SerializeField] private CanvasHouse canvasHouse;
     void Awake()
     {
         allHousePrefab.FillInList();
@@ -54,7 +54,7 @@ public class ReturnAllOnStart : MonoBehaviour
                 {
                     //Debug.Log(allData.allDataHouses[I].dataHouse.NameThisHouse);
                     House house = Instantiate(allHousePrefab.listHouse[i][allData.allDataHouses[I].dataHouse.levelHouse]);
-                    house.canvasWindows = canvasWindowsForHouse;
+                    house.canvasHouse = canvasHouse;
                     house.dataHouse.myIndexOnSave = I;
                     int x = allData.allDataHouses[I].dataHouse.posit.x;
                     int z = allData.allDataHouses[I].dataHouse.posit.z;
@@ -73,6 +73,11 @@ public class ReturnAllOnStart : MonoBehaviour
     }
     public void ReturnChangeTextOnButton(House _house)
     {
+        if (startProject == StartProject.Start) // змінні тексти не стираються, бо залишаються в префабах, треба їх стирати
+        {
+            _house.houseTextOnShop.dataHouseChangeOnText = new DataHouseChangeOnText();
+            return;
+        }
         for (int i = allHousePrefab.listHouse.Count - 1; i >= 0; i--)
         {
             if (_house.dataHouse.NameThisHouse == allHousePrefab.listHouse[i][0].dataHouse.NameThisHouse)
@@ -84,10 +89,6 @@ public class ReturnAllOnStart : MonoBehaviour
             {
                 Debug.Log("не знайшов по імені хаус, тому дані для кнопки не дав");
             }
-        }
-        if (startProject == StartProject.Start) // змінні тексти не стираються, бо залишаються в префабах, треба їх стирати
-        {
-            _house.houseTextOnShop.dataHouseChangeOnText = new DataHouseChangeOnText();
         }
     }
 

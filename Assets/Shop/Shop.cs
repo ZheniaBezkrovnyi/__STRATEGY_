@@ -27,6 +27,7 @@ public class Shop : MonoBehaviour
     [SerializeField] private MyTerrain terrain;
     private ShopButtonInterface shopInterface;
     [SerializeField] private Notification notification;
+    [SerializeField] private CanvasHouse canvasHouse;
     private void Start()
     {
         localScaleCanvas = canvas.localScale;
@@ -73,6 +74,9 @@ public class Shop : MonoBehaviour
 
             RectTransform button = Instantiate(buttonPrefab);
             Button _button = button.GetComponent<Button>();
+            Image image = button.GetChild(1).GetComponent<Image>();
+            image.sprite= _house.dataTextOnHouse.info.spriteHouse; // картинка пряма, но потом под кутом скрин и обрезать все кроме здания и клетки
+
             ButtonChange buttonChange = _button.GetComponent<ButtonChange>();
 
 
@@ -83,6 +87,7 @@ public class Shop : MonoBehaviour
             {
                 if(_button.image.color == new Color(1, 1, 1, 1))
                 {
+                    _house.canvasHouse = canvasHouse; // в Take уже откриваю канвас, поетому перед ним присваиваю
                     terrain.TakeHouse(_house, buttonChange);
                     canvasShop.gameObject.SetActive(false);
                     CameraMove.possibleMove = true;
@@ -93,7 +98,8 @@ public class Shop : MonoBehaviour
                 }
             }
             _button.onClick.AddListener(OnButton);
-            Text text = button?.GetChild(0).GetComponent<Text>();
+
+            Text text = button?.GetChild(0).GetComponent<Text>(); // по хорошому внести в текст инит, но пускай тут
             text.text = listShop[I].ToString();
 
             button.gameObject.SetActive(true);

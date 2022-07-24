@@ -46,18 +46,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drag: 0
   startMove: 0
-  endMove: 0
   stateHouse: 0
+  onDown: 0
   dataTextOnHouse:
     priceImprove: 100
     timeImprove:
-      days: 0
-      hours: 0
+      days: 1
+      hours: 1
       minutes: 0
       seconds: 0
+    typeHouse: 0
+    info:
+      spriteHouse: {fileID: 21300000, guid: d4879ce57f2308948bbc604dac11acd7, type: 3}
   houseTextOnShop:
     dataHouseChangeOnText:
-      currentBuildThisHouse: 2
+      currentBuildThisHouse: 4
     MaxCountBuild: 15
     TimeBuildStart:
       days: 0
@@ -71,12 +74,13 @@ MonoBehaviour:
       x: 0
       z: 0
     myIndexOnSave: 0
-  canvasWindows: {fileID: 0}
+    levelHouse: 0
+  canvasHouse: {fileID: 0}
   sides: {x: 5, y: 2}
   clickColor: {r: 0, g: 0.7169812, b: 0.098891445, a: 0}
   redColor: {r: 1, g: 0.21854474, b: 0.0047169924, a: 0}
-  currentColor: 0
   existOrNot: 0
+  currentColor: 0
 --- !u!1 &7001209234828751408
 GameObject:
   m_ObjectHideFlags: 0
