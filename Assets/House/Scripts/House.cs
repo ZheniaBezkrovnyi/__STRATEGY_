@@ -38,7 +38,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     [SerializeField] private Color clickColor;
     [SerializeField] private Color redColor;
 
-    [HideInInspector] public bool existOrNot; // тільки шоб добавить в список на збереження раз і привзятті тач відкинути
+    [HideInInspector] public ExistOrNot existOrNot;
     private int neParniX;
     public int NeParniX { get { return neParniX; } }
     private int neParniZ;

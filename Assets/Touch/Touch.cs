@@ -29,9 +29,12 @@ public class Touch : MonoBehaviour,IDragHandler
         {
             if(Input.touchCount == 0) // з активного на синій
             {
-                zeroCell = false;
                 drag = false;
                 onDown = false;
+
+                if (__house.existOrNot != ExistOrNot.Yes) return;
+
+                zeroCell = false;
                 //Debug.Log("0 тачей");
                 TakeObjects.End(
                     Posit.DesWithPosit(__house.transform.position.x, __house.transform.position.z, __house).x,

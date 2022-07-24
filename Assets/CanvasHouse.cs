@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CanvasHouse : MonoBehaviour
 {
     [SerializeField] private Canvas canvasHouse;
+    [SerializeField] private Canvas canvasHouseOnlyStart;
     [SerializeField] private PanelCanvasHouse panelCanvasHouse;
     public void OpenCanvasHouse(House _house)
     {
@@ -37,5 +38,14 @@ public class CanvasHouse : MonoBehaviour
     {
         panelCanvasHouse.house = null;
         canvasHouse.gameObject.SetActive(false);
+    }
+
+    public void OpenCanvasHouseOnlyStart()
+    {
+        canvasHouseOnlyStart.gameObject.SetActive(true);
+    }
+    public void CloseCanvasHouseOnlyStart()
+    {
+        canvasHouseOnlyStart.gameObject.SetActive(false);
     }
 }

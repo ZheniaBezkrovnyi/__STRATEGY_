@@ -84,7 +84,9 @@ public class TakeObjects : MonoBehaviour
         myHouse.transform.position += new Vector3(x * SizeOneCell + MyTerrain.xMin * SizeOneCell + (float)myHouse.NeParniX / 2f* SizeOneCell, myHouse.transform.localScale.y / 2, z * SizeOneCell + MyTerrain.zMin * SizeOneCell + (float)myHouse.NeParniZ / 2f * SizeOneCell);
         myHouse.stateHouse = StateHouse.InBlue;
         myHouse.currentColor = StateColor.Blue;
-        myHouse.canvasHouse.OpenCanvasHouse(myHouse);
+
+        myHouse.canvasHouse.OpenCanvasHouseOnlyStart();
+ 
         myHouse.houseTextOnShop.buttonChange = buttonChange; // закинув для смени текста на кнопках, треба тільки на тих шо беру
         _house = myHouse;
         //End(x,z,myHouse,false);
@@ -224,7 +226,7 @@ public class TakeObjects : MonoBehaviour
         {
             for (int z = Z - _house__.Sides.y / 2; z < Z + _house__.Sides.y / 2 + _house__.NeParniZ; z++)
             {
-                //Debug.Log(x + " " + z + "end");
+                Debug.Log(x + " " + z + "end");
                 _setMap[x, z] = 1;
             }
         }
@@ -245,7 +247,7 @@ public class TakeObjects : MonoBehaviour
             {
                 for (int z = Z - _house_.Sides.y / 2; z < Z + _house_.Sides.y / 2 + _house_.NeParniZ; z++)
                 {
-                    //Debug.Log(x + " " + z + "zero");
+                    Debug.Log(x + " " + z + "zero");
                     _setMap[x, z] = 0;
                 }
             }

@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ExistOrNot
+{
+    Not,
+    Almost,
+    Yes
+}
 public class GetTouch0 : MonoBehaviour
 {
     [SerializeField] private UIStartScene uiStartScene;
@@ -27,13 +33,15 @@ public class GetTouch0 : MonoBehaviour
     {
         if (TakeObjects._house == null) { return; }
         house = TakeObjects._house;
-        if (!house.existOrNot) // щоб не відпрацьовував тач при взятті хауса, далі можна з exist зробити enum, якшо треба буде відслідковувати перше взяття з переносами
+        if (house.existOrNot != ExistOrNot.Yes) // щоб не відпрацьовував тач при взятті хауса, далі можна з exist зробити enum, якшо треба буде відслідковувати перше взяття з переносами
+        {
+            house.existOrNot = ExistOrNot.Almost;
+            return;
+        }/*else if (house.existOrNot == ExistOrNot.Yes)
         {
             SaveInJSON saveInJSON = new SaveInJSON();
             saveInJSON.SaveThisHouseInList(house);
-            house.existOrNot = true;
-            return;
-        }
+        }*/
         if (Input.touchCount > 0)
         {
 
@@ -68,7 +76,6 @@ public class GetTouch0 : MonoBehaviour
                     house,
                     true
                 );
-                TakeObjects._house = null;
             }
             else
             {

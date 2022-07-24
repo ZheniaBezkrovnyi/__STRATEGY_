@@ -64,7 +64,7 @@ public class ReturnAllOnStart : MonoBehaviour
                         Posit.InitInPosit(x, z, house).y
                     );
                     TakeObjects.End(x,z,house, false,false);
-                    house.existOrNot = true;
+                    house.existOrNot = ExistOrNot.Yes;
                     house.stateHouse = StateHouse.NotActive;
                     return;
                 }

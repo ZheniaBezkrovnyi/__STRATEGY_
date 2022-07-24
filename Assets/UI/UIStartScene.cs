@@ -12,6 +12,7 @@ public class UIStartScene : MonoBehaviour
     [SerializeField] private Canvas panelCanvas;
     [SerializeField] private Button buttonImprove, buttonInfo, buttonBackPanel;
     [SerializeField] private GetTouch0 getTouch0;
+    [SerializeField] private Button buttonCanvasStartYes, buttonCanvasStartNo;
     private void Awake()
     {
         widthCanvas = rectCanvas.rect.width * rectCanvas.localScale.x;
@@ -21,6 +22,8 @@ public class UIStartScene : MonoBehaviour
         ActiveOrNotShop(buttonImprove, true, panelCanvas);
         ActiveOrNotShop(buttonInfo, true, panelCanvas);
         ActiveOrNotShop(buttonBackPanel, false, panelCanvas);
+        RealizeCanvasHouseStart(buttonCanvasStartYes);
+        RealizeCanvasHouseStart(buttonCanvasStartNo);
     }
     private float widthCanvas;
     private float heightCanvas;
@@ -111,5 +114,36 @@ public class UIStartScene : MonoBehaviour
                 return false;
             }
         }
+    }
+
+
+
+    private void RealizeCanvasHouseStart(Button _button) //оптимізувати
+    {
+        _button.onClick.AddListener(() => {
+            if(_button.name == "Yes")   // закинуть сюда же загрузку временем сразу
+            {
+                SaveInJSON saveInJSON = new SaveInJSON();
+                saveInJSON.SaveThisHouseInList(TakeObjects._house);
+                TakeObjects._house.canvasHouse.CloseCanvasHouseOnlyStart();
+                TakeObjects._house.existOrNot = ExistOrNot.Yes;
+                TakeObjects.End(
+                    Posit.DesWithPosit(TakeObjects._house.transform.position.x, TakeObjects._house.transform.position.z, TakeObjects._house).x,
+                    Posit.DesWithPosit(TakeObjects._house.transform.position.x, TakeObjects._house.transform.position.z, TakeObjects._house).y,
+                    TakeObjects._house,
+                    true
+                );
+            }
+            else if(_button.name == "No")
+            {
+                TakeObjects._house.canvasHouse.CloseCanvasHouseOnlyStart();
+                Destroy(TakeObjects._house.gameObject);
+                TakeObjects._house = null;
+            }
+            else
+            {
+                Debug.LogError("щось з назвами у канвас хаус старт");
+            }
+        });
     }
 }
