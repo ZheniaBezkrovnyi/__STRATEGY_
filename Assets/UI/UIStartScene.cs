@@ -65,9 +65,9 @@ public class UIStartScene : MonoBehaviour
 
 
         bool ForAllNeedButton(RectTransform[] rect) {
-            float MinWidth = 0;
+            float MinWidth = widthCanvas;
             float MaxWidth = 0;
-            float MinHeight = 0;
+            float MinHeight = heightCanvas;
             float MaxHeight = 0;
             for (int i = 0; i < rect.Length; i++)
             {
