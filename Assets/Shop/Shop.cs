@@ -11,8 +11,6 @@ public enum NameHouse
     C,
     D,
     Wall,
-    F,
-    G
 }
 public class Shop : MonoBehaviour
 {

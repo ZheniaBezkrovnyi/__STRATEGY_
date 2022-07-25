@@ -73,21 +73,17 @@ public class ReturnAllOnStart : MonoBehaviour
     }
     public void ReturnChangeTextOnButton(House _house)
     {
-        if (startProject == StartProject.Start) // змінні тексти не стираються, бо залишаються в префабах, треба їх стирати
+        _house.houseTextOnShop.dataHouseChangeOnText = new DataHouseChangeOnText(); //щоб те що залишалось в префабах  стерти і заново дати
+        for (int i = allData.allDataHouses.Count - 1; i >= 0; i--)
         {
-            _house.houseTextOnShop.dataHouseChangeOnText = new DataHouseChangeOnText();
-            return;
-        }
-        for (int i = allHousePrefab.listHouse.Count - 1; i >= 0; i--)
-        {
-            if (_house.dataHouse.NameThisHouse == allHousePrefab.listHouse[i][0].dataHouse.NameThisHouse)
+            if (_house.dataHouse.NameThisHouse == allData.allDataHouses[i].dataHouse.NameThisHouse)  //беру підряд по іменам що є в скролі і беру останні дані
             {
-                _house.houseTextOnShop.dataHouseChangeOnText = allHousePrefab.listHouse[i][0].houseTextOnShop.dataHouseChangeOnText; // далі дається ссилка на хаус і він передає ссилку свою на кнопку)))
+                _house.houseTextOnShop.dataHouseChangeOnText = allData.allDataHouses[i].dataHouseChangeOnText;
                 break;
             }
             if (i == 0)
             {
-                Debug.Log("не знайшов по імені хаус, тому дані для кнопки не дав");
+                Debug.Log(i + " не знайшов по імені хаус, тому дані для кнопки не дав");
             }
         }
     }

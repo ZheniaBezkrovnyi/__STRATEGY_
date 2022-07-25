@@ -972,7 +972,7 @@ MonoBehaviour:
   cameraMove: {fileID: 963194231}
   buttonPrefab: {fileID: 1127359017}
   textOnButton: {fileID: 2112497505}
-  listShop: 00000000010000000200000003000000040000000000000001000000
+  listShop: 0000000001000000020000000300000004000000
   returnAllStart: {fileID: 963194232}
   terrain: {fileID: 850528394}
   notification: {fileID: 243569585}
