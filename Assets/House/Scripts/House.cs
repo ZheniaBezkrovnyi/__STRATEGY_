@@ -29,6 +29,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     public DataTextOnHouse dataTextOnHouse;
     public HouseTextOnShop houseTextOnShop;
     public DataHouse dataHouse;
+    public House housesNextPrefab;
 
     [HideInInspector] public CanvasHouse canvasHouse; 
     [SerializeField] private Vector2Int sides;
@@ -114,9 +115,12 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     {
         if (eventData.delta.magnitude == 0 && !Drag)
         {
-            //TakeObjects._house = this;
             if (TakeObjects._house != null)
             {
+                if(TakeObjects._house.existOrNot == ExistOrNot.Not) // чтоб не переключался когда еще здание не поставил, из Attack по ситуации поменяю
+                {
+                    return;
+                }
                 //Debug.Log("хаус при кліку");
                 TakeObjects.End(TakeObjects._house.dataHouse.posit.x, TakeObjects._house.dataHouse.posit.z, TakeObjects._house, true);
             }
@@ -165,7 +169,8 @@ public class ColorsObjects
         {
             if (_trnsf.childCount != 0)
             {
-                for (int i = 0; i < _trnsf.childCount; i++)
+
+                /*for (int i = 0; i < _trnsf.childCount; i++)
                 {
                     if (emptyList)
                     {
@@ -188,6 +193,27 @@ public class ColorsObjects
                     }
                     countChild++;
                     Init(_trnsf.GetChild(i), _color_);
+                }*/
+                for (int i = 0; i < 1; i++)
+                {
+                    if (emptyList)
+                    {
+                        listStartColor.Add(_trnsf.GetChild(i).GetComponent<Renderer>().material.color);
+                    }
+                    else
+                    {
+                        if (_color_ == Color.white)
+                        {
+                            if (listStartColor[countChild] != null)
+                            {
+                                _trnsf.GetChild(i).GetComponent<Renderer>().material.color = listStartColor[countChild];
+                            }
+                        }
+                        else
+                        {
+                            _trnsf.GetChild(i).GetComponent<Renderer>().material.color = _color_;
+                        }
+                    }
                 }
             }
         }

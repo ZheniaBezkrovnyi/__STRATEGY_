@@ -32,7 +32,7 @@ public class Touch : MonoBehaviour,IDragHandler
                 drag = false;
                 onDown = false;
 
-                if (__house.existOrNot != ExistOrNot.Yes) return;
+                if (__house.existOrNot == ExistOrNot.Not) return;
 
                 zeroCell = false;
                 //Debug.Log("0 тачей");

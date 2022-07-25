@@ -24,10 +24,10 @@ public class ButtonChange : MonoBehaviour
     }
     private void GoStringTimeBuild()
     {
-        string day = houseTextOnShop.TimeBuildStart.days != 0 ? houseTextOnShop.TimeBuildStart.days.ToString() + "d" : null;
-        string hour = houseTextOnShop.TimeBuildStart.hours != 0 ? houseTextOnShop.TimeBuildStart.hours.ToString() + "h" : null;
-        string minute = houseTextOnShop.TimeBuildStart.minutes != 0 ? houseTextOnShop.TimeBuildStart.minutes.ToString() + "m" : null;
-        string second = houseTextOnShop.TimeBuildStart.seconds != 0 ? houseTextOnShop.TimeBuildStart.seconds.ToString() + "s" : null;
+        string day = houseTextOnShop.TimeNeedBuildStart.days != 0 ? houseTextOnShop.TimeNeedBuildStart.days.ToString() + "d" : null;
+        string hour = houseTextOnShop.TimeNeedBuildStart.hours != 0 ? houseTextOnShop.TimeNeedBuildStart.hours.ToString() + "h" : null;
+        string minute = houseTextOnShop.TimeNeedBuildStart.minutes != 0 ? houseTextOnShop.TimeNeedBuildStart.minutes.ToString() + "m" : null;
+        string second = houseTextOnShop.TimeNeedBuildStart.seconds != 0 ? houseTextOnShop.TimeNeedBuildStart.seconds.ToString() + "s" : null;
         textTimeBuild.text = day + hour + minute + second;
     }
     public void AddCurrentBuildThisHouse()

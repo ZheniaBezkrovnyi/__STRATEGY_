@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public enum StartProject
 {
@@ -14,6 +15,7 @@ public class ReturnAllOnStart : MonoBehaviour
     [HideInInspector] public StartProject startProject;
     public static AllData allData;
     [SerializeField] private CanvasHouse canvasHouse;
+    [SerializeField] private AnimTimeBuild animTimeBuild;
     void Awake()
     {
         allHousePrefab.FillInList();
@@ -52,8 +54,14 @@ public class ReturnAllOnStart : MonoBehaviour
             {
                 if (allData.allDataHouses[I].dataHouse.NameThisHouse == allHousePrefab.listHouse[i][0].dataHouse.NameThisHouse)
                 {
-                    //Debug.Log(allData.allDataHouses[I].dataHouse.NameThisHouse);
-                    House house = Instantiate(allHousePrefab.listHouse[i][allData.allDataHouses[I].dataHouse.levelHouse]);
+                    ExistOrNot existOrNot = ExistOrNot.Yes;
+                    int diffLevel = 0; // треба для цього початку, може колись щось краще зроблю
+                    if(allData.allDataHouses[I].dataHouse.levelHouse == 0){
+
+                        existOrNot = ExistOrNot.Almost; // бо якщо є, то будується
+                        diffLevel = 1;
+                    }
+                    House house = Instantiate(allHousePrefab.listHouse[i][allData.allDataHouses[I].dataHouse.levelHouse - 1 + diffLevel]);
                     house.canvasHouse = canvasHouse;
                     house.dataHouse.myIndexOnSave = I;
                     int x = allData.allDataHouses[I].dataHouse.posit.x;
@@ -63,8 +71,17 @@ public class ReturnAllOnStart : MonoBehaviour
                         house.transform.localScale.y / 2,
                         Posit.InitInPosit(x, z, house).y
                     );
+                    house.dataHouse.dataAnimBuildHouse.timeEndBuild = allData.allDataHouses[I].dataHouse.dataAnimBuildHouse.timeEndBuild;
                     TakeObjects.End(x,z,house, false,false);
-                    house.existOrNot = ExistOrNot.Yes;
+                    house.existOrNot = existOrNot; // не раніше корутіни, бо там це треба
+
+                    TimeDateTime timeEnd = house.dataHouse.dataAnimBuildHouse.timeEndBuild;
+                    int timeEndseconds = TimeDateTime.TimeInSeconds(timeEnd);
+                    if (timeEndseconds != 0)
+                    {
+                        StartCoroutine(animTimeBuild.BeginBuildHouse(house, false));
+                    }
+
                     house.stateHouse = StateHouse.NotActive;
                     return;
                 }

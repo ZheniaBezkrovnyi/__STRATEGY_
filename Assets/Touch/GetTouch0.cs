@@ -33,9 +33,8 @@ public class GetTouch0 : MonoBehaviour
     {
         if (TakeObjects._house == null) { return; }
         house = TakeObjects._house;
-        if (house.existOrNot != ExistOrNot.Yes) // щоб не відпрацьовував тач при взятті хауса, далі можна з exist зробити enum, якшо треба буде відслідковувати перше взяття з переносами
+        if (house.existOrNot == ExistOrNot.Not) 
         {
-            house.existOrNot = ExistOrNot.Almost;
             return;
         }/*else if (house.existOrNot == ExistOrNot.Yes)
         {

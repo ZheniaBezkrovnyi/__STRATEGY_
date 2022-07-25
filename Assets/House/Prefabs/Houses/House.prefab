@@ -60,21 +60,31 @@ MonoBehaviour:
       spriteHouse: {fileID: 21300000, guid: d4879ce57f2308948bbc604dac11acd7, type: 3}
   houseTextOnShop:
     dataHouseChangeOnText:
-      currentBuildThisHouse: 4
+      currentBuildThisHouse: 3
     MaxCountBuild: 15
-    TimeBuildStart:
+    TimeNeedBuildStart:
       days: 0
-      hours: 20
+      hours: 0
       minutes: 0
-      seconds: 0
+      seconds: 10
     buttonChange: {fileID: 0}
   dataHouse:
     NameThisHouse: 0
     posit:
       x: 0
       z: 0
+    dataAnimBuildHouse:
+      timeEndBuild:
+        years: 0
+        month: 0
+        days: 0
+        hours: 0
+        minutes: 0
+        seconds: 0
     myIndexOnSave: 0
     levelHouse: 0
+  housesNextPrefab: {fileID: 7865930380890707765, guid: 0d2e718569f065140a0d3184aa89399d,
+    type: 3}
   canvasHouse: {fileID: 0}
   sides: {x: 5, y: 2}
   clickColor: {r: 0, g: 0.7169812, b: 0.098891445, a: 0}

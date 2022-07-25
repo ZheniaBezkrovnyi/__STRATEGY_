@@ -153,12 +153,12 @@ MonoBehaviour:
       spriteHouse: {fileID: 0}
   houseTextOnShop:
     dataHouseChangeOnText:
-      currentBuildThisHouse: 1
+      currentBuildThisHouse: 0
     MaxCountBuild: 35
-    TimeBuildStart:
+    TimeNeedBuildStart:
       days: 0
-      hours: 1
-      minutes: 30
+      hours: 0
+      minutes: 45
       seconds: 0
     buttonChange: {fileID: 0}
   dataHouse:
@@ -166,6 +166,14 @@ MonoBehaviour:
     posit:
       x: 0
       z: 0
+    dataAnimBuildHouse:
+      timeEndBuild:
+        years: 0
+        month: 0
+        days: 0
+        hours: 0
+        minutes: 0
+        seconds: 0
     myIndexOnSave: 0
     levelHouse: 0
   canvasHouse: {fileID: 0}

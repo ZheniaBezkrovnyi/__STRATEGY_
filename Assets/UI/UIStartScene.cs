@@ -13,6 +13,7 @@ public class UIStartScene : MonoBehaviour
     [SerializeField] private Button buttonImprove, buttonInfo, buttonBackPanel;
     [SerializeField] private GetTouch0 getTouch0;
     [SerializeField] private Button buttonCanvasStartYes, buttonCanvasStartNo;
+    [SerializeField] private AnimTimeBuild animTimeBuild;
     private void Awake()
     {
         widthCanvas = rectCanvas.rect.width * rectCanvas.localScale.x;
@@ -123,16 +124,18 @@ public class UIStartScene : MonoBehaviour
         _button.onClick.AddListener(() => {
             if(_button.name == "Yes")   // закинуть сюда же загрузку временем сразу
             {
+                House thidHouse = TakeObjects._house;
                 SaveInJSON saveInJSON = new SaveInJSON();
-                saveInJSON.SaveThisHouseInList(TakeObjects._house);
-                TakeObjects._house.canvasHouse.CloseCanvasHouseOnlyStart();
-                TakeObjects._house.existOrNot = ExistOrNot.Yes;
+                saveInJSON.AddThisHouseInList(thidHouse);
+                thidHouse.canvasHouse.CloseCanvasHouseOnlyStart();
                 TakeObjects.End(
-                    Posit.DesWithPosit(TakeObjects._house.transform.position.x, TakeObjects._house.transform.position.z, TakeObjects._house).x,
-                    Posit.DesWithPosit(TakeObjects._house.transform.position.x, TakeObjects._house.transform.position.z, TakeObjects._house).y,
-                    TakeObjects._house,
+                    Posit.DesWithPosit(thidHouse.transform.position.x, thidHouse.transform.position.z, thidHouse).x,
+                    Posit.DesWithPosit(thidHouse.transform.position.x, thidHouse.transform.position.z, thidHouse).y,
+                    thidHouse,
                     true
                 );
+                StartCoroutine(animTimeBuild.BeginBuildHouse(thidHouse,true));
+                thidHouse.existOrNot = ExistOrNot.Almost;
             }
             else if(_button.name == "No")
             {

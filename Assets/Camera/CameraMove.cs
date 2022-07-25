@@ -18,7 +18,7 @@ public class CameraMove : MonoBehaviour
         SizeCell = MyTerrain.sizeOneCell;
         yMin = 15 * SizeCell / 2;
         yMax = yMin * 5;
-        transformThis.position = new Vector3(transformThis.position.x, yMin*2, transformThis.position.z);
+        transformThis.position = new Vector3(MyTerrain.xMin*SizeCell, yMin*2, MyTerrain.xMin*SizeCell);
     }
     private void FixedUpdate()
     {

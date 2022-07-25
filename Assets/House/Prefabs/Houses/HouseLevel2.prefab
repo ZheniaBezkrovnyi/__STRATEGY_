@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2438271881682839862
+--- !u!1 &2563479964469164033
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,10 +8,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2438271881682839869}
-  - component: {fileID: 2438271881682839858}
-  - component: {fileID: 2438271881682839859}
-  - component: {fileID: 2438271881682839856}
+  - component: {fileID: 4124325901108051107}
+  - component: {fileID: 589352670170378197}
+  - component: {fileID: 6155113072842517840}
+  - component: {fileID: 7315742248848156658}
   m_Layer: 0
   m_Name: childHouse
   m_TagString: Untagged
@@ -19,35 +19,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2438271881682839869
+--- !u!4 &4124325901108051107
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2438271881682839862}
+  m_GameObject: {fileID: 2563479964469164033}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 1, z: 3}
+  m_LocalScale: {x: 5, y: 1, z: 2}
   m_Children: []
-  m_Father: {fileID: 3651349857202589070}
+  m_Father: {fileID: 8839349822303825694}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &2438271881682839858
+--- !u!33 &589352670170378197
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2438271881682839862}
+  m_GameObject: {fileID: 2563479964469164033}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &2438271881682839859
+--- !u!23 &6155113072842517840
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2438271881682839862}
+  m_GameObject: {fileID: 2563479964469164033}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -80,20 +80,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &2438271881682839856
+--- !u!65 &7315742248848156658
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2438271881682839862}
+  m_GameObject: {fileID: 2563479964469164033}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &8806990691465197710
+--- !u!1 &6306220303078600028
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,37 +101,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3651349857202589070}
-  - component: {fileID: 3355637756002620365}
+  - component: {fileID: 8839349822303825694}
+  - component: {fileID: 7865930380890707765}
   m_Layer: 0
-  m_Name: House1
+  m_Name: HouseLevel2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3651349857202589070
+--- !u!4 &8839349822303825694
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8806990691465197710}
+  m_GameObject: {fileID: 6306220303078600028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 6, y: 6, z: 6}
   m_Children:
-  - {fileID: 2438271881682839869}
+  - {fileID: 4124325901108051107}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3355637756002620365
+--- !u!114 &7865930380890707765
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8806990691465197710}
+  m_GameObject: {fileID: 6306220303078600028}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e489e924557ef04db2de1179a69b635, type: 3}
@@ -142,35 +142,44 @@ MonoBehaviour:
   stateHouse: 0
   onDown: 0
   dataTextOnHouse:
-    priceImprove: 500
+    priceImprove: 1000
     timeImprove:
-      days: 2
-      hours: 2
-      minutes: 0
+      days: 0
+      hours: 1
+      minutes: 20
       seconds: 0
-    typeHouse: 1
+    typeHouse: 0
     info:
-      spriteHouse: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+      spriteHouse: {fileID: 0}
   houseTextOnShop:
     dataHouseChangeOnText:
-      currentBuildThisHouse: 1
-    MaxCountBuild: 5
-    TimeBuildStart:
+      currentBuildThisHouse: 0
+    MaxCountBuild: 0
+    TimeNeedBuildStart:
       days: 0
       hours: 0
-      minutes: 5
+      minutes: 0
       seconds: 0
     buttonChange: {fileID: 0}
   dataHouse:
-    NameThisHouse: 1
+    NameThisHouse: 0
     posit:
       x: 0
       z: 0
+    dataAnimBuildHouse:
+      timeEndBuild:
+        years: 0
+        month: 0
+        days: 0
+        hours: 0
+        minutes: 0
+        seconds: 0
     myIndexOnSave: 0
-    levelHouse: 0
+    levelHouse: 2
+  housesNextPrefab: {fileID: 0}
   canvasHouse: {fileID: 0}
-  sides: {x: 3, y: 3}
-  clickColor: {r: 0, g: 0.7169812, b: 0.098891445, a: 0}
-  redColor: {r: 1, g: 0.21854474, b: 0.0047169924, a: 0}
+  sides: {x: 5, y: 2}
+  clickColor: {r: 0, g: 0, b: 0, a: 0}
+  redColor: {r: 1, g: 0.8217412, b: 0, a: 0}
   existOrNot: 0
   currentColor: 0

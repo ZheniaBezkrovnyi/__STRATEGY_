@@ -66,33 +66,3 @@ public class ShopButtonInterface : MonoBehaviour
         }
     }
 }
-[Serializable]
-public class TimeBuild
-{
-    public int days,hours,minutes,seconds;
-    public TimeBuild(int _days, int _hours, int _minutes, int _seconds)
-    {
-        days = _days;
-
-        if (_hours > 23) _hours = 23;
-        if (_hours < 0) _hours = 0;
-        hours = _hours;
-
-        if (_minutes > 59) _minutes = 59;
-        if (_minutes < 0) _minutes = 0;
-        minutes = _minutes;
-
-        if (_seconds > 59) _seconds = 59;
-        if (_seconds < 0) _seconds = 0;
-        seconds = _seconds;
-    }
-    public static string GoStringTimeBuild(TimeBuild timeBuild)
-    {
-        string day = timeBuild.days != 0 ? timeBuild.days.ToString() + "d" : null;
-        string hour = timeBuild.hours != 0 ? timeBuild.hours.ToString() + "h" : null;
-        string minute = timeBuild.minutes != 0 ? timeBuild.minutes.ToString() + "m" : null;
-        string second = timeBuild.seconds != 0 ? timeBuild.seconds.ToString() + "s" : null;
-        return day + hour + minute + second;
-    }
-
-}
