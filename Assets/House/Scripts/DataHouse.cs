@@ -32,7 +32,7 @@ public class TimeBuild
         if (_seconds < 0) _seconds = 0;
         seconds = _seconds;
     }
-    public static string GoStringTimeBuild(TimeBuild timeBuild)
+    public static string ToString(TimeBuild timeBuild)
     {
         string day = timeBuild.days != 0 ? timeBuild.days.ToString() + "d" : null;
         string hour = timeBuild.hours != 0 ? timeBuild.hours.ToString() + "h" : null;
@@ -40,7 +40,7 @@ public class TimeBuild
         string second = timeBuild.seconds != 0 ? timeBuild.seconds.ToString() + "s" : null;
         return day + hour + minute + second;
     }
-    public static int TimeInSeconds(TimeBuild timeBuild)
+    public static int InSeconds(TimeBuild timeBuild)
     {
         int _seconds = 0;
         _seconds += timeBuild.seconds;
@@ -127,7 +127,7 @@ public class TimeDateTime
         minutes = _minutes;
         seconds = _seconds;
     }
-    public static string GoStringTimeDateTime(TimeDateTime timeDateTime)
+    public static string ToString(TimeDateTime timeDateTime)
     {
         string day = timeDateTime.days.ToString() + ".";
         string month = timeDateTime.month.ToString() + ".";
@@ -137,7 +137,7 @@ public class TimeDateTime
         string second = timeDateTime.seconds.ToString();
         return day + month + years + hour + minute + second;
     }
-    public static TimeDateTime GoWithStringInTimeDateTime(string timeDateTime)
+    public static TimeDateTime ToTimeDateTime(string timeDateTime)
     {
         string[] stringAll = timeDateTime.Split(' ');
 
@@ -152,82 +152,101 @@ public class TimeDateTime
         int _years = Int32.Parse(stringDMY[2]);
         return new TimeDateTime(_years, _month, _day, _hours, _minutes, _seconds);
     }
-    #region ReturnIfNeed
     public static TimeDateTime TimeMinusTime(TimeDateTime time1, TimeDateTime time2)
     {
-        int _seconds = time1.seconds - time2.seconds;
-        Debug.Log(_seconds + " secondsStart");
-        int deltaMinutes = 0;
-        if(_seconds < 0)
+        bool PlusOrMinus = CompareTimeDateTime(time1, time2);
+        if (PlusOrMinus)
         {
-            _seconds = 60 + _seconds;
-            Debug.Log(_seconds + " secondsFact");
-            deltaMinutes = -1;
+            return InitValues(time1, time2);
+        }
+        else
+        {
+            Debug.Log("мінус");
+            return InitValues(time2, time1);
         }
 
-        int _minutes = time1.minutes - time2.minutes + deltaMinutes;
-        int deltaHours = 0;
-        if (_minutes < 0)
+        TimeDateTime InitValues(TimeDateTime _time1, TimeDateTime _time2)
         {
-            _minutes = 60 + _minutes;
-            deltaHours = -1;
-        }
-
-        int _hours = time1.hours - time2.hours + deltaHours;
-        int deltaDays = 0;
-        if (_hours < 0)
-        {
-            _minutes = 24 + _minutes;
-            deltaDays = -1;
-        }
-
-        int _month = time1.month - time2.month;
-        int deltaYears = 0;
-        if (_month < 0)
-        {
-            _month = 12 + _month;
-            deltaYears = -1;
-        }
-
-        int _years = time1.years - time2.years + deltaYears;
-
-        int _day = time1.days - time2.days + deltaDays;
-        if (_day < 0)
-        {
-            --_month;
-            switch (_month)
+            int _seconds = _time1.seconds - _time2.seconds;
+            int deltaMinutes = 0;
+            if (_seconds < 0)
             {
-                case 1:
-                case 3:
-                case 5:
-                case 7:
-                case 8:
-                case 10:
-                case 12:
-                    _day = 31 + _day;
-                    break;
-                case 4:
-                case 6:
-                case 9:
-                case 11:
-                    _day = 30 + _day;
-                    break;
-                case 2:
-                    if (_years % 4 == 0)
-                    {
-                        _day = 29 + _day;
-                    }
-                    else
-                    {
-                        _day = 28 + _day;
-                    }
-                    break;
+                _seconds = 60 + _seconds;
+                deltaMinutes = -1;
+            }
+
+            int _minutes = _time1.minutes - _time2.minutes + deltaMinutes;
+            int deltaHours = 0;
+            if (_minutes < 0)
+            {
+                _minutes = 60 + _minutes;
+                deltaHours = -1;
+            }
+
+            int _hours = _time1.hours - _time2.hours + deltaHours;
+            int deltaDays = 0;
+            if (_hours < 0)
+            {
+                _hours = 24 + _hours;
+                deltaDays = -1;
+            }
+
+            int _month = _time1.month - _time2.month;
+            int deltaYears = 0;
+            if (_month < 0)
+            {
+                _month = 12 + _month;
+                deltaYears = -1;
+            }
+
+            int _years = _time1.years - _time2.years + deltaYears;
+
+            int _day = _time1.days - _time2.days + deltaDays;
+            if (_day < 0)
+            {
+                --_month;
+                switch (_time2.month)
+                {
+                    case 1:
+                    case 3:
+                    case 5:
+                    case 7:
+                    case 8:
+                    case 10:
+                    case 12:
+                        _day = 31 + _day;
+
+                        break;
+                    case 4:
+                    case 6:
+                    case 9:
+                    case 11:
+                        _day = 30 + _day;
+                        break;
+                    case 2:
+                        if (_years % 4 == 0)
+                        {
+                            _day = 29 + _day;
+                        }
+                        else
+                        {
+                            _day = 28 + _day;
+                        }
+                        break;
+                }
+            }
+            if (PlusOrMinus)
+            {
+                return new TimeDateTime(_years, _month, _day, _hours, _minutes, _seconds);
+            }
+            else
+            {
+                Debug.Log(_minutes + " " + _seconds);
+                return new TimeDateTime(_years*(-1), _month * (-1), _day * (-1), _hours * (-1), _minutes * (-1), _seconds * (-1));
             }
         }
-        Debug.Log(_years + " " + _month +  " " + _day + " " + _hours + " " + _minutes + " " + _seconds);
-        return new TimeDateTime(_years, _month, _day, _hours, _minutes, _seconds);
     }
-    public static TimeDateTime TimePlusTimeBuild(TimeDateTime timeDate, TimeBuild timeBuild)
+    public static TimeDateTime GetSum(TimeDateTime timeDate, TimeBuild timeBuild)
     {
         int _seconds = timeDate.seconds + timeBuild.seconds;
         int deltaMinutes = 0;
@@ -311,7 +330,7 @@ public class TimeDateTime
 
         return new TimeDateTime(_years, _month, _day, _hours, _minutes, _seconds);
     }
-    public static int TimeInSeconds(TimeDateTime timeDate) // для секунд в разнице времени, там нет месяцев
+    public static int InSeconds(TimeDateTime timeDate) // для секунд в разнице времени, там нет месяцев
     {
         TimeDateTime time = new TimeDateTime(timeDate.years, timeDate.month, timeDate.days, timeDate.hours, timeDate.minutes, timeDate.seconds); // щоб перевірилось
         //Debug.Log("startCheckData");
@@ -327,16 +346,27 @@ public class TimeDateTime
         _seconds += time.days * 24 * 3600;
         return _seconds;
     }
-    #endregion
-    public static bool CompareTimeDateTime(TimeDateTime time1, TimeDateTime time2) //true якщо другий більший
+    public static bool CompareTimeDateTime(TimeDateTime time1, TimeDateTime time2) //true якщо перший більший
     {
-        if(time1.years > time2.years) { return false; }
-        else if (time1.month > time2.month) { return false; }
-        else if (time1.days > time2.days) { return false; }
-        else if (time1.hours > time2.hours) { return false; }
-        else if (time1.minutes > time2.minutes) { return false; }
-        else if (time1.seconds > time2.seconds) { return false; }
-        else { return true; }
+        if(time1.years > time2.years) { return true; }
+        else if (time1.years < time2.years) { return false; }
+
+        if (time1.month > time2.month) { return true; }
+        else if (time1.month < time2.month) { return false; }
+
+        if (time1.days > time2.days) { return true; }
+        else if (time1.days < time2.days) { return false; }
+
+        if (time1.hours > time2.hours) { return true; }
+        else if (time1.hours < time2.hours) { return false; }
+
+        if (time1.minutes > time2.minutes) { return true; }
+        else if (time1.minutes < time2.minutes) { return false; }
+
+        if (time1.seconds > time2.seconds) { return true; }
+        else if (time1.seconds < time2.seconds) { return false; }
+
+        return false;
     }
 }
 

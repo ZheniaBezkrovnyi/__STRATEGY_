@@ -36,8 +36,8 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     public Vector2Int Sides { get { return sides; } }
 
     private ColorsObjects colorsObjects;
-    [SerializeField] public Color clickColor; //закрить
-    [SerializeField] public Color redColor;
+    [SerializeField] private Color clickColor;
+    [SerializeField] private Color redColor;
 
     [HideInInspector] public ExistOrNot existOrNot;
     private int neParniX;

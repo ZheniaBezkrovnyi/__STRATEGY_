@@ -145,7 +145,7 @@ public class InitPanelHouse : MonoBehaviour  // панель не буду ст�
         void InitTimeImprove()
         {
             timeImprove.gameObject.SetActive(true);
-            timeImprove.text = TimeBuild.GoStringTimeBuild(_house.dataTextOnHouse.timeImprove);
+            timeImprove.text = TimeBuild.ToString(_house.dataTextOnHouse.timeImprove);
         }
     }
     private void InitImage(House _house)

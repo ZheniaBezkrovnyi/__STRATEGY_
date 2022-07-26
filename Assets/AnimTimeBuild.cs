@@ -26,17 +26,16 @@ public class AnimTimeBuild : MonoBehaviour
         int remainsSeconds = 0;
         if (beginOrContinue)
         {
-            TimeDateTime timeEndTime = TimeDateTime.TimePlusTimeBuild(TimeDateTime.GoWithStringInTimeDateTime(dateTimeStart.ToString()), timeBuild);
+            TimeDateTime timeEndTime = TimeDateTime.GetSum(TimeDateTime.ToTimeDateTime(dateTimeStart.ToString()), timeBuild);
 
             ReturnAllOnStart.allData.allDataHouses[_house.dataHouse.myIndexOnSave].dataHouse.dataAnimBuildHouse.timeEndBuild = timeEndTime;
             ReturnAllOnStart.json.Save(ReturnAllOnStart.allData);
-            remainsSeconds = TimeBuild.TimeInSeconds(timeBuild);
+            remainsSeconds = TimeBuild.InSeconds(timeBuild);
         }
         else
         {
-            Debug.Log(dateTimeStart.ToString());
-            TimeDateTime diffTime = TimeDateTime.TimeMinusTime(_house.dataHouse.dataAnimBuildHouse.timeEndBuild, TimeDateTime.GoWithStringInTimeDateTime(DateTime.Now.ToString()));
-            int diffTimeInSeconds = TimeDateTime.TimeInSeconds(diffTime);
+            TimeDateTime diffTime = TimeDateTime.TimeMinusTime(_house.dataHouse.dataAnimBuildHouse.timeEndBuild, TimeDateTime.ToTimeDateTime(dateTimeStart.ToString()));
+            int diffTimeInSeconds = TimeDateTime.InSeconds(diffTime);
             remainsSeconds = diffTimeInSeconds;
             if(remainsSeconds < 0)
             {
@@ -52,7 +51,7 @@ public class AnimTimeBuild : MonoBehaviour
         RectTransform rectCanvasSlider = InstCanvasSlider(_house);
         Slider slider = rectCanvasSlider.GetChild(0).GetChild(0).GetComponent<Slider>();
 
-        int timeForBuild = TimeBuild.TimeInSeconds(timeBuild);
+        int timeForBuild = TimeBuild.InSeconds(timeBuild);
         float timeStart = Time.time - 1;
         for (; remainsSeconds > 0; )
         {

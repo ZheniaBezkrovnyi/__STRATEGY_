@@ -76,7 +76,7 @@ public class ReturnAllOnStart : MonoBehaviour
                     house.existOrNot = existOrNot; // не раніше корутіни, бо там це треба
 
                     TimeDateTime timeEnd = house.dataHouse.dataAnimBuildHouse.timeEndBuild;
-                    int timeEndseconds = TimeDateTime.TimeInSeconds(timeEnd);
+                    int timeEndseconds = TimeDateTime.InSeconds(timeEnd);
                     if (timeEndseconds != 0)
                     {
                         StartCoroutine(animTimeBuild.BeginBuildHouse(house, false));
