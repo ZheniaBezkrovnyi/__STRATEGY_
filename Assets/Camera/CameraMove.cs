@@ -53,7 +53,11 @@ public class CameraMove : MonoBehaviour
                         //Debug.Log(deltaTouchX1);
                         float differentX = PositionX - (deltaTouchX1 / 400 * PositionY + deltaTouchY1 / 400 * PositionY);
                         float differentZ = PositionZ -(-deltaTouchX1 / 400 * PositionY + deltaTouchY1 / 400 * PositionY);
-                        transformThis.position = new Vector3(Mathf.Clamp(differentX, -40* SizeCell, 25* SizeCell), PositionY, Mathf.Clamp(differentZ, -40* SizeCell, 25* SizeCell));
+                        transformThis.position = new Vector3(
+                            Mathf.Clamp(differentX, -1.7f* SizeCell*MyTerrain.xMax, 1.3f * SizeCell * MyTerrain.xMax), 
+                            PositionY, 
+                            Mathf.Clamp(differentZ, -1.7f * SizeCell * MyTerrain.xMax, 1.3f * SizeCell * MyTerrain.zMax)
+                        );
                     }
 
                 }

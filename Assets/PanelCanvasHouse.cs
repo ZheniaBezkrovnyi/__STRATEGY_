@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public enum InfoImprove
 {
     Info,
-    Improve
+    Improve,
+    End
 }
 public class PanelCanvasHouse : MonoBehaviour // у Improve треба зробить те що плюсується, і картинки до полосок, але то другим
 {
@@ -21,15 +22,8 @@ public class PanelCanvasHouse : MonoBehaviour // у Improve треба зроб�
     public void GiveBackData(InfoImprove infoImprove)
     {
         initPanelHouse = new InitPanelHouse(panel, image, sliderButton, buttonPrice, canvas, message, timeImprove,allObj); // не могу в Awake, он не успевает
-        switch (infoImprove)
-        {
-            case InfoImprove.Info:
-                initPanelHouse.InitPanel(house,InfoImprove.Info);
-                break;
-            case InfoImprove.Improve:
-                initPanelHouse.InitPanel(house, InfoImprove.Improve);
-                break;
-        }
+
+        initPanelHouse.InitPanel(house, infoImprove);
     }
 }
 public class InitPanelHouse : MonoBehaviour  // панель не буду стирать, потому что и так другой клик заменит содержимое
@@ -97,6 +91,21 @@ public class InitPanelHouse : MonoBehaviour  // панель не буду ст�
                         break;
                     case TypeHouse.Resources:
                         InitMessage("Resources");
+                        break;
+                }
+                break;
+            case InfoImprove.End:
+                InitPriceAndTimeButton(_house);
+                switch (_house.dataTextOnHouse.typeHouse)
+                {
+                    case TypeHouse.JustHouse:
+                        InitMessage("End");
+                        break;
+                    case TypeHouse.Defence:
+                        InitMessage("End");
+                        break;
+                    case TypeHouse.Resources:
+                        InitMessage("End");
                         break;
                 }
                 break;

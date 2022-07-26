@@ -49,7 +49,7 @@ MonoBehaviour:
   stateHouse: 0
   onDown: 0
   dataTextOnHouse:
-    priceImprove: 200
+    priceImprove: 400
     timeImprove:
       days: 0
       hours: 1

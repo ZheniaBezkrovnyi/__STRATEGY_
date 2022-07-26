@@ -124,14 +124,18 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
                 //Debug.Log("хаус при кліку");
                 TakeObjects.End(TakeObjects._house.dataHouse.posit.x, TakeObjects._house.dataHouse.posit.z, TakeObjects._house, true);
             }
-            TakeObjects._house = this;
             if (stateHouse == StateHouse.NotActive)
             {
-                canvasHouse.OpenCanvasHouse(this);
-                stateHouse = StateHouse.InBlue;
-                currentColor = StateColor.Blue;
+                IfClick(this,canvasHouse);
             }
         }
+    }
+    public static void IfClick(House _house,CanvasHouse _canvasHouse)
+    {
+        TakeObjects._house = _house;
+        _canvasHouse.OpenCanvasHouse(_house);
+        _house.stateHouse = StateHouse.InBlue;
+        _house.currentColor = StateColor.Blue;
     }
     #endregion
     ~House()

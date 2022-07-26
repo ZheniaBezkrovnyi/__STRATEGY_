@@ -9,6 +9,7 @@ public class AnimTimeBuild : MonoBehaviour
     [SerializeField] private Text textTime;
     [SerializeField] private RectTransform canvasSlider;
     [SerializeField] private Transform cameraMain;
+    [SerializeField] private CanvasHouse canvasHouse;
     public IEnumerator BeginBuildHouse(House _house, bool beginOrContinue)
     {
         TimeBuild timeBuild;
@@ -28,6 +29,7 @@ public class AnimTimeBuild : MonoBehaviour
         {
             TimeDateTime timeEndTime = TimeDateTime.GetSum(TimeDateTime.ToTimeDateTime(dateTimeStart.ToString()), timeBuild);
 
+            _house.dataHouse.dataAnimBuildHouse.timeEndBuild = timeEndTime;
             ReturnAllOnStart.allData.allDataHouses[_house.dataHouse.myIndexOnSave].dataHouse.dataAnimBuildHouse.timeEndBuild = timeEndTime;
             ReturnAllOnStart.json.Save(ReturnAllOnStart.allData);
             remainsSeconds = TimeBuild.InSeconds(timeBuild);
@@ -55,6 +57,8 @@ public class AnimTimeBuild : MonoBehaviour
         float timeStart = Time.time - 1;
         for (; remainsSeconds > 0; )
         {
+            if (TakeObjects._house == _house) { canvasHouse.OpenCanvasHouse(_house); }
+
             if (Time.time - timeStart >= 1)
             {
                 timeStart++;
@@ -68,6 +72,7 @@ public class AnimTimeBuild : MonoBehaviour
 
     private void IfTimeIsUp(House _house,RectTransform canvasSlider,bool removeCanvasSlider)
     {
+        _house.dataHouse.dataAnimBuildHouse.timeEndBuild = new TimeDateTime(0, 0, 0, 0, 0, 0);
         if (removeCanvasSlider)
         {
             Destroy(canvasSlider.gameObject);
@@ -81,6 +86,10 @@ public class AnimTimeBuild : MonoBehaviour
             saveInJSON.SaveInsteadThisTwoHouseInList(houseNew,_house);
             Destroy(_house.gameObject);
             Debug.Log("конец замени здания");
+
+            if (TakeObjects._house == _house) {
+                House.IfClick(houseNew,canvasHouse);
+            }
         }
         else
         {
@@ -90,6 +99,8 @@ public class AnimTimeBuild : MonoBehaviour
             ReturnAllOnStart.allData.allDataHouses[_house.dataHouse.myIndexOnSave].dataHouse.dataAnimBuildHouse.timeEndBuild = new TimeDateTime(0, 0, 0, 0, 0, 0);
             ReturnAllOnStart.allData.allDataHouses[_house.dataHouse.myIndexOnSave].dataHouse.levelHouse = 1;
             ReturnAllOnStart.json.Save(ReturnAllOnStart.allData);
+
+            if (TakeObjects._house == _house) { canvasHouse.OpenCanvasHouse(_house); }
         }
     }
 

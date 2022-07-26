@@ -5,25 +5,22 @@ using UnityEngine.UI;
 
 public class UIStartScene : MonoBehaviour
 {
-    [SerializeField] private CameraMove cameraMove;
     [SerializeField] private Button buttonShop, buttonBackShop;
-    [SerializeField] private RectTransform rectCanvas;
     [SerializeField] private Canvas shopCanvas;
     [SerializeField] private Canvas panelCanvas;
-    [SerializeField] private Button buttonImprove, buttonInfo, buttonBackPanel,buttonImprovePrice;
+    [SerializeField] private Button buttonBackPanel;
+    [SerializeField] private CanvasHouse canvasHouse;
     [SerializeField] private GetTouch0 getTouch0;
     [SerializeField] private Button buttonCanvasStartYes, buttonCanvasStartNo;
     [SerializeField] private AnimTimeBuild animTimeBuild;
     private void Awake()
     {
-        widthCanvas = rectCanvas.rect.width * rectCanvas.localScale.x;
-        heightCanvas = rectCanvas.rect.height * rectCanvas.localScale.y;
         ActiveOrNotShop(buttonShop,true, shopCanvas);
         ActiveOrNotShop(buttonBackShop, false, shopCanvas);
-        ActiveOrNotShop(buttonImprove, true, panelCanvas);
-        ActiveOrNotShop(buttonInfo, true, panelCanvas);
+        ActiveOrNotShop(canvasHouse.buttonImprove, true, panelCanvas);
+        ActiveOrNotShop(canvasHouse.buttonInfo, true, panelCanvas);
         ActiveOrNotShop(buttonBackPanel, false, panelCanvas);
-        ActiveOrNotShop(buttonImprovePrice, false, panelCanvas);
+        ActiveOrNotShop(canvasHouse.buttonImprovePrice, false, panelCanvas);
         RealizeCanvasHouseStart(buttonCanvasStartYes);
         RealizeCanvasHouseStart(buttonCanvasStartNo);
     }
@@ -32,6 +29,7 @@ public class UIStartScene : MonoBehaviour
     private void ActiveOrNotShop(Button button,bool _bool,Canvas canvas)
     {
         button.onClick.AddListener(() => {
+            Debug.Log(button.name);
             if (canvas == panelCanvas)
             {
                 if (_bool)
@@ -42,7 +40,7 @@ public class UIStartScene : MonoBehaviour
                 else
                 {
                     StartCoroutine(StopTouch()); // не могу красиво, потому что гонка времени не дает
-                    if (button == buttonImprovePrice) // проблеми із ссилкою у самій панелі, тому буде тут
+                    if (button == canvasHouse.buttonImprovePrice) // проблеми із ссилкою у самій панелі, тому буде тут
                     {
                         StartCoroutine(animTimeBuild.BeginBuildHouse(TakeObjects._house, true));
                     }
@@ -67,58 +65,9 @@ public class UIStartScene : MonoBehaviour
             case "Improve":
                 panelCanvas.GetComponent<PanelCanvasHouse>().GiveBackData(InfoImprove.Improve);
                 break;
-        }
-    }
-
-    public bool boolPosButton(Vector2 pos)
-    {
-        RectTransform[] rectButtons = new RectTransform[2]
-        {
-            buttonImprove.GetComponent<RectTransform>(),
-            buttonInfo.GetComponent<RectTransform>()
-        };
-        if (!ForAllNeedButton(rectButtons))
-        {
-            return false;
-        }
-        return true;
-
-
-
-        bool ForAllNeedButton(RectTransform[] rect) {
-            float MinWidth = widthCanvas;
-            float MaxWidth = 0;
-            float MinHeight = heightCanvas;
-            float MaxHeight = 0;
-            for (int i = 0; i < rect.Length; i++)
-            {
-                if(rect[i].anchorMin.x < MinWidth)
-                {
-                    MinWidth = rect[i].anchorMin.x;
-                }
-                if (rect[i].anchorMax.x > MaxWidth)
-                {
-                    MaxWidth = rect[i].anchorMax.x;
-                }
-                if (rect[i].anchorMin.y < MinHeight)
-                {
-                    MinHeight = rect[i].anchorMin.y;
-                }
-                if (rect[i].anchorMax.y > MaxHeight)
-                {
-                    MaxHeight = rect[i].anchorMax.y;
-                }
-            }
-
-            if (pos.x < widthCanvas * MaxWidth && pos.x > widthCanvas * MinWidth &&
-                pos.y < heightCanvas * MaxHeight && pos.y > heightCanvas * MinHeight)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            case "End":
+                panelCanvas.GetComponent<PanelCanvasHouse>().GiveBackData(InfoImprove.End);
+                break;
         }
     }
 

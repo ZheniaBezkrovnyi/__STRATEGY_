@@ -10,7 +10,7 @@ public enum ExistOrNot
 }
 public class GetTouch0 : MonoBehaviour
 {
-    [SerializeField] private UIStartScene uiStartScene;
+    [SerializeField] private CanvasHouse canvasHouse;
     [SerializeField] private Canvas panel;
     House house;
     private bool drag = false;
@@ -36,18 +36,14 @@ public class GetTouch0 : MonoBehaviour
         if (house.existOrNot == ExistOrNot.Not) 
         {
             return;
-        }/*else if (house.existOrNot == ExistOrNot.Yes)
-        {
-            SaveInJSON saveInJSON = new SaveInJSON();
-            saveInJSON.SaveThisHouseInList(house);
-        }*/
+        }
         if (Input.touchCount > 0)
         {
 
 
             if(Input.GetTouch(0).phase == TouchPhase.Ended)
             {
-                if(timeDrag <= 0.3f  && !STOP && !uiStartScene.boolPosButton(Input.GetTouch(0).position))
+                if(timeDrag <= 0.3f  && !STOP)
                 {
                     ActionIfOneTap();
                 }
