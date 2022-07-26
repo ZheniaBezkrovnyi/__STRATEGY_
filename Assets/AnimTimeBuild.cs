@@ -26,7 +26,6 @@ public class AnimTimeBuild : MonoBehaviour
         int remainsSeconds = 0;
         if (beginOrContinue)
         {
-            Debug.Log(dateTimeStart.ToString());
             TimeDateTime timeEndTime = TimeDateTime.TimePlusTimeBuild(TimeDateTime.GoWithStringInTimeDateTime(dateTimeStart.ToString()), timeBuild);
 
             ReturnAllOnStart.allData.allDataHouses[_house.dataHouse.myIndexOnSave].dataHouse.dataAnimBuildHouse.timeEndBuild = timeEndTime;
@@ -46,7 +45,7 @@ public class AnimTimeBuild : MonoBehaviour
         }
         if(remainsSeconds == 0)
         {
-            IfTimeIsUp(_house, canvasSlider);
+            IfTimeIsUp(_house, canvasSlider,false);
             yield break;
         }
 
@@ -63,20 +62,26 @@ public class AnimTimeBuild : MonoBehaviour
                 --remainsSeconds;
                 slider.value = ((float)timeForBuild - (float)remainsSeconds) / (float)timeForBuild;
             }
-            yield return null;
+            yield return new WaitForSeconds(1f); //перевірка зверху на час має бути, щоб неточності коректувати
         }
-        IfTimeIsUp(_house, rectCanvasSlider);
+        IfTimeIsUp(_house, rectCanvasSlider,true);
     }
 
-    private void IfTimeIsUp(House _house,RectTransform canvasSlider)
+    private void IfTimeIsUp(House _house,RectTransform canvasSlider,bool removeCanvasSlider)
     {
-        Destroy(canvasSlider.gameObject);
+        if (removeCanvasSlider)
+        {
+            Destroy(canvasSlider.gameObject);
+        }
         if (_house.existOrNot == ExistOrNot.Yes)
         {
-            House houseNew = Instantiate(_house,_house.transform.position,_house.transform.rotation);
+            //Debug.Log(_house.houseTextOnShop.dataHouseChangeOnText.currentBuildThisHouse);
+            //Debug.Log("начало замени здания");
+            House houseNew = Instantiate(_house.housesNextPrefab,_house.transform.position,_house.transform.rotation);
             SaveInJSON saveInJSON = new SaveInJSON();
             saveInJSON.SaveInsteadThisTwoHouseInList(houseNew,_house);
             Destroy(_house.gameObject);
+            Debug.Log("конец замени здания");
         }
         else
         {
@@ -95,7 +100,6 @@ public class AnimTimeBuild : MonoBehaviour
 
 
 
-
     private Quaternion angleCamera;
     private RectTransform InstCanvasSlider(House _house)
     {
@@ -103,7 +107,6 @@ public class AnimTimeBuild : MonoBehaviour
         RectTransform canvasSLIDER = Instantiate(canvasSlider);
         canvasSLIDER.gameObject.SetActive(true);
         Transform trHouse = _house.transform;
-        //Transform trChild = trHouse.GetChild(0);
         canvasSLIDER.SetParent(trHouse);
         float diffX = trHouse.position.x;
         float diffY = trHouse.position.y;

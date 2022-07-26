@@ -10,7 +10,7 @@ public class UIStartScene : MonoBehaviour
     [SerializeField] private RectTransform rectCanvas;
     [SerializeField] private Canvas shopCanvas;
     [SerializeField] private Canvas panelCanvas;
-    [SerializeField] private Button buttonImprove, buttonInfo, buttonBackPanel;
+    [SerializeField] private Button buttonImprove, buttonInfo, buttonBackPanel,buttonImprovePrice;
     [SerializeField] private GetTouch0 getTouch0;
     [SerializeField] private Button buttonCanvasStartYes, buttonCanvasStartNo;
     [SerializeField] private AnimTimeBuild animTimeBuild;
@@ -23,6 +23,7 @@ public class UIStartScene : MonoBehaviour
         ActiveOrNotShop(buttonImprove, true, panelCanvas);
         ActiveOrNotShop(buttonInfo, true, panelCanvas);
         ActiveOrNotShop(buttonBackPanel, false, panelCanvas);
+        ActiveOrNotShop(buttonImprovePrice, false, panelCanvas);
         RealizeCanvasHouseStart(buttonCanvasStartYes);
         RealizeCanvasHouseStart(buttonCanvasStartNo);
     }
@@ -41,6 +42,10 @@ public class UIStartScene : MonoBehaviour
                 else
                 {
                     StartCoroutine(StopTouch()); // не могу красиво, потому что гонка времени не дает
+                    if (button == buttonImprovePrice) // проблеми із ссилкою у самій панелі, тому буде тут
+                    {
+                        StartCoroutine(animTimeBuild.BeginBuildHouse(TakeObjects._house, true));
+                    }
                 }
             }
             canvas.gameObject.SetActive(_bool);

@@ -45,7 +45,6 @@ public class CameraMove : MonoBehaviour
             {
                 if (Input.touchCount == 1)
                 {
-                    Debug.Log(possibleMove);
                     float deltaTouchX1 = touch1.deltaPosition.x;
                     float deltaTouchY1 = touch1.deltaPosition.y;
                     if (TakeObjects._house == null || (TakeObjects._house != null && !TakeObjects._house.Drag))

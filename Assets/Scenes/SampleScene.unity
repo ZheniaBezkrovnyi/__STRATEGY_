@@ -1357,8 +1357,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointsMap:
-  - {x: -7, y: -7}
-  - {x: 7, y: 7}
+  - {x: -27, y: -27}
+  - {x: 27, y: 27}
   zatychki: {fileID: 8606414305439931372, guid: eeff0849c5d41b94bbceda47e14faf33,
     type: 3}
   field: {fileID: 11400000, guid: 7cb2352fc7affad4bbabe412074015ae, type: 2}
@@ -2285,6 +2285,7 @@ MonoBehaviour:
   buttonImprove: {fileID: 807567337}
   buttonInfo: {fileID: 2095059092}
   buttonBackPanel: {fileID: 1811240857}
+  buttonImprovePrice: {fileID: 1340562975}
   getTouch0: {fileID: 2021051346}
   buttonCanvasStartYes: {fileID: 1249470693}
   buttonCanvasStartNo: {fileID: 487027371}

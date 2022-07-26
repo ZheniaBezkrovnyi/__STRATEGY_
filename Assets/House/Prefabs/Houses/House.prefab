@@ -51,16 +51,16 @@ MonoBehaviour:
   dataTextOnHouse:
     priceImprove: 100
     timeImprove:
-      days: 1
-      hours: 1
+      days: 0
+      hours: 0
       minutes: 0
-      seconds: 0
+      seconds: 5
     typeHouse: 0
     info:
       spriteHouse: {fileID: 21300000, guid: d4879ce57f2308948bbc604dac11acd7, type: 3}
   houseTextOnShop:
     dataHouseChangeOnText:
-      currentBuildThisHouse: 3
+      currentBuildThisHouse: 1
     MaxCountBuild: 15
     TimeNeedBuildStart:
       days: 0

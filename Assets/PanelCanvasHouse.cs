@@ -27,7 +27,6 @@ public class PanelCanvasHouse : MonoBehaviour // у Improve треба зроб�
                 initPanelHouse.InitPanel(house,InfoImprove.Info);
                 break;
             case InfoImprove.Improve:
-                Debug.Log(initPanelHouse);
                 initPanelHouse.InitPanel(house, InfoImprove.Improve);
                 break;
         }
@@ -39,7 +38,8 @@ public class InitPanelHouse : MonoBehaviour  // панель не буду ст�
     private Image image;
     private Text message,timeImprove;
     private List<GameObject> allObj;
-    public InitPanelHouse(RectTransform _panel, Image _image, RectTransform _sliderButton, RectTransform _buttonPrice, RectTransform _canvas, Text _message, Text _timeImprove, List<GameObject> _allObj)
+    public InitPanelHouse(RectTransform _panel, Image _image, RectTransform _sliderButton, RectTransform _buttonPrice, 
+        RectTransform _canvas, Text _message, Text _timeImprove, List<GameObject> _allObj)
     {
         allObj = _allObj;
         if(allObj.Count != 0)
@@ -57,7 +57,6 @@ public class InitPanelHouse : MonoBehaviour  // панель не буду ст�
         canvas = _canvas;
         message = _message;
         timeImprove = _timeImprove;
-
         CloseAllForStart();
         widthCanvas = canvas.rect.width * canvas.localScale.x;
         heightCanvas = canvas.rect.height * canvas.localScale.y;
@@ -138,9 +137,10 @@ public class InitPanelHouse : MonoBehaviour  // панель не буду ст�
     }
     private void InitPriceAndTimeButton(House _house)
     {
-        buttonPrice.gameObject.SetActive(true);
+        buttonPrice.gameObject.SetActive(true); //баттон инит в UIStartScene
         Text text = buttonPrice.GetChild(0).GetComponent<Text>();
         text.text = _house.dataTextOnHouse.priceImprove.ToString();
+
         InitTimeImprove();
         void InitTimeImprove()
         {

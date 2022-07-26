@@ -32,6 +32,11 @@ public class SaveInJSON : MonoBehaviour
     {
         int indexLast = _house.dataHouse.myIndexOnSave;
         house.dataHouse = _house.dataHouse;
+        house.dataHouse.levelHouse = _house.dataHouse.levelHouse + 1;
+        house.canvasHouse = _house.canvasHouse;
+        house.houseTextOnShop = _house.houseTextOnShop;
+        house.houseTextOnShop.dataHouseChangeOnText.currentBuildThisHouse = ReturnAllOnStart.allData.allDataHouses[indexLast].dataHouseChangeOnText.currentBuildThisHouse;
+        house.existOrNot = ExistOrNot.Yes;
         AllDataHouse allDataHouse = new AllDataHouse()
         {
             dataHouse = new DataHouse()
@@ -40,7 +45,11 @@ public class SaveInJSON : MonoBehaviour
                 posit = new Posit(house.dataHouse.posit.x, house.dataHouse.posit.z),
                 dataAnimBuildHouse = new DataAnimBuildHouse(),
                 myIndexOnSave = indexLast,
-                levelHouse = _house.dataHouse.levelHouse + 1
+                levelHouse = house.dataHouse.levelHouse
+            },
+            dataHouseChangeOnText = new DataHouseChangeOnText()
+            {
+                currentBuildThisHouse = _house.houseTextOnShop.dataHouseChangeOnText.currentBuildThisHouse
             }
         };
         ReturnAllOnStart.allData.allDataHouses[indexLast] = allDataHouse;
