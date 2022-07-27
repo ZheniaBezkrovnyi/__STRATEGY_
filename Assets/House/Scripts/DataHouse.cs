@@ -9,6 +9,7 @@ public class HouseTextOnShop //дание для кнопок в магазин�
 {
     [HideInInspector] public DataHouseChangeOnText dataHouseChangeOnText;
     public int MaxCountBuild;
+    public int priceForBuild;
     public TimeBuild TimeNeedBuildStart;
     [HideInInspector] public ButtonChange buttonChange;
 }

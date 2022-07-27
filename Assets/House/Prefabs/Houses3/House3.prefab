@@ -155,6 +155,7 @@ MonoBehaviour:
     dataHouseChangeOnText:
       currentBuildThisHouse: 0
     MaxCountBuild: 35
+    priceForBuild: 3000
     TimeNeedBuildStart:
       days: 0
       hours: 0
@@ -176,6 +177,7 @@ MonoBehaviour:
         seconds: 0
     myIndexOnSave: 0
     levelHouse: 0
+  housesNextPrefab: {fileID: 0}
   canvasHouse: {fileID: 0}
   sides: {x: 4, y: 4}
   clickColor: {r: 0, g: 0.7169812, b: 0.098891445, a: 0}

@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 public class CameraMove : MonoBehaviour
 {
+    [SerializeField] private RectTransform canvas;
     private float angleY;
     public Transform transformThis;
     private Vector2 posTouch1;
     private Vector2 posTouch2;
     private bool boolTouch;
     private int yMax,yMin;
+    private float localScaleCanvasX;
+    private float localScaleCanvasY;
     private int SizeCell;
     public static bool possibleMove = true;
     private void Awake()
@@ -18,6 +21,8 @@ public class CameraMove : MonoBehaviour
         SizeCell = MyTerrain.sizeOneCell;
         yMin = 15 * SizeCell / 2;
         yMax = yMin * 5;
+        localScaleCanvasX = canvas.localScale.x;
+        localScaleCanvasY = canvas.localScale.y;
         transformThis.position = new Vector3(MyTerrain.xMin*SizeCell, yMin*2, MyTerrain.xMin*SizeCell);
     }
     private void FixedUpdate()
@@ -46,6 +51,7 @@ public class CameraMove : MonoBehaviour
                 if (Input.touchCount == 1)
                 {
                     float deltaTouchX1 = touch1.deltaPosition.x;
+                    Debug.Log(deltaTouchX1);
                     float deltaTouchY1 = touch1.deltaPosition.y;
                     if (TakeObjects._house == null || (TakeObjects._house != null && !TakeObjects._house.Drag))
                     {

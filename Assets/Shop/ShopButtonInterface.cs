@@ -7,7 +7,7 @@ public enum TypeTextOnButton
 {
     CountHouse,
     TimeBuild,
-
+    Price
 }
 public class ShopButtonInterface : MonoBehaviour
 {
@@ -16,9 +16,10 @@ public class ShopButtonInterface : MonoBehaviour
     private TypeTextOnButton typeText;
     public ShopButtonInterface(Text _text) // тепер можу просто вписувать значення і правильно добавиться, значення ставити, від правого нижного куту кнопок,однакова послідовність з енамом
     {
-        listPosText = new Vector2[2] {
-            new Vector2(20,14),
-            new Vector2(330,14),
+        listPosText = new Vector2[3] {
+            new Vector2(20,54),
+            new Vector2(330,54),
+            new Vector2(175,24)
         };
         text = _text;
 
@@ -52,17 +53,7 @@ public class ShopButtonInterface : MonoBehaviour
 
         void SwithEnumBetweenText(TypeTextOnButton type, ButtonChange _buttonChange, Text Text)
         {
-            switch (type)
-            {
-                case TypeTextOnButton.CountHouse:
-                    Text.alignment = TextAnchor.MiddleRight;
-                    _buttonChange.InitTextCurrent(Text);
-                        break;
-                case TypeTextOnButton.TimeBuild:
-                    Text.alignment = TextAnchor.MiddleLeft;
-                    _buttonChange.InitTextTimeBuild(Text);
-                    break;
-            }
+            _buttonChange.InitText(Text,type);
         }
     }
 }
