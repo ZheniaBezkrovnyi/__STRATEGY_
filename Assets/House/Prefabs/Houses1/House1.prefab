@@ -153,9 +153,10 @@ MonoBehaviour:
       spriteHouse: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   houseTextOnShop:
     dataHouseChangeOnText:
-      currentBuildThisHouse: 0
+      currentBuildThisHouse: 5
     MaxCountBuild: 5
     priceForBuild: 500
+    typeMoney: 1
     TimeNeedBuildStart:
       days: 0
       hours: 1

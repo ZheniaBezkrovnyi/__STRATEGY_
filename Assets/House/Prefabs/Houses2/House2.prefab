@@ -63,6 +63,7 @@ MonoBehaviour:
       currentBuildThisHouse: 0
     MaxCountBuild: 8
     priceForBuild: 200
+    typeMoney: 2
     TimeNeedBuildStart:
       days: 0
       hours: 0

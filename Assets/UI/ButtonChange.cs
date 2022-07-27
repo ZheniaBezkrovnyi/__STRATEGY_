@@ -9,6 +9,7 @@ public class ButtonChange : MonoBehaviour
     public Text textTimeBuild;
     public Text textPrice;
     public HouseTextOnShop houseTextOnShop;
+    public Money money;
     public void InitText(Text _text,TypeTextOnButton typeText) // alignment можна потом при ініциалізації вказувать
     {
         switch (typeText)
@@ -63,9 +64,26 @@ public class ButtonChange : MonoBehaviour
         }
     }
 
-    public void CheckUpdate() //визвать при обновлении MaxCount и входе в игру 
+    private Button CheckUpdateMaxCountBuild() //визвать при обновлении MaxCount и входе в игру 
     {
+        Button b = GetComponent<Button>();
         if (houseTextOnShop.dataHouseChangeOnText.currentBuildThisHouse != houseTextOnShop.MaxCountBuild)
+        {
+            b.image.color = new Color(1, 1, 1, 1);
+        }
+        else
+        {
+            b.image.color = new Color(0.6f, 0.6f, 0.6f, 1f);
+        }
+        return b;
+    }
+
+    public void CheckAllUpdate()   // buttonChange при переході будівлі на інший рівень передає свої ці дані наступному, карренти залишаються, поки багів не бачив, наче все ідеально, головне не стирати buttonChange у будівель ніде
+    {
+        Button b = CheckUpdateMaxCountBuild();
+        if(b.image.color == new Color(0.6f, 0.6f, 0.6f, 1f)) { return; }
+
+        if (money.CanDoingOperation(-houseTextOnShop.priceForBuild,houseTextOnShop.typeMoney) != TypeOperation.False)
         {
             GetComponent<Button>().image.color = new Color(1, 1, 1, 1);
         }

@@ -12,6 +12,7 @@ public enum InfoImprove
 }
 public class PanelCanvasHouse : MonoBehaviour // у Improve треба зробить те що плюсується, і картинки до полосок, але то другим
 {
+    [SerializeField] private Money money;
     [HideInInspector] public House house;
     [SerializeField] private RectTransform canvas;
     [SerializeField] private Image image;
@@ -21,7 +22,7 @@ public class PanelCanvasHouse : MonoBehaviour // у Improve треба зроб�
     private List<GameObject> allObj = new List<GameObject>(); // чтоб удалять при переключении
     public void GiveBackData(InfoImprove infoImprove)
     {
-        initPanelHouse = new InitPanelHouse(panel, image, sliderButton, buttonPrice, canvas, message, timeImprove,allObj); // не могу в Awake, он не успевает
+        initPanelHouse = new InitPanelHouse(panel, image, sliderButton, buttonPrice, canvas, message, timeImprove,allObj,money); // не могу в Awake, он не успевает
 
         initPanelHouse.InitPanel(house, infoImprove);
     }
@@ -32,9 +33,11 @@ public class InitPanelHouse : MonoBehaviour  // панель не буду ст�
     private Image image;
     private Text message,timeImprove;
     private List<GameObject> allObj;
+    private Money money;
     public InitPanelHouse(RectTransform _panel, Image _image, RectTransform _sliderButton, RectTransform _buttonPrice, 
-        RectTransform _canvas, Text _message, Text _timeImprove, List<GameObject> _allObj)
+        RectTransform _canvas, Text _message, Text _timeImprove, List<GameObject> _allObj, Money _money)
     {
+        money = _money;
         allObj = _allObj;
         if(allObj.Count != 0)
         {
@@ -149,7 +152,28 @@ public class InitPanelHouse : MonoBehaviour  // панель не буду ст�
         buttonPrice.gameObject.SetActive(true); //баттон инит в UIStartScene
         Text text = buttonPrice.GetChild(0).GetComponent<Text>();
         text.text = _house.dataTextOnHouse.priceImprove.ToString();
+        Button bPrice = buttonPrice.GetComponent<Button>();
+        if (!CanBuy())      //можна лучше)
+        {
+            bPrice.image.color = new Color(0.6f, 0.6f, 0.6f, 1f);
+        }
+        else
+        {
+            bPrice.image.color = new Color(1f, 1f, 1f, 1f);
+        }
 
+        bool CanBuy()
+        {
+            if (money.CanDoingOperation(-_house.dataTextOnHouse.priceImprove, _house.houseTextOnShop.typeMoney) != TypeOperation.False)
+            {
+                return true;
+            }
+            else
+            {
+                Debug.Log("не хватает денег для улучшения");  //  потом notification
+                return false;
+            }
+        }
         InitTimeImprove();
         void InitTimeImprove()
         {

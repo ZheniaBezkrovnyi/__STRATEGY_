@@ -26,15 +26,29 @@ public class Shop : MonoBehaviour
     private ShopButtonInterface shopInterface;
     [SerializeField] private Notification notification;
     [SerializeField] private CanvasHouse canvasHouse;
-    private void Start()
-    {
-        localScaleCanvas = canvas.localScale;
-        shopInterface = new ShopButtonInterface(textOnButton);
-        InitializeShop();
-    }
     private Vector3 localScaleCanvas;
+    [SerializeField] private Money money;
+
+    private bool IsCreate;
+
+    public void OpenShop()
+    {
+        if (!IsCreate)
+        {
+            InitializeShop();
+        }
+        else
+        {
+            CheckAllUpdate();
+        }
+    }
+
+
     private void InitializeShop()
     {
+        IsCreate = true;
+        localScaleCanvas = canvas.localScale;
+        shopInterface = new ShopButtonInterface(textOnButton);
         float heightCanvas = canvas.rect.height * canvas.localScale.y;
         float widthCanvas = canvas.rect.width * canvas.localScale.x;
         float heightContent = heightCanvas * 0.9f;
@@ -76,10 +90,11 @@ public class Shop : MonoBehaviour
             image.sprite= _house.dataTextOnHouse.info.spriteHouse; // картинка пряма, но потом под кутом скрин и обрезать все кроме здания и клетки
 
             ButtonChange buttonChange = _button.GetComponent<ButtonChange>();
-
+            buttonChange.money = money;
+            listButtonChange.Add(buttonChange);
 
             shopInterface.InitialiseTexts(_button, _house, buttonChange);
-            buttonChange.CheckUpdate(); // для interactable
+            buttonChange.CheckAllUpdate(); // для interactable
 
             void OnButton()
             {
@@ -118,6 +133,14 @@ public class Shop : MonoBehaviour
             {
                 return 0;
             }
+        }
+    }
+    private List<ButtonChange> listButtonChange = new List<ButtonChange>();
+    private void CheckAllUpdate()
+    {
+        for(int i=0; i < listButtonChange.Count; i++)
+        {
+            listButtonChange[i].CheckAllUpdate();
         }
     }
 }

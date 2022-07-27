@@ -12,7 +12,7 @@ public class ReturnAllOnStart : MonoBehaviour
 {
     public AllHousePrefab allHousePrefab;
     public static JSON json;
-    [HideInInspector] public StartProject startProject;
+    [HideInInspector] public static StartProject startProject; //поки так
     public static AllData allData;
     [SerializeField] private CanvasHouse canvasHouse;
     [SerializeField] private AnimTimeBuild animTimeBuild;
@@ -34,6 +34,12 @@ public class ReturnAllOnStart : MonoBehaviour
             allData = new AllData()
             {
                 allDataHouses = new List<AllDataHouse>(),
+                allTypeMoney = new AllTypeMoney()
+                {
+                    dataMoneyYellow = new DataMoneyJSON(),
+                    dataMoneyGreen = new DataMoneyJSON(),
+                    dataMoneyBlue = new DataMoneyJSON(),
+                }
             };
         }
         void NullJSON()

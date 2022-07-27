@@ -62,6 +62,8 @@ MonoBehaviour:
     dataHouseChangeOnText:
       currentBuildThisHouse: 0
     MaxCountBuild: 5
+    priceForBuild: 0
+    typeMoney: 1
     TimeNeedBuildStart:
       days: 0
       hours: 0

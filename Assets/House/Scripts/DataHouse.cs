@@ -10,6 +10,7 @@ public class HouseTextOnShop //дание для кнопок в магазин�
     [HideInInspector] public DataHouseChangeOnText dataHouseChangeOnText;
     public int MaxCountBuild;
     public int priceForBuild;
+    public TypeMoney typeMoney;
     public TimeBuild TimeNeedBuildStart;
     [HideInInspector] public ButtonChange buttonChange;
 }
@@ -92,8 +93,25 @@ public class Info
 public class AllData
 {
     public List<AllDataHouse> allDataHouses;
+    public AllTypeMoney allTypeMoney;
 }
+#region Money
+[Serializable]
+public class AllTypeMoney
+{
+    public DataMoneyJSON dataMoneyYellow;
+    public DataMoneyJSON dataMoneyGreen;
+    public DataMoneyJSON dataMoneyBlue;
+}
+[Serializable]
+public class DataMoneyJSON
+{
+    public int countMoney;
+    public int maxMoney;
+}
+#endregion
 
+#region AllDataHouse
 [Serializable]
 public class AllDataHouse
 {
@@ -398,3 +416,4 @@ public class Posit
         return new Vector2Int(X, Z);
     }
 }
+#endregion
