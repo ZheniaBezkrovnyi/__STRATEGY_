@@ -35,12 +35,20 @@ public class Money : MonoBehaviour
             StartCoroutine(ValueSliderAnim(0, (float)dataMoneyBlue.CountMoney / (float)dataMoneyBlue.MaxMoney, dataMoneyBlue.slider));
         }
     }
+    private int time;
     private void Update()
     {
         if (Input.GetMouseButtonDown(1))
         {
             ChangeMoney(1000,(TypeMoney)UnityEngine.Random.Range(0,3));
         }
+#if UNITY_ANDROID && !UNITY_EDITOR
+        if (Time.time >= time + 1)
+        {
+            time++;
+            ChangeMoney(100, (TypeMoney)UnityEngine.Random.Range(0, 3));
+        }
+#endif
     }
     public void ChangeMoney(int sum,TypeMoney typeMoney,bool save = true)
     {
@@ -119,7 +127,7 @@ public class DataMoney
 
     public void OnStart(TypeMoney typeMoney)
     {
-        if (ReturnAllOnStart.startProject == StartProject.Continue) // потомучто если тут 0, то еще не сохранял
+        if (ReturnAllOnStart.startProject == StartProject.Continue) 
         {
             GetJSONData(typeMoney);
         }
@@ -203,7 +211,7 @@ public class DataMoney
         {
             case TypeMoney.Yellow:
                 maxMoney = ReturnAllOnStart.allData.allTypeMoney.dataMoneyYellow.maxMoney;
-                countMoney = ReturnAllOnStart.allData.allTypeMoney.dataMoneyYellow.countMoney;
+                countMoney = ReturnAllOnStart.allData.allTypeMoney.dataMoneyYellow.countMoney; 
                 break;
             case TypeMoney.Green:
                 maxMoney = ReturnAllOnStart.allData.allTypeMoney.dataMoneyGreen.maxMoney;

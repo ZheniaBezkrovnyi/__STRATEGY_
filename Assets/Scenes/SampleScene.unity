@@ -239,8 +239,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1556870078}
-  m_RootOrder: 1
+  m_Father: {fileID: 1139755759}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3, y: 0.4}
   m_AnchorMax: {x: 0.7, y: 0.6}
@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.3330518, b: 0, a: 0}
+  m_Color: {r: 0, g: 0.21367025, b: 1, a: 0}
   m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1902,6 +1902,7 @@ MonoBehaviour:
   allHousePrefab: {fileID: 11400000, guid: b2d0ceec37cf8f24990bf4cbd9ec61b2, type: 2}
   canvasHouse: {fileID: 417757216}
   animTimeBuild: {fileID: 7434120174395539828}
+  notification: {fileID: 243569585}
 --- !u!114 &963194233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2604,7 +2605,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 540, y: 540}
+  m_SizeDelta: {x: 540, y: 580}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1127359018
 MonoBehaviour:
@@ -2812,6 +2813,7 @@ RectTransform:
   - {fileID: 125861730}
   - {fileID: 1468097956}
   - {fileID: 1093914918}
+  - {fileID: 243569582}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3946,7 +3948,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1597283369}
-  - {fileID: 243569582}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5526,6 +5527,7 @@ MonoBehaviour:
   canvasSlider: {fileID: 7434120174395539827}
   cameraMain: {fileID: 963194228}
   canvasHouse: {fileID: 417757216}
+  notification: {fileID: 243569585}
 --- !u!223 &7434120174395539838
 Canvas:
   m_ObjectHideFlags: 0

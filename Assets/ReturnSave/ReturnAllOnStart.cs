@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.IO;
 
 public enum StartProject
 {
@@ -16,15 +17,15 @@ public class ReturnAllOnStart : MonoBehaviour
     public static AllData allData;
     [SerializeField] private CanvasHouse canvasHouse;
     [SerializeField] private AnimTimeBuild animTimeBuild;
+    [SerializeField] private Notification notification;
     void Awake()
     {
         allHousePrefab.FillInList();
-        json = new JSON();
+        json = new JSON(notification);
         //NullJSON();
         if (json.Load() != null)
         {
             startProject = StartProject.Continue;
-            //Debug.Log("считал вродеби");
             allData = json.Load();
             CreateReturnHouse();
         }
@@ -42,6 +43,7 @@ public class ReturnAllOnStart : MonoBehaviour
                 }
             };
         }
+        notification.CallNotification("Create");
         void NullJSON()
         {
             allData = null;

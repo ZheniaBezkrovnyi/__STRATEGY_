@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.IO;
 using System;
 
@@ -11,18 +12,23 @@ public enum TypeSave
 }
 public class JSON
 {
-    public string fileJSON;
-    public JSON()
+    private string fileJSON;
+    private Notification notification;
+    public JSON(Notification _notification)
     {
+        notification = _notification;
         string application;
-
-#if UNITY_ANDROID
+#if UNITY_ANDROID && !UNITY_EDITOR
         application = Application.persistentDataPath;
-#endif
-#if UNITY_EDITOR
+#else
         application = Application.dataPath;
 #endif
-        fileJSON = Path.Combine(application + "/JSON/JSON.json.txt");
+        fileJSON = Path.Combine(application, "JSON.json.txt");
+        if (ReturnAllOnStart.startProject == StartProject.Start && !File.Exists(fileJSON))
+        {
+            File.Create(fileJSON);
+            SceneManager.LoadScene("SampleScene");
+        }
     }
     public void Save(AllData allData)
     {

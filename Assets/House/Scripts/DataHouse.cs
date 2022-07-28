@@ -148,8 +148,13 @@ public class TimeDateTime
     }
     public static string ToString(TimeDateTime timeDateTime)
     {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        string day = timeDateTime.days.ToString() + "/";
+        string month = timeDateTime.month.ToString() + "/";
+#else
         string day = timeDateTime.days.ToString() + ".";
         string month = timeDateTime.month.ToString() + ".";
+#endif
         string years = timeDateTime.years.ToString() + " ";
         string hour = timeDateTime.hours.ToString() + ":";
         string minute = timeDateTime.minutes.ToString() + ":";
@@ -160,7 +165,11 @@ public class TimeDateTime
     {
         string[] stringAll = timeDateTime.Split(' ');
 
+#if UNITY_ANDROID && !UNITY_EDITOR
+        string[] stringDMY = stringAll[0].Split('/');
+#else
         string[] stringDMY = stringAll[0].Split('.');
+#endif
         string[] stringHMS = stringAll[1].Split(':');
         int _seconds = Int32.Parse(stringHMS[2]);
         int _minutes = Int32.Parse(stringHMS[1]);
@@ -260,7 +269,6 @@ public class TimeDateTime
             }
             else
             {
-                Debug.Log(_minutes + " " + _seconds);
                 return new TimeDateTime(_years*(-1), _month * (-1), _day * (-1), _hours * (-1), _minutes * (-1), _seconds * (-1));
             }
         }

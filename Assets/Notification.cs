@@ -11,16 +11,16 @@ public class Notification : MonoBehaviour
     }
     private IEnumerator alphaNotification(string _text)
     {
+        textNotification.text = _text;
         for (int i = 1; i <= 10; i++)
         {
             textNotification.color = new Color(textNotification.color.r, textNotification.color.g, textNotification.color.b, i);
             yield return new WaitForSeconds(1f / 50);
         }
-        textNotification.text = _text;
         for (int i = 0; i < 10; i++)
         {
             textNotification.color = new Color(textNotification.color.r, textNotification.color.g, textNotification.color.b, 9 - i);
-            yield return new WaitForSeconds(1f / 5);
+            yield return new WaitForSeconds(1f / 2);
         }
     }
 }

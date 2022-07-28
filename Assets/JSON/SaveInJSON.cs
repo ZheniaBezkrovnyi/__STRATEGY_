@@ -6,7 +6,6 @@ public class SaveInJSON : MonoBehaviour
 {
     public void AddThisHouseInList(House house)
     {
-        Debug.Log("AddInList");
         house.houseTextOnShop.buttonChange.AddCurrentBuildThisHouse(); // визветься тільки при ставленні;по ссилкам все норм, при взятті, даю сюди ссилку на buttonChange кнопки на якій це пишеться і маю тут її дані, і у неї змінюю і свої і ї
         AllDataHouse allDataHouse = new AllDataHouse()
         {
