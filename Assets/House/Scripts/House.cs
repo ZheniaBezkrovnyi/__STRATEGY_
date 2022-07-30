@@ -26,10 +26,10 @@ public enum TypeHouse
 }
 public class House : Touch, IPointerClickHandler, IPointerDownHandler
 {
-    public DataTextOnHouse dataTextOnHouse;
+    public DataTextOnHouse dataTextOnHouse;//----- не нужно в общий клас над house
     public HouseTextOnShop houseTextOnShop;
     public DataHouse dataHouse;
-    public House housesNextPrefab;
+    public House housesNextPrefab;//------
 
     [HideInInspector] public CanvasHouse canvasHouse; 
     [SerializeField] private Vector2Int sides;

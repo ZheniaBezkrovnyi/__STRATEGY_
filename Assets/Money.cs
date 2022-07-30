@@ -18,21 +18,21 @@ public enum TypeOperation
 public class Money : MonoBehaviour
 {
     [SerializeField] private AnimationCurve curve; // від 1 до 0 в середині і до 5 наверх
-    [SerializeField] private DataMoney dataMoneyYellow;
-    [SerializeField] private DataMoney dataMoneyGreen;
-    [SerializeField] private DataMoney dataMoneyBlue;
+    [SerializeField] private DataMoney dataMoneyDollar;
+    [SerializeField] private DataMoney dataMoneySilver;
+    [SerializeField] private DataMoney dataMoneyGold;
 
     private void Start() // для инициализации
     {
         Init();
         void Init()
         {
-            dataMoneyYellow.OnStart(TypeMoney.Yellow);
-            StartCoroutine(ValueSliderAnim(0, (float)dataMoneyYellow.CountMoney/(float)dataMoneyYellow.MaxMoney, dataMoneyYellow.slider));
-            dataMoneyGreen.OnStart(TypeMoney.Green);
-            StartCoroutine(ValueSliderAnim(0, (float)dataMoneyGreen.CountMoney / (float)dataMoneyGreen.MaxMoney, dataMoneyGreen.slider));
-            dataMoneyBlue.OnStart(TypeMoney.Blue);
-            StartCoroutine(ValueSliderAnim(0, (float)dataMoneyBlue.CountMoney / (float)dataMoneyBlue.MaxMoney, dataMoneyBlue.slider));
+            dataMoneyDollar.OnStart(TypeMoney.Yellow);
+            StartCoroutine(ValueSliderAnim(0, (float)dataMoneyDollar.CountMoney/(float)dataMoneyDollar.MaxMoney, dataMoneyDollar));
+            dataMoneySilver.OnStart(TypeMoney.Green);
+            StartCoroutine(ValueSliderAnim(0, (float)dataMoneySilver.CountMoney / (float)dataMoneySilver.MaxMoney, dataMoneySilver));
+            dataMoneyGold.OnStart(TypeMoney.Blue);
+            StartCoroutine(ValueSliderAnim(0, (float)dataMoneyGold.CountMoney / (float)dataMoneyGold.MaxMoney, dataMoneyGold));
         }
     }
     private int time;
@@ -57,28 +57,28 @@ public class Money : MonoBehaviour
         switch (typeMoney)
         {
             case TypeMoney.Yellow:
-                if (dataMoneyYellow.CanDoingOperation(sum) == TypeOperation.False) { return; }
+                if (dataMoneyDollar.CanDoingOperation(sum) == TypeOperation.False) { return; }
 
-                beginValueSlider = dataMoneyYellow.slider.value;
-                endValueSlider = dataMoneyYellow.ChangeMoneyAndGetValue(sum);
-                dataMoneyYellow.SaveJSONData(TypeMoney.Yellow);
-                StartCoroutine(ValueSliderAnim(beginValueSlider, endValueSlider, dataMoneyYellow.slider));
+                beginValueSlider = dataMoneyDollar.slider.value;
+                endValueSlider = dataMoneyDollar.ChangeMoneyAndGetValue(sum);
+                dataMoneyDollar.SaveJSONData(TypeMoney.Yellow);
+                StartCoroutine(ValueSliderAnim(beginValueSlider, endValueSlider, dataMoneyDollar));
                 break;
             case TypeMoney.Green:
-                if (dataMoneyGreen.CanDoingOperation(sum) == TypeOperation.False) { return; }
+                if (dataMoneySilver.CanDoingOperation(sum) == TypeOperation.False) { return; }
 
-                beginValueSlider = dataMoneyGreen.slider.value;
-                endValueSlider = dataMoneyGreen.ChangeMoneyAndGetValue(sum);
-                dataMoneyGreen.SaveJSONData(TypeMoney.Green);
-                StartCoroutine(ValueSliderAnim(beginValueSlider, endValueSlider, dataMoneyGreen.slider));
+                beginValueSlider = dataMoneySilver.slider.value;
+                endValueSlider = dataMoneySilver.ChangeMoneyAndGetValue(sum);
+                dataMoneySilver.SaveJSONData(TypeMoney.Green);
+                StartCoroutine(ValueSliderAnim(beginValueSlider, endValueSlider, dataMoneySilver));
                 break;
             case TypeMoney.Blue:
-                if (dataMoneyBlue.CanDoingOperation(sum) == TypeOperation.False) { return; }
+                if (dataMoneyGold.CanDoingOperation(sum) == TypeOperation.False) { return; }
 
-                beginValueSlider = dataMoneyBlue.slider.value;
-                endValueSlider = dataMoneyBlue.ChangeMoneyAndGetValue(sum);
-                dataMoneyBlue.SaveJSONData(TypeMoney.Blue);
-                StartCoroutine(ValueSliderAnim(beginValueSlider, endValueSlider, dataMoneyBlue.slider));
+                beginValueSlider = dataMoneyGold.slider.value;
+                endValueSlider = dataMoneyGold.ChangeMoneyAndGetValue(sum);
+                dataMoneyGold.SaveJSONData(TypeMoney.Blue);
+                StartCoroutine(ValueSliderAnim(beginValueSlider, endValueSlider, dataMoneyGold));
                 break;
         }
     }
@@ -88,28 +88,47 @@ public class Money : MonoBehaviour
         switch (typeMoney)
         {
             case TypeMoney.Yellow:
-                return dataMoneyYellow.CanDoingOperation(sum);
+                return dataMoneyDollar.CanDoingOperation(sum);
             case TypeMoney.Green:
-                return dataMoneyGreen.CanDoingOperation(sum);
+                return dataMoneySilver.CanDoingOperation(sum);
             case TypeMoney.Blue:
-                return dataMoneyBlue.CanDoingOperation(sum);
+                return dataMoneyGold.CanDoingOperation(sum);
         }
         return TypeOperation.False;
     }
 
 
-    private IEnumerator ValueSliderAnim(float beginValue, float endValue, Slider slider)
+    private IEnumerator ValueSliderAnim(float beginValue, float endValue, DataMoney _dataMoney) // для текста меньше кадров сделать(50)
     {
-        float diffValue = (endValue - beginValue) / 100f;
+        int numberCadr = 100;
+
+        int startCount = Mathf.RoundToInt(beginValue * _dataMoney.MaxMoney);
+        int endCount = _dataMoney.CountMoney;
+        int diffCount = Mathf.RoundToInt(((float)endCount - (float)startCount) / numberCadr);
+
+        float diffValue = ((float)endValue - (float)beginValue) / numberCadr;
+
+
         bool direction = diffValue > 0 ? true : false;
 
-        for (int i = 0; i < 100; i++)
+        int currentCountText = startCount;
+        for (int i = 0; i < numberCadr; i++)
         {
-            slider.value += diffValue;
-            yield return new WaitForSeconds(1f/100*curve.Evaluate((float)i/100f));
+            _dataMoney.slider.value += diffValue;
 
-            if(direction && slider.value >= endValue || !direction && slider.value <= endValue)
+            currentCountText += diffCount;
+            _dataMoney.textCount.text = (currentCountText).ToString();
+
+            yield return new WaitForSeconds(1f/ numberCadr * curve.Evaluate((float)i/ (float)numberCadr));
+
+            if (i == numberCadr - 1 && currentCountText != endCount)
             {
+                _dataMoney.textCount.text = endCount.ToString();
+            }
+
+            if(direction && _dataMoney.slider.value >= endValue || !direction && _dataMoney.slider.value <= endValue)
+            {
+                _dataMoney.textCount.text = endCount.ToString();
                 yield break;
             }
         }
@@ -124,6 +143,7 @@ public class DataMoney
     [SerializeField] private int maxMoney;
     public int MaxMoney { get { return maxMoney; } }
     public Slider slider;
+    public Text textCount;
 
     public void OnStart(TypeMoney typeMoney)
     {

@@ -84,9 +84,10 @@ public class TakeObjects : MonoBehaviour
         myHouse.transform.position += new Vector3(x * SizeOneCell + MyTerrain.xMin * SizeOneCell + (float)myHouse.NeParniX / 2f* SizeOneCell, myHouse.transform.localScale.y / 2, z * SizeOneCell + MyTerrain.zMin * SizeOneCell + (float)myHouse.NeParniZ / 2f * SizeOneCell);
         myHouse.stateHouse = StateHouse.InBlue;
         myHouse.currentColor = StateColor.Blue;
+        myHouse.dataHouse.dataAnimBuildHouse.timeEndBuild = new TimeDateTime(0, 0, 0, 0, 0, 0);
 
         myHouse.canvasHouse.OpenCanvasHouseOnlyStart();
- 
+
         myHouse.houseTextOnShop.buttonChange = buttonChange; // закинув для смени текста на кнопках, треба тільки на тих шо беру
         _house = myHouse;
         //End(x,z,myHouse,false);

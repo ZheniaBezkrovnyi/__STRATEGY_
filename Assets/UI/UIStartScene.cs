@@ -109,6 +109,7 @@ public class UIStartScene : MonoBehaviour
                     thisHouse,
                     true
                 );
+
                 StartCoroutine(animTimeBuild.BeginBuildHouse(thisHouse, true));
                 thisHouse.existOrNot = ExistOrNot.Almost;
                 money.ChangeMoney(-thisHouse.houseTextOnShop.priceForBuild, thisHouse.houseTextOnShop.typeMoney);

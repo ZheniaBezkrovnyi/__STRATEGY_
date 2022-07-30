@@ -69,16 +69,22 @@ public class InitPanelHouse : MonoBehaviour  // панель не буду ст�
                 switch (_house.dataTextOnHouse.typeHouse)
                 {
                     case TypeHouse.JustHouse:
-                        InitSliderButton(sliderButton, 0);
+                        for (int i = 0; i < 1; i++)
+                        {
+                            InitSliderButton(sliderButton, i);
+                        }
                         break;
                     case TypeHouse.Defence:
-                        InitSliderButton(sliderButton, 0);
-                        InitSliderButton(sliderButton, 1);
+                        for (int i = 0; i < 2; i++)
+                        {
+                            InitSliderButton(sliderButton, i);
+                        }
                         break;
                     case TypeHouse.Resources:
-                        InitSliderButton(sliderButton, 0);
-                        InitSliderButton(sliderButton, 1);
-                        InitSliderButton(sliderButton, 2);
+                        for (int i = 0; i < 3; i++)
+                        {
+                            InitSliderButton(sliderButton, i);
+                        }
                         break;
                 }
                 break;

@@ -51,7 +51,26 @@ public class TimeBuild
         _seconds += timeBuild.days * 24 * 3600;
         return _seconds;
     }
+    public static TimeBuild WithSecondsToTime(int _seconds)
+    {
+        if(_seconds < 0)
+        {
+            Debug.LogError("секунди менше 0");
+        }
 
+        int __days = _seconds / 3600 / 24;
+        int diffDays = __days * 3600 * 24;
+
+        int __hours = (_seconds - diffDays) / 3600;
+        int diffHours = __hours * 3600;
+
+        int __minutes = (_seconds - diffDays - diffHours) / 60;
+        int diffMinutes = __minutes * 60;
+
+        int __seconds = _seconds - diffDays - diffHours - diffMinutes;
+
+        return new TimeBuild(__days, __hours, __minutes, __seconds);
+    }
 }
 [Serializable]
 public class DataTextOnHouse
@@ -359,18 +378,12 @@ public class TimeDateTime
     }
     public static int InSeconds(TimeDateTime timeDate) // для секунд в разнице времени, там нет месяцев
     {
-        TimeDateTime time = new TimeDateTime(timeDate.years, timeDate.month, timeDate.days, timeDate.hours, timeDate.minutes, timeDate.seconds); // щоб перевірилось
-        //Debug.Log("startCheckData");
-        //Debug.Log(time.seconds);
-        //Debug.Log(time.minutes);
-        //Debug.Log(time.hours);
-        //Debug.Log(time.days);
-
+        Debug.Log(timeDate);
         int _seconds = 0;
-        _seconds += time.seconds;
-        _seconds += time.minutes * 60;
-        _seconds += time.hours * 3600;
-        _seconds += time.days * 24 * 3600;
+        _seconds += timeDate.seconds;
+        _seconds += timeDate.minutes * 60;
+        _seconds += timeDate.hours * 3600;
+        _seconds += timeDate.days * 24 * 3600;
         return _seconds;
     }
     public static bool CompareTimeDateTime(TimeDateTime time1, TimeDateTime time2) //true якщо перший більший

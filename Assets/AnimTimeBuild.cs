@@ -5,14 +5,13 @@ using UnityEngine.UI;
 using System;
 public class AnimTimeBuild : MonoBehaviour
 {
-    [SerializeField] private Text textTime;
     [SerializeField] private RectTransform canvasSlider;
     [SerializeField] private Transform cameraMain;
     [SerializeField] private CanvasHouse canvasHouse;
+    [SerializeField] private Text textTime;
     [SerializeField] private Notification notification;
     public IEnumerator BeginBuildHouse(House _house, bool beginOrContinue)
     {
-        notification.CallNotification("StartAnim");
         TimeBuild timeBuild;
         #region InitTimeBuild
         if (_house.existOrNot != ExistOrNot.Yes)
@@ -26,19 +25,20 @@ public class AnimTimeBuild : MonoBehaviour
         #endregion
         DateTime dateTimeStart = DateTime.Now;
         int remainsSeconds = 0;
-        notification.CallNotification("StartAnim2");
         TimeDateTime timeEndTime = null;
         if (beginOrContinue)
         {
-            notification.CallNotification(dateTimeStart.ToString());
             timeEndTime = TimeDateTime.GetSum(TimeDateTime.ToTimeDateTime(dateTimeStart.ToString()), timeBuild);
             
-
             _house.dataHouse.dataAnimBuildHouse.timeEndBuild = timeEndTime;
+            if (_house.existOrNot == ExistOrNot.Yes)
+            {
+                canvasHouse.OpenCanvasHouse(_house);
+            }
+
             ReturnAllOnStart.allData.allDataHouses[_house.dataHouse.myIndexOnSave].dataHouse.dataAnimBuildHouse.timeEndBuild = timeEndTime;
             ReturnAllOnStart.json.Save(ReturnAllOnStart.allData);
             remainsSeconds = TimeBuild.InSeconds(timeBuild);
-            //notification.CallNotification("StartAnim4");
         }
         else
         {
@@ -55,31 +55,31 @@ public class AnimTimeBuild : MonoBehaviour
             IfTimeIsUp(_house, canvasSlider,false);
             yield break;
         }
-        //notification.CallNotification("StartAnim*");
         RectTransform rectCanvasSlider = InstCanvasSlider(_house);
-        //notification.CallNotification("StartAnim**");
-        Slider slider = rectCanvasSlider.GetChild(0).GetChild(0).GetComponent<Slider>();
-        //notification.CallNotification("StartAnim***");
-
+        Slider slider = rectCanvasSlider.GetChild(1).GetChild(0).GetComponent<Slider>();
+        Text _textTime = rectCanvasSlider.GetChild(0).GetComponent<Text>();
 
         int timeForBuild = TimeBuild.InSeconds(timeBuild);
+        TimeBuild _timeBuild;
+
         float timeStart = Time.time - 1;
-        //notification.CallNotification("StartAnim5");
+        if (remainsSeconds == 0 && TakeObjects._house == _house) { canvasHouse.OpenCanvasHouse(_house); }
         for (; remainsSeconds > 0; )
         {
-            if (TakeObjects._house == _house) { canvasHouse.OpenCanvasHouse(_house); }
 
             if (Time.time - timeStart >= 1)
             {
                 timeStart++;
                 --remainsSeconds;
                 slider.value = ((float)timeForBuild - (float)remainsSeconds) / (float)timeForBuild;
+
+                _timeBuild = TimeBuild.WithSecondsToTime(remainsSeconds);
+                _textTime.text = TimeBuild.ToString(_timeBuild);
             }
-            yield return new WaitForSeconds(1f); //перевірка зверху на час має бути, щоб неточності коректувати
+            yield return new WaitForSeconds(1f);
         }
-        //notification.CallNotification("StartAnim6");
+
         IfTimeIsUp(_house, rectCanvasSlider,true);
-        //notification.CallNotification("StartAnim7");
     }
 
     private void IfTimeIsUp(House _house,RectTransform canvasSlider,bool removeCanvasSlider)
@@ -91,13 +91,10 @@ public class AnimTimeBuild : MonoBehaviour
         }
         if (_house.existOrNot == ExistOrNot.Yes)
         {
-            //Debug.Log(_house.houseTextOnShop.dataHouseChangeOnText.currentBuildThisHouse);
-            //Debug.Log("начало замени здания");
             House houseNew = Instantiate(_house.housesNextPrefab,_house.transform.position,_house.transform.rotation);
             SaveInJSON saveInJSON = new SaveInJSON();
             saveInJSON.SaveInsteadThisTwoHouseInList(houseNew,_house);
             Destroy(_house.gameObject);
-            Debug.Log("конец замени здания");
 
             if (TakeObjects._house == _house) {
                 House.IfClick(houseNew,canvasHouse);
@@ -108,13 +105,12 @@ public class AnimTimeBuild : MonoBehaviour
             _house.existOrNot = ExistOrNot.Yes;
             _house.dataHouse.levelHouse = 1;
 
-            /*ReturnAllOnStart.allData.allDataHouses[_house.dataHouse.myIndexOnSave].dataHouse.dataAnimBuildHouse.timeEndBuild = new TimeDateTime(0, 0, 0, 0, 0, 0);
+            ReturnAllOnStart.allData.allDataHouses[_house.dataHouse.myIndexOnSave].dataHouse.dataAnimBuildHouse.timeEndBuild = new TimeDateTime(0, 0, 0, 0, 0, 0);
             ReturnAllOnStart.allData.allDataHouses[_house.dataHouse.myIndexOnSave].dataHouse.levelHouse = 1;
-            ReturnAllOnStart.json.Save(ReturnAllOnStart.allData);*/
+            ReturnAllOnStart.json.Save(ReturnAllOnStart.allData);
 
             if (TakeObjects._house == _house) { canvasHouse.OpenCanvasHouse(_house); }
         }
-        notification.CallNotification("EndAnim");
     }
 
 
@@ -139,6 +135,7 @@ public class AnimTimeBuild : MonoBehaviour
 
         int minSide = Mathf.Min(_house.Sides.x, _house.Sides.y);
         canvasSLIDER.localScale = new Vector3(canvasSLIDER.localScale.x * Mathf.Sqrt(2 * minSide * minSide), canvasSLIDER.localScale.y, canvasSLIDER.localScale.z);
+
         return canvasSLIDER;
     }
 }
