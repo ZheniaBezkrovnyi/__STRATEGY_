@@ -45,7 +45,7 @@ public class UIStartScene : MonoBehaviour
                 {
                     if (button == canvasHouse.buttonImprovePrice) // проблеми із ссилкою у самій панелі, тому буде тут
                     {
-                        if (button.image.color != new Color(0.6f, 0.6f, 0.6f, 1f))
+                        if (button.image.color != ColorsStatic.colorDefoltInShop)
                         {
                             money.ChangeMoney(-TakeObjects._house.dataTextOnHouse.priceImprove, TakeObjects._house.houseTextOnShop.typeMoney);
                             StartCoroutine(animTimeBuild.BeginBuildHouse(TakeObjects._house, true));

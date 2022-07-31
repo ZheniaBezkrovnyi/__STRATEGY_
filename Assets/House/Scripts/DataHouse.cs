@@ -113,6 +113,7 @@ public class AllData
 {
     public List<AllDataHouse> allDataHouses;
     public AllTypeMoney allTypeMoney;
+    public DataExpierence dataExp;
 }
 #region Money
 [Serializable]
@@ -129,6 +130,16 @@ public class DataMoneyJSON
     public int maxMoney;
 }
 #endregion
+[Serializable]
+public class DataExpierence
+{
+    public int countExp;
+    public int countLevel;
+}
+
+
+
+
 
 #region AllDataHouse
 [Serializable]

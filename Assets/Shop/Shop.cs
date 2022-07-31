@@ -18,8 +18,7 @@ public class Shop : MonoBehaviour
     [SerializeField] private Canvas canvasShop; // процент влияет на pos
     [SerializeField] private RectTransform canvas;
     [SerializeField] private CameraMove cameraMove;
-    [SerializeField] private RectTransform buttonPrefab;
-    [SerializeField] private Text textOnButton;
+    [SerializeField] private RectTransform panelPrefab;
     [SerializeField] private List<NameHouse> listShop;
     [SerializeField] private ReturnAllOnStart returnAllStart;
     [SerializeField] private MyTerrain terrain;
@@ -48,14 +47,13 @@ public class Shop : MonoBehaviour
     {
         IsCreate = true;
         localScaleCanvas = canvas.localScale;
-        shopInterface = new ShopButtonInterface(textOnButton);
         float heightCanvas = canvas.rect.height * canvas.localScale.y;
         float widthCanvas = canvas.rect.width * canvas.localScale.x;
         float heightContent = heightCanvas * 0.9f;
         float widthContent = widthCanvas * 0.9f;
         float diffX = widthCanvas * 0.05f;
         float diffY = heightCanvas * 0.95f;
-        float DiffContent = (50*2 + buttonPrefab.rect.width * canvas.localScale.x + (listShop.Count - 1) * (buttonPrefab.rect.width * canvas.localScale.x + 30))/ widthContent;
+        float DiffContent = (50*2 + panelPrefab.rect.width * canvas.localScale.x + (listShop.Count - 1) * (panelPrefab.rect.width * canvas.localScale.x + 30))/ widthContent;
         content.anchorMax = new Vector2(DiffContent,1);
 
         for (int i = 0; i < listShop.Count; i++)
@@ -84,21 +82,29 @@ public class Shop : MonoBehaviour
 
             returnAllStart.ReturnChangeTextOnButton(_house);
 
-            RectTransform button = Instantiate(buttonPrefab);
-            Button _button = button.GetComponent<Button>();
-            Image image = button.GetChild(1).GetComponent<Image>();
+            RectTransform panel = Instantiate(panelPrefab);
+            Button _button = panel.GetChild(0).GetComponent<Button>();
+
+            Image image = panel.GetChild(1).GetComponent<Image>();
             image.sprite= _house.dataTextOnHouse.info.spriteHouse; // картинка пряма, но потом под кутом скрин и обрезать все кроме здания и клетки
 
             ButtonChange buttonChange = _button.GetComponent<ButtonChange>();
+
             buttonChange.money = money;
             listButtonChange.Add(buttonChange);
 
-            shopInterface.InitialiseTexts(_button, _house, buttonChange);
+            shopInterface = new ShopButtonInterface(panel.GetChild(2).GetComponent<Text>(), panel.GetChild(3).GetComponent<Text>(), panel.GetChild(0).GetChild(0).GetComponent<Text>());
+            shopInterface.InitialiseTexts( _house, buttonChange);
+            Transform imageMoney = _button.transform.GetChild(1 + (int)buttonChange.houseTextOnShop.typeMoney);
+            imageMoney.gameObject.SetActive(true);
+
+
+
             buttonChange.CheckAllUpdate(); // для interactable
 
             void OnButton()
             {
-                if(_button.image.color == new Color(1, 1, 1, 1))
+                if(_button.image.color != ColorsStatic.colorDefoltInShop)
                 {
                     _house.canvasHouse = canvasHouse; // в Take уже откриваю канвас, поетому перед ним присваиваю
                     terrain.TakeHouse(_house, buttonChange);
@@ -112,13 +118,13 @@ public class Shop : MonoBehaviour
             }
             _button.onClick.AddListener(OnButton);
 
-            Text text = button?.GetChild(0).GetComponent<Text>(); // по хорошому внести в текст инит, но пускай тут
+            Text text = panel.GetChild(4).GetComponent<Text>(); // по хорошому внести в текст инит, но пускай тут
             text.text = listShop[I].ToString();
 
-            button.gameObject.SetActive(true);
-            button.SetParent(content);
-            button.position = new Vector3(50 + diffX + button.rect.width / 2 * canvas.localScale.x + I*(button.rect.width * canvas.localScale.x + 30), diffY - button.rect.height / 2*canvas.localScale.y - heihtPadding(button), 0);
-            button.localScale = new Vector3(1, 1, 1);
+            panel.gameObject.SetActive(true);
+            panel.SetParent(content);
+            panel.position = new Vector3(50 + diffX + panel.rect.width / 2 * canvas.localScale.x + I*(panel.rect.width * canvas.localScale.x + 30), diffY - panel.rect.height / 2*canvas.localScale.y - heihtPadding(panel), 0);
+            panel.localScale = new Vector3(1, 1, 1);
         }
 
         float heihtPadding(RectTransform button)
@@ -126,8 +132,8 @@ public class Shop : MonoBehaviour
             //Debug.Log(heightContent);
             if (heightContent - button.rect.height * canvas.localScale.y / 2 > 0)
             {
-                float dif = (heightContent - button.rect.height * canvas.localScale.y) / 2 * 0.85f;
-                return dif;
+                float dif = (heightContent - button.rect.height * canvas.localScale.y) / 2 * 1.25f;
+                return dif; 
             }
             else
             {

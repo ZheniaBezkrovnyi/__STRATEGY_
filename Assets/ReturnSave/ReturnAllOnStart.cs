@@ -40,7 +40,8 @@ public class ReturnAllOnStart : MonoBehaviour
                     dataMoneyYellow = new DataMoneyJSON(),
                     dataMoneyGreen = new DataMoneyJSON(),
                     dataMoneyBlue = new DataMoneyJSON(),
-                }
+                },
+                dataExp = new DataExpierence(),
             };
         }
         notification.CallNotification("Create");

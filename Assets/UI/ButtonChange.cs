@@ -44,7 +44,6 @@ public class ButtonChange : MonoBehaviour
     private void GoStringPrice(Text _text)
     {
         textPrice = _text;
-        textPrice.GetComponent<RectTransform>().localScale += new Vector3(0.2f,0.2f,0);
         textPrice.text = houseTextOnShop.priceForBuild.ToString();
     }
     public void AddCurrentBuildThisHouse()
@@ -55,7 +54,7 @@ public class ButtonChange : MonoBehaviour
             GoStringCountBuild(textCurrent);
             if(houseTextOnShop.dataHouseChangeOnText.currentBuildThisHouse == houseTextOnShop.MaxCountBuild)
             {
-                GetComponent<Button>().image.color = new Color(0.6f, 0.6f, 0.6f, 1f);
+                GetComponent<Button>().image.color = ColorsStatic.colorDefoltInShop;
             }
         }
         else
@@ -69,11 +68,11 @@ public class ButtonChange : MonoBehaviour
         Button b = GetComponent<Button>();
         if (houseTextOnShop.dataHouseChangeOnText.currentBuildThisHouse != houseTextOnShop.MaxCountBuild)
         {
-            b.image.color = new Color(1, 1, 1, 1);
+            b.image.color = money.GetDataMoney(houseTextOnShop.typeMoney).Color;
         }
         else
         {
-            b.image.color = new Color(0.6f, 0.6f, 0.6f, 1f);
+            b.image.color = ColorsStatic.colorDefoltInShop;
         }
         return b;
     }
@@ -81,15 +80,15 @@ public class ButtonChange : MonoBehaviour
     public void CheckAllUpdate()   // buttonChange при переході будівлі на інший рівень передає свої ці дані наступному, карренти залишаються, поки багів не бачив, наче все ідеально, головне не стирати buttonChange у будівель ніде
     {
         Button b = CheckUpdateMaxCountBuild();
-        if(b.image.color == new Color(0.6f, 0.6f, 0.6f, 1f)) { return; }
+        if(b.image.color == ColorsStatic.colorDefoltInShop) { return; }
 
         if (money.CanDoingOperation(-houseTextOnShop.priceForBuild,houseTextOnShop.typeMoney) != TypeOperation.False)
         {
-            GetComponent<Button>().image.color = new Color(1, 1, 1, 1);
+            GetComponent<Button>().image.color = money.GetDataMoney(houseTextOnShop.typeMoney).Color;
         }
         else
         {
-            GetComponent<Button>().image.color = new Color(0.6f, 0.6f, 0.6f, 1f);
+            GetComponent<Button>().image.color = ColorsStatic.colorDefoltInShop;
         }
     }
 }
