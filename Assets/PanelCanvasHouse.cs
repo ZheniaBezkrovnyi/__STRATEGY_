@@ -13,7 +13,7 @@ public enum InfoImprove
 public class PanelCanvasHouse : MonoBehaviour // у Improve треба зробить те що плюсується, і картинки до полосок, але то другим
 {
     [SerializeField] private Money money;
-    [HideInInspector] public House house;
+    [HideInInspector] public GeneralHouse house;
     [SerializeField] private RectTransform canvas;
     [SerializeField] private Image image;
     [SerializeField] private RectTransform panel, sliderButton, buttonPrice;
@@ -60,7 +60,7 @@ public class InitPanelHouse : MonoBehaviour  // панель не буду ст�
         widthPanel = panel.rect.width * canvas.localScale.x;
         heightPanel = panel.rect.height * canvas.localScale.y;
     }
-    public void InitPanel(House _house,InfoImprove infoImprove)
+    public void InitPanel(GeneralHouse _house,InfoImprove infoImprove)
     {
         InitImage(_house);
         switch (infoImprove)
@@ -153,7 +153,7 @@ public class InitPanelHouse : MonoBehaviour  // панель не буду ст�
 
 
     }
-    private void InitPriceAndTimeButton(House _house)
+    private void InitPriceAndTimeButton(GeneralHouse _house)
     {
         buttonPrice.gameObject.SetActive(true); //баттон инит в UIStartScene
         Text text = buttonPrice.GetChild(0).GetComponent<Text>();
@@ -187,7 +187,7 @@ public class InitPanelHouse : MonoBehaviour  // панель не буду ст�
             timeImprove.text = TimeBuild.ToString(_house.dataTextOnHouse.timeImprove);
         }
     }
-    private void InitImage(House _house)
+    private void InitImage(GeneralHouse _house)
     {
         image.gameObject.SetActive(true);
         image.sprite = _house.dataTextOnHouse.info.spriteHouse;

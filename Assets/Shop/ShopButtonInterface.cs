@@ -17,7 +17,7 @@ public class ShopButtonInterface : MonoBehaviour
     {
         text = _text;
     }
-    public void InitialiseTexts(House house,ButtonChange buttonChange)
+    public void InitialiseTexts(GeneralHouse house,ButtonChange buttonChange)
     {
         buttonChange.houseTextOnShop = house.houseTextOnShop;
 

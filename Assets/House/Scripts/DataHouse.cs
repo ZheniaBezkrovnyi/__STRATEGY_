@@ -435,13 +435,13 @@ public class Posit
         x = _x;
         z = _z;
     }
-    public static Vector2 InitInPosit(int x,int z,House house)
+    public static Vector2 InitInPosit(int x,int z, GeneralHouse house)
     {
         float X = (x + (float)house.NeParniX / 2f + MyTerrain.xMin) * MyTerrain.sizeOneCell;
         float Z = (z + (float)house.NeParniZ / 2f + MyTerrain.zMin) * MyTerrain.sizeOneCell;
         return new Vector2(X,Z);
     }
-    public static Vector2Int DesWithPosit(float x, float z, House house)
+    public static Vector2Int DesWithPosit(float x, float z, GeneralHouse house)
     {
         int X = Mathf.RoundToInt( x / MyTerrain.sizeOneCell - MyTerrain.xMin - (float)house.NeParniX / 2f);
         int Z = Mathf.RoundToInt(z / MyTerrain.sizeOneCell - MyTerrain.xMin - (float)house.NeParniZ / 2f);

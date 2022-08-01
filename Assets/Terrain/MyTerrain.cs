@@ -51,7 +51,7 @@ public class MyTerrain : MonoBehaviour
             }
         }*/
     }
-    public void TakeHouse(House house, ButtonChange buttonChange) // вісить на AddListener при створенні кнопок у Shop
+    public void TakeHouse(GeneralHouse house, ButtonChange buttonChange) // вісить на AddListener при створенні кнопок у Shop
     {
         takeObjects.TakeHouse(house,buttonChange);
     }
@@ -59,9 +59,9 @@ public class MyTerrain : MonoBehaviour
 
 public class TakeObjects : MonoBehaviour
 {
-    public static House _house;
+    public static GeneralHouse _house;
     private static int[,] _setMap;
-    private static House myHouse;
+    private static GeneralHouse myHouse;
     private bool canPut = true;
     private int SizeOneCell;
     private SaveInJSON saveInJSON;
@@ -71,7 +71,7 @@ public class TakeObjects : MonoBehaviour
         _setMap = _setMap_;
         SizeOneCell = MyTerrain.sizeOneCell;
     }
-    public void TakeHouse(House house,ButtonChange buttonChange) // при взятии переносить камеру на видимую зону обьекта чрез интерполяцию
+    public void TakeHouse(GeneralHouse house,ButtonChange buttonChange) // при взятии переносить камеру на видимую зону обьекта чрез интерполяцию
     { 
         if (_house != null) Destroy(_house.gameObject);
         _house = Instantiate(house);
@@ -84,7 +84,6 @@ public class TakeObjects : MonoBehaviour
         myHouse.transform.position += new Vector3(x * SizeOneCell + MyTerrain.xMin * SizeOneCell + (float)myHouse.NeParniX / 2f* SizeOneCell, myHouse.transform.localScale.y / 2, z * SizeOneCell + MyTerrain.zMin * SizeOneCell + (float)myHouse.NeParniZ / 2f * SizeOneCell);
         myHouse.stateHouse = StateHouse.InBlue;
         myHouse.currentColor = StateColor.Blue;
-        myHouse.dataHouse.dataAnimBuildHouse.timeEndBuild = new TimeDateTime(0, 0, 0, 0, 0, 0);
 
         myHouse.canvasHouse.OpenCanvasHouseOnlyStart();
 
@@ -199,7 +198,7 @@ public class TakeObjects : MonoBehaviour
         }
         return true;
     }
-    public static void End(int X, int Z,House _house__, bool fullEndNotSave, bool saveJson = true)
+    public static void End(int X, int Z, GeneralHouse _house__, bool fullEndNotSave, bool saveJson = true)
     {
         if (fullEndNotSave)
         {
@@ -238,7 +237,7 @@ public class TakeObjects : MonoBehaviour
         }
     }
 
-    public static void ZeroCell(House _house_)
+    public static void ZeroCell(GeneralHouse _house_)
     {
         int X = _house_.dataHouse.posit.x;
         int Z = _house_.dataHouse.posit.z;

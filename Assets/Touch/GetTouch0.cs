@@ -12,7 +12,7 @@ public class GetTouch0 : MonoBehaviour
 {
     [SerializeField] private CanvasHouse canvasHouse;
     [SerializeField] private Canvas panel;
-    House house;
+    private GeneralHouse house;
     private bool drag = false;
     private float timeDrag;
     public bool STOP;

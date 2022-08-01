@@ -10,7 +10,7 @@ public class AnimTimeBuild : MonoBehaviour
     [SerializeField] private CanvasHouse canvasHouse;
     [SerializeField] private Text textTime;
     [SerializeField] private Notification notification;
-    public IEnumerator BeginBuildHouse(House _house, bool beginOrContinue)
+    public IEnumerator BeginBuildHouse(MainHouse _house, bool beginOrContinue)
     {
         TimeBuild timeBuild;
         #region InitTimeBuild
@@ -82,7 +82,7 @@ public class AnimTimeBuild : MonoBehaviour
         IfTimeIsUp(_house, rectCanvasSlider,true);
     }
 
-    private void IfTimeIsUp(House _house,RectTransform canvasSlider,bool removeCanvasSlider)
+    private void IfTimeIsUp(MainHouse _house,RectTransform canvasSlider,bool removeCanvasSlider)
     {
         _house.dataHouse.dataAnimBuildHouse.timeEndBuild = new TimeDateTime(0, 0, 0, 0, 0, 0);
         if (removeCanvasSlider)
@@ -91,13 +91,13 @@ public class AnimTimeBuild : MonoBehaviour
         }
         if (_house.existOrNot == ExistOrNot.Yes)
         {
-            House houseNew = Instantiate(_house.housesNextPrefab,_house.transform.position,_house.transform.rotation);
+            MainHouse houseNew = Instantiate(_house.housesNextPrefab,_house.transform.position,_house.transform.rotation);
             SaveInJSON saveInJSON = new SaveInJSON();
             saveInJSON.SaveInsteadThisTwoHouseInList(houseNew,_house);
             Destroy(_house.gameObject);
 
             if (TakeObjects._house == _house) {
-                House.IfClick(houseNew,canvasHouse);
+                GeneralHouse.IfClick(houseNew,canvasHouse);
             }
         }
         else
@@ -120,7 +120,7 @@ public class AnimTimeBuild : MonoBehaviour
 
 
     private Quaternion angleCamera;
-    private RectTransform InstCanvasSlider(House _house)
+    private RectTransform InstCanvasSlider(GeneralHouse _house)
     {
         angleCamera = Quaternion.Euler(cameraMain.rotation.eulerAngles.x, cameraMain.rotation.eulerAngles.y,0);
         RectTransform canvasSLIDER = Instantiate(canvasSlider);

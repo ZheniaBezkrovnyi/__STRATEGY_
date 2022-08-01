@@ -6,16 +6,16 @@ using System;
 [CreateAssetMenu]
 public class AllHousePrefab : ScriptableObject
 {
-    [HideInInspector] public List<List<House>> listHouse;
-    [SerializeField] private List<House> list0;
-    [SerializeField] private List<House> list1;
-    [SerializeField] private List<House> list2;
-    [SerializeField] private List<House> list3;
-    [SerializeField] private List<House> list4;
+    [HideInInspector] public List<List<GeneralHouse>> listHouse;
+    [SerializeField] private List<GeneralHouse> list0;
+    [SerializeField] private List<GeneralHouse> list1;
+    [SerializeField] private List<GeneralHouse> list2;
+    [SerializeField] private List<GeneralHouse> list3;
+    [SerializeField] private List<GeneralHouse> list4;
 
     public void FillInList()
     {
-        listHouse = new List<List<House>>();
+        listHouse = new List<List<GeneralHouse>>();
         listHouse.Add(list0);
         listHouse.Add(list1);
         listHouse.Add(list2);

@@ -8,7 +8,7 @@ public class UIStartScene : MonoBehaviour
     [SerializeField] private Button buttonShop, buttonBackShop;
     [SerializeField] private Canvas shopCanvas;
     [SerializeField] private Shop shop;
-    [SerializeField] private Canvas panelCanvas;
+    [SerializeField] private Canvas panelCanvas;        //панель з усім своїм повність у свій клас який створю
     [SerializeField] private Button buttonBackPanel;
     [SerializeField] private CanvasHouse canvasHouse;
     [SerializeField] private GetTouch0 getTouch0;
@@ -48,7 +48,10 @@ public class UIStartScene : MonoBehaviour
                         if (button.image.color != ColorsStatic.colorDefoltInShop)
                         {
                             money.ChangeMoney(-TakeObjects._house.dataTextOnHouse.priceImprove, TakeObjects._house.houseTextOnShop.typeMoney);
-                            StartCoroutine(animTimeBuild.BeginBuildHouse(TakeObjects._house, true));
+                            if (TakeObjects._house.GetComponent<MainHouse>())
+                            {
+                                StartCoroutine(animTimeBuild.BeginBuildHouse((MainHouse)TakeObjects._house, true));
+                            }
                             StartCoroutine(StopTouch());
                         }
                         else
@@ -99,7 +102,7 @@ public class UIStartScene : MonoBehaviour
         _button.onClick.AddListener(() => {
             if(_button.name == "Yes")   // закинуть сюда же загрузку временем сразу
             {
-                House thisHouse = TakeObjects._house;
+                GeneralHouse thisHouse = TakeObjects._house;
                 SaveInJSON saveInJSON = new SaveInJSON();
                 saveInJSON.AddThisHouseInList(thisHouse);
                 thisHouse.canvasHouse.CloseCanvasHouseOnlyStart();
@@ -109,9 +112,16 @@ public class UIStartScene : MonoBehaviour
                     thisHouse,
                     true
                 );
-
-                StartCoroutine(animTimeBuild.BeginBuildHouse(thisHouse, true));
-                thisHouse.existOrNot = ExistOrNot.Almost;
+                if (thisHouse.GetComponent<MainHouse>())
+                {
+                    Debug.Log(1234);
+                    StartCoroutine(animTimeBuild.BeginBuildHouse((MainHouse)thisHouse, true));
+                    thisHouse.existOrNot = ExistOrNot.Almost;
+                }
+                else
+                {
+                    thisHouse.existOrNot = ExistOrNot.Yes;
+                }
                 money.ChangeMoney(-thisHouse.houseTextOnShop.priceForBuild, thisHouse.houseTextOnShop.typeMoney);
             }
             else if(_button.name == "No")

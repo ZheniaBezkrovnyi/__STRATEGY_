@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+
+
+
 public enum StateHouse
 {
     IsActive,
@@ -18,20 +21,13 @@ public enum StateColor
     Red,
     Blue
 }
-public enum TypeHouse
+public class GeneralHouse : Touch, IPointerClickHandler, IPointerDownHandler
 {
-    JustHouse,
-    Defence,
-    Resources,
-}
-public class House : Touch, IPointerClickHandler, IPointerDownHandler
-{
-    public DataTextOnHouse dataTextOnHouse;//----- не нужно в общий клас над house
+    public DataTextOnHouse dataTextOnHouse;
     public HouseTextOnShop houseTextOnShop;
     public DataHouse dataHouse;
-    public House housesNextPrefab;//------
 
-    [HideInInspector] public CanvasHouse canvasHouse; 
+    [HideInInspector] public CanvasHouse canvasHouse;
     [SerializeField] private Vector2Int sides;
     public Vector2Int Sides { get { return sides; } }
 
@@ -51,7 +47,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     {
         get
         {
-            if(_currentColor != currentColor)
+            if (_currentColor != currentColor)
             {
                 return true;
             }
@@ -79,7 +75,7 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
         }
         Upd();
     }
-    public void ReturnCell(House _house) //позиція у масиві точки це її початок зліва
+    public void ReturnCell(GeneralHouse _house) //позиція у масиві точки це її початок зліва
     {
         transform.position = new Vector3(
             Posit.InitInPosit(_house.dataHouse.posit.x, _house.dataHouse.posit.z, _house).x,
@@ -92,15 +88,17 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
     {
         if (stateColor == StateColor.Green)
         {
-            colorsObjects.InitColor(clickColor,this);
-        }else if(stateColor == StateColor.Red)
+            colorsObjects.InitColor(clickColor, this);
+        }
+        else if (stateColor == StateColor.Red)
         {
             colorsObjects.InitColor(redColor, this);
         }
         else if (stateColor == StateColor.Blue)
         {
-            colorsObjects.InitColor(new Color(0,0,1), this);
-        }else if(stateColor == StateColor.Normal)
+            colorsObjects.InitColor(new Color(0, 0, 1), this);
+        }
+        else if (stateColor == StateColor.Normal)
         {
             colorsObjects.ReturnOrInitColor(this.transform);
         }
@@ -117,20 +115,19 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
         {
             if (TakeObjects._house != null)
             {
-                if(TakeObjects._house.existOrNot == ExistOrNot.Not) // чтоб не переключался когда еще здание не поставил, из Attack по ситуации поменяю
+                if (TakeObjects._house.existOrNot == ExistOrNot.Not) // чтоб не переключался когда еще здание не поставил, из Attack по ситуации поменяю
                 {
                     return;
                 }
-                //Debug.Log("хаус при кліку");
                 TakeObjects.End(TakeObjects._house.dataHouse.posit.x, TakeObjects._house.dataHouse.posit.z, TakeObjects._house, true);
             }
             if (stateHouse == StateHouse.NotActive)
             {
-                IfClick(this,canvasHouse);
+                IfClick(this, canvasHouse);
             }
         }
     }
-    public static void IfClick(House _house,CanvasHouse _canvasHouse)
+    public static void IfClick(GeneralHouse _house, CanvasHouse _canvasHouse)
     {
         TakeObjects._house = _house;
         _canvasHouse.OpenCanvasHouse(_house);
@@ -138,11 +135,13 @@ public class House : Touch, IPointerClickHandler, IPointerDownHandler
         _house.currentColor = StateColor.Blue;
     }
     #endregion
-    ~House()
+    ~GeneralHouse()
     {
         //Debug.Log("ending");
     }
 }
+
+
 
 public class ColorsObjects
 {
@@ -156,7 +155,7 @@ public class ColorsObjects
     {
         InitializeOrReturnColor(trnsf, Color.white);
     }
-    public void InitColor(Color _clickColor,House house)
+    public void InitColor(Color _clickColor, GeneralHouse house)
     {
         InitializeOrReturnColor(house.transform, _clickColor);
     }
@@ -173,7 +172,7 @@ public class ColorsObjects
         {
             if (_trnsf.childCount != 0)
             {
-
+                #region Comment
                 /*for (int i = 0; i < _trnsf.childCount; i++)
                 {
                     if (emptyList)
@@ -198,6 +197,7 @@ public class ColorsObjects
                     countChild++;
                     Init(_trnsf.GetChild(i), _color_);
                 }*/
+                #endregion
                 for (int i = 0; i < 1; i++)
                 {
                     if (emptyList)
@@ -223,4 +223,3 @@ public class ColorsObjects
         }
     }
 }
-

@@ -23,17 +23,19 @@ public class Money : MonoBehaviour
     [SerializeField] private Sliders sliders;
     private void Start() // для инициализации
     {
-        Init();
-        void Init()
+        InitColor();
+        for(int i = 0; i < 3; i++) {
+            Init((TypeMoney)i);
+        }
+        void Init(TypeMoney typeMoney)
         {
-            dataMoneyDollar.InitColor(new Color32(0,255,50,255));
-            dataMoneyDollar.OnStart(TypeMoney.Yellow);
-            StartCoroutine(sliders.ValueSliderAnim(0, (float)dataMoneyDollar.CountMoney/(float)dataMoneyDollar.MaxMoney, dataMoneyDollar));
-            dataMoneySilver.OnStart(TypeMoney.Green);
-            StartCoroutine(sliders.ValueSliderAnim(0, (float)dataMoneySilver.CountMoney / (float)dataMoneySilver.MaxMoney, dataMoneySilver));
+            GetDataMoney(typeMoney).OnStart(typeMoney);
+            StartCoroutine(sliders.ValueSliderAnim(0, (float)GetDataMoney(typeMoney).CountMoney/(float)GetDataMoney(typeMoney).MaxMoney, GetDataMoney(typeMoney)));
+        }
+        void InitColor()
+        {
+            dataMoneyDollar.InitColor(new Color32(0, 255, 50, 255));
             dataMoneySilver.InitColor(new Color32(195, 195, 195, 255));
-            dataMoneyGold.OnStart(TypeMoney.Blue);
-            StartCoroutine(sliders.ValueSliderAnim(0, (float)dataMoneyGold.CountMoney / (float)dataMoneyGold.MaxMoney, dataMoneyGold));
             dataMoneyGold.InitColor(new Color32(255, 242, 0, 255));
         }
     }
@@ -52,51 +54,18 @@ public class Money : MonoBehaviour
         }
 #endif
     }
-    public void ChangeMoney(int sum,TypeMoney typeMoney,bool save = true)
+    public void ChangeMoney(int sum,TypeMoney typeMoney,bool save = true) 
     {
-        float beginValueSlider;
-        float endValueSlider;
-        switch (typeMoney)
-        {
-            case TypeMoney.Yellow:
-                if (dataMoneyDollar.CanDoingOperation(sum) == TypeOperation.False) { return; }
-
-                beginValueSlider = dataMoneyDollar.slider.value;
-                endValueSlider = dataMoneyDollar.ChangeMoneyAndGetValue(sum);
-                dataMoneyDollar.SaveJSONData(TypeMoney.Yellow);
-                StartCoroutine(sliders.ValueSliderAnim(beginValueSlider, endValueSlider, dataMoneyDollar));
-                break;
-            case TypeMoney.Green:
-                if (dataMoneySilver.CanDoingOperation(sum) == TypeOperation.False) { return; }
-
-                beginValueSlider = dataMoneySilver.slider.value;
-                endValueSlider = dataMoneySilver.ChangeMoneyAndGetValue(sum);
-                dataMoneySilver.SaveJSONData(TypeMoney.Green);
-                StartCoroutine(sliders.ValueSliderAnim(beginValueSlider, endValueSlider, dataMoneySilver));
-                break;
-            case TypeMoney.Blue:
-                if (dataMoneyGold.CanDoingOperation(sum) == TypeOperation.False) { return; }
-
-                beginValueSlider = dataMoneyGold.slider.value;
-                endValueSlider = dataMoneyGold.ChangeMoneyAndGetValue(sum);
-                dataMoneyGold.SaveJSONData(TypeMoney.Blue);
-                StartCoroutine(sliders.ValueSliderAnim(beginValueSlider, endValueSlider, dataMoneyGold));
-                break;
-        }
+        if (GetDataMoney(typeMoney).CanDoingOperation(sum) == TypeOperation.False) { return; }
+        float beginValueSlider = GetDataMoney(typeMoney).slider.value;
+        float endValueSlider = GetDataMoney(typeMoney).ChangeMoneyAndGetValue(sum);
+        GetDataMoney(typeMoney).SaveJSONData(typeMoney);
+        StartCoroutine(sliders.ValueSliderAnim(beginValueSlider, endValueSlider, GetDataMoney(typeMoney)));
     }
 
     public TypeOperation CanDoingOperation(int sum, TypeMoney typeMoney, bool notIgnore = false)
     {
-        switch (typeMoney)
-        {
-            case TypeMoney.Yellow:
-                return dataMoneyDollar.CanDoingOperation(sum);
-            case TypeMoney.Green:
-                return dataMoneySilver.CanDoingOperation(sum);
-            case TypeMoney.Blue:
-                return dataMoneyGold.CanDoingOperation(sum);
-        }
-        return TypeOperation.False;
+        return GetDataMoney(typeMoney).CanDoingOperation(sum,notIgnore);
     }
     public DataMoney GetDataMoney(TypeMoney typeMoney)
     {
@@ -187,40 +156,15 @@ public class DataMoney
 
     public void SaveJSONData(TypeMoney typeMoney) // потім оптимізую
     {
-        switch (typeMoney)
-        {
-            case TypeMoney.Yellow:
-                ReturnAllOnStart.allData.allTypeMoney.dataMoneyYellow.countMoney = countMoney;
-                ReturnAllOnStart.allData.allTypeMoney.dataMoneyYellow.maxMoney = maxMoney;
-                break;
-            case TypeMoney.Green:
-                ReturnAllOnStart.allData.allTypeMoney.dataMoneyGreen.countMoney = countMoney;
-                ReturnAllOnStart.allData.allTypeMoney.dataMoneyGreen.maxMoney = maxMoney;
-                break;
-            case TypeMoney.Blue:
-                ReturnAllOnStart.allData.allTypeMoney.dataMoneyBlue.countMoney = countMoney;
-                ReturnAllOnStart.allData.allTypeMoney.dataMoneyBlue.maxMoney = maxMoney;
-                break;
-        }
+        GetDataMoney(typeMoney).countMoney = countMoney;
+        GetDataMoney(typeMoney).maxMoney = maxMoney;
+
         ReturnAllOnStart.json.Save(ReturnAllOnStart.allData);
     }
     private void GetJSONData(TypeMoney typeMoney) // потім оптимізую
     {
-        switch (typeMoney)
-        {
-            case TypeMoney.Yellow:
-                maxMoney = ReturnAllOnStart.allData.allTypeMoney.dataMoneyYellow.maxMoney;
-                countMoney = ReturnAllOnStart.allData.allTypeMoney.dataMoneyYellow.countMoney; 
-                break;
-            case TypeMoney.Green:
-                maxMoney = ReturnAllOnStart.allData.allTypeMoney.dataMoneyGreen.maxMoney;
-                countMoney = ReturnAllOnStart.allData.allTypeMoney.dataMoneyGreen.countMoney;
-                break;
-            case TypeMoney.Blue:
-                maxMoney = ReturnAllOnStart.allData.allTypeMoney.dataMoneyBlue.maxMoney;
-                countMoney = ReturnAllOnStart.allData.allTypeMoney.dataMoneyBlue.countMoney;
-                break;
-        }
+        maxMoney = GetDataMoney(typeMoney).maxMoney;
+        countMoney = GetDataMoney(typeMoney).countMoney;
         if (countMoney > maxMoney)
         {
             countMoney = 0;
@@ -230,5 +174,15 @@ public class DataMoney
     public void InitColor(Color _color)
     {
         color = _color;
+    }
+    public DataMoneyJSON GetDataMoney(TypeMoney typeMoney)
+    {
+        switch (typeMoney)
+        {
+            case TypeMoney.Yellow: return ReturnAllOnStart.allData.allTypeMoney.dataMoneyYellow;
+            case TypeMoney.Green: return ReturnAllOnStart.allData.allTypeMoney.dataMoneyGreen;
+            case TypeMoney.Blue: return ReturnAllOnStart.allData.allTypeMoney.dataMoneyBlue;
+        }
+        return null;
     }
 }

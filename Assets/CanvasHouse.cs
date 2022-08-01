@@ -10,7 +10,7 @@ public class CanvasHouse : MonoBehaviour
     public Button buttonImprove, buttonInfo, buttonEnd, buttonImprovePrice;
     [SerializeField] private PanelCanvasHouse panelCanvasHouse;
     [SerializeField] private RectTransform canvas;
-    public void OpenCanvasHouse(House _house)
+    public void OpenCanvasHouse(GeneralHouse _house)
     {
         FalseAllActiveButton();
 
@@ -49,7 +49,7 @@ public class CanvasHouse : MonoBehaviour
         }
         activeButton = new List<Button>();
     }
-    private void BuildPosButton(House _house)
+    private void BuildPosButton(GeneralHouse _house)
     {
         RectTransform rectButtonInfo = buttonInfo.GetComponent<RectTransform>();
         float widthOne = rectButtonInfo.rect.width * canvas.localScale.x;

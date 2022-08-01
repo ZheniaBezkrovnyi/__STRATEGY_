@@ -70,7 +70,7 @@ public class ReturnAllOnStart : MonoBehaviour
                         existOrNot = ExistOrNot.Almost; // бо якщо є, то будується
                         diffLevel = 1;
                     }
-                    House house = Instantiate(allHousePrefab.listHouse[i][allData.allDataHouses[I].dataHouse.levelHouse - 1 + diffLevel]);
+                    GeneralHouse house = Instantiate(allHousePrefab.listHouse[i][allData.allDataHouses[I].dataHouse.levelHouse - 1 + diffLevel]);
                     house.canvasHouse = canvasHouse;
                     house.dataHouse.myIndexOnSave = I;
                     int x = allData.allDataHouses[I].dataHouse.posit.x;
@@ -84,20 +84,22 @@ public class ReturnAllOnStart : MonoBehaviour
                     TakeObjects.End(x,z,house, false,false);
                     house.existOrNot = existOrNot; // не раніше корутіни, бо там це треба
 
-                    TimeDateTime timeEnd = house.dataHouse.dataAnimBuildHouse.timeEndBuild;
-                    int timeEndseconds = TimeDateTime.InSeconds(timeEnd);
-                    if (timeEndseconds != 0)
+                    if (house.GetComponent<MainHouse>())
                     {
-                        StartCoroutine(animTimeBuild.BeginBuildHouse(house, false));
+                        TimeDateTime timeEnd = house.dataHouse.dataAnimBuildHouse.timeEndBuild;
+                        int timeEndseconds = TimeDateTime.InSeconds(timeEnd);
+                        if (timeEndseconds != 0)
+                        {
+                            StartCoroutine(animTimeBuild.BeginBuildHouse((MainHouse)house, false));
+                        }
                     }
-
                     house.stateHouse = StateHouse.NotActive;
                     return;
                 }
             }
         }
     }
-    public void ReturnChangeTextOnButton(House _house)
+    public void ReturnChangeTextOnButton(GeneralHouse _house)
     {
         _house.houseTextOnShop.dataHouseChangeOnText = new DataHouseChangeOnText(); //щоб те що залишалось в префабах  стерти і заново дати
         for (int i = allData.allDataHouses.Count - 1; i >= 0; i--)

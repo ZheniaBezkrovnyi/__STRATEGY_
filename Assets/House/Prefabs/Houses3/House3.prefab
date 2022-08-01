@@ -102,7 +102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3640084873963595902}
-  - component: {fileID: 3366863431143028285}
+  - component: {fileID: 928080949837969341}
   m_Layer: 0
   m_Name: House3
   m_TagString: Untagged
@@ -125,7 +125,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3366863431143028285
+--- !u!114 &928080949837969341
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,26 +142,26 @@ MonoBehaviour:
   stateHouse: 0
   onDown: 0
   dataTextOnHouse:
-    priceImprove: 300
+    priceImprove: 4000
     timeImprove:
       days: 0
-      hours: 4
-      minutes: 4
-      seconds: 0
+      hours: 0
+      minutes: 2
+      seconds: 35
     typeHouse: 2
     info:
       spriteHouse: {fileID: 0}
   houseTextOnShop:
     dataHouseChangeOnText:
-      currentBuildThisHouse: 8
-    MaxCountBuild: 35
-    priceForBuild: 3000
+      currentBuildThisHouse: 0
+    MaxCountBuild: 80
+    priceForBuild: 1500
     typeMoney: 0
     TimeNeedBuildStart:
       days: 0
       hours: 0
-      minutes: 45
-      seconds: 0
+      minutes: 0
+      seconds: 27
     buttonChange: {fileID: 0}
   dataHouse:
     NameThisHouse: 3
@@ -177,11 +177,11 @@ MonoBehaviour:
         minutes: 0
         seconds: 0
     myIndexOnSave: 0
-    levelHouse: 0
-  housesNextPrefab: {fileID: 0}
+    levelHouse: 1
   canvasHouse: {fileID: 0}
   sides: {x: 4, y: 4}
-  clickColor: {r: 0, g: 0.7169812, b: 0.098891445, a: 0}
-  redColor: {r: 1, g: 0.21854474, b: 0.0047169924, a: 0}
+  clickColor: {r: 0, g: 1, b: 0.0323627, a: 0}
+  redColor: {r: 1, g: 0.23272201, b: 0, a: 0}
   existOrNot: 0
   currentColor: 0
+  housesNextPrefab: {fileID: 928080949837969341}

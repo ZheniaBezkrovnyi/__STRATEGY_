@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SaveInJSON : MonoBehaviour
 {
-    public void AddThisHouseInList(House house)
+    public void AddThisHouseInList(GeneralHouse house)
     {
         house.houseTextOnShop.buttonChange.AddCurrentBuildThisHouse(); // визветься тільки при ставленні;по ссилкам все норм, при взятті, даю сюди ссилку на buttonChange кнопки на якій це пишеться і маю тут її дані, і у неї змінюю і свої і ї
         AllDataHouse allDataHouse = new AllDataHouse()
@@ -27,7 +27,7 @@ public class SaveInJSON : MonoBehaviour
         ReturnAllOnStart.json.Save(ReturnAllOnStart.allData);
     }
 
-    public void SaveInsteadThisTwoHouseInList(House house,House _house)
+    public void SaveInsteadThisTwoHouseInList(GeneralHouse house, GeneralHouse _house)
     {
         int indexLast = _house.dataHouse.myIndexOnSave;
         house.dataHouse = _house.dataHouse;

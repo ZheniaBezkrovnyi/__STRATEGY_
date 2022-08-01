@@ -12,7 +12,7 @@ public class Touch : MonoBehaviour,IDragHandler
     //[HideInInspector] public bool endMove;
     [HideInInspector] public StateHouse stateHouse;
     public bool onDown;
-    protected House __house;
+    protected GeneralHouse __house;
     public void OnDrag(PointerEventData eventData) // відповідає за те коли переходить з синього на активний
     {
         drag = true;

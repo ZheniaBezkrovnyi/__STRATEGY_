@@ -53,7 +53,7 @@ public class Shop : MonoBehaviour
         float widthContent = widthCanvas * 0.9f;
         float diffX = widthCanvas * 0.05f;
         float diffY = heightCanvas * 0.95f;
-        float DiffContent = (50*2 + panelPrefab.rect.width * canvas.localScale.x + (listShop.Count - 1) * (panelPrefab.rect.width * canvas.localScale.x + 30))/ widthContent;
+        float DiffContent = ((panelPrefab.rect.width * canvas.localScale.x / 5) * 2 + panelPrefab.rect.width * canvas.localScale.x + (listShop.Count - 1) * (panelPrefab.rect.width * canvas.localScale.x + (panelPrefab.rect.width * canvas.localScale.x / 8)))/ widthContent;
         content.anchorMax = new Vector2(DiffContent,1);
 
         for (int i = 0; i < listShop.Count; i++)
@@ -65,7 +65,7 @@ public class Shop : MonoBehaviour
 
         void CreateButton(int I)
         {
-            House _house = null;
+            GeneralHouse _house = null;
             for (int i = 0; i < returnAllStart.allHousePrefab.listHouse.Count; i++) //з енама витягується, все норм тут, але в майбутньому оптимізувати
             {
                 if (listShop[I] == returnAllStart.allHousePrefab.listHouse[i][0].dataHouse.NameThisHouse)
@@ -123,7 +123,10 @@ public class Shop : MonoBehaviour
 
             panel.gameObject.SetActive(true);
             panel.SetParent(content);
-            panel.position = new Vector3(50 + diffX + panel.rect.width / 2 * canvas.localScale.x + I*(panel.rect.width * canvas.localScale.x + 30), diffY - panel.rect.height / 2*canvas.localScale.y - heihtPadding(panel), 0);
+            panel.position = new Vector3((panel.rect.width * canvas.localScale.x/5) + diffX + panel.rect.width / 2 * canvas.localScale.x + I*(panel.rect.width * canvas.localScale.x + (panel.rect.width * canvas.localScale.x / 8)),
+                diffY - panel.rect.height / 2*canvas.localScale.y - heihtPadding(panel),
+                0
+            );
             panel.localScale = new Vector3(1, 1, 1);
         }
 
