@@ -114,7 +114,6 @@ public class UIStartScene : MonoBehaviour
                 );
                 if (thisHouse.GetComponent<MainHouse>())
                 {
-                    Debug.Log(1234);
                     StartCoroutine(animTimeBuild.BeginBuildHouse((MainHouse)thisHouse, true));
                     thisHouse.existOrNot = ExistOrNot.Almost;
                 }

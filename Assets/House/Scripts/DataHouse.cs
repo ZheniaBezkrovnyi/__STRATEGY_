@@ -389,7 +389,7 @@ public class TimeDateTime
     }
     public static int InSeconds(TimeDateTime timeDate) // для секунд в разнице времени, там нет месяцев
     {
-        Debug.Log(timeDate);
+        //Debug.Log(timeDate);
         int _seconds = 0;
         _seconds += timeDate.seconds;
         _seconds += timeDate.minutes * 60;
