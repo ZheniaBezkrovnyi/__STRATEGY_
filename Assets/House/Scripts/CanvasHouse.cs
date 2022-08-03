@@ -7,7 +7,7 @@ public class CanvasHouse : MonoBehaviour
 {
     [SerializeField] private Canvas canvasHouse;
     [SerializeField] private Canvas canvasHouseOnlyStart;
-    public Button buttonImprove, buttonInfo, buttonEnd, buttonImprovePrice;
+    public Button buttonImprove, buttonInfo, buttonEnd, buttonImprovePrice,buttonBackPanel;
     [SerializeField] private PanelCanvasHouse panelCanvasHouse;
     [SerializeField] private RectTransform canvas;
     public void OpenCanvasHouse(GeneralHouse _house)

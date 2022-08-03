@@ -8,7 +8,6 @@ public class MyTerrain : MonoBehaviour
     [SerializeField] private List<Vector2Int> pointsMap;
     public static int xMin, xMax,zMin,zMax;
     private TakeObjects takeObjects;
-    [SerializeField] private GameObject zatychki;
     [SerializeField] private Field field;
     public static int sizeOneCell;
     [SerializeField] private int SizeOneCell;
@@ -22,10 +21,6 @@ public class MyTerrain : MonoBehaviour
             xMax = Mathf.Max(pointsMap[0].x, pointsMap[1].x);
             zMin = Mathf.Min(pointsMap[0].y, pointsMap[1].y);
             zMax = Mathf.Max(pointsMap[0].y, pointsMap[1].y);
-            Instantiate(zatychki,new Vector3(xMin * sizeOneCell, zatychki.transform.localScale.y/2, zMin * sizeOneCell),Quaternion.identity);
-            Instantiate(zatychki, new Vector3(xMax * sizeOneCell, zatychki.transform.localScale.y / 2, zMin * sizeOneCell), Quaternion.identity);
-            Instantiate(zatychki, new Vector3(xMin * sizeOneCell, zatychki.transform.localScale.y / 2, zMax * sizeOneCell), Quaternion.identity);
-            Instantiate(zatychki, new Vector3(xMax * sizeOneCell, zatychki.transform.localScale.y / 2, zMax * sizeOneCell), Quaternion.identity);
         }
         else { 
             Debug.LogError("не заполнени точки карти"); 
@@ -37,7 +32,7 @@ public class MyTerrain : MonoBehaviour
     void Update()
     {
         takeObjects.MoveHouse(xMin,zMin);
-
+        #region check
         /*CheckCell();
         void CheckCell()
         {
@@ -50,6 +45,7 @@ public class MyTerrain : MonoBehaviour
                 }
             }
         }*/
+#endregion
     }
     public void TakeHouse(GeneralHouse house, ButtonChange buttonChange) // вісить на AddListener при створенні кнопок у Shop
     {
