@@ -7,40 +7,37 @@ public class UIPanel : MonoBehaviour
 {
     public Canvas panelCanvas;
     public Button buttonBackPanel;
+    public CanvasHouse canvasHouse;
     [SerializeField] private GetTouch0 getTouch0;
     [SerializeField] private AnimTimeBuild animTimeBuild;
-    [SerializeField] private CanvasHouse canvasHouse;
     [SerializeField] private Money money;
     public void ActionsWithPanel(Button button)
     {
-        button.onClick.AddListener(() =>
+        if (button == canvasHouse.buttonInfo || button == canvasHouse.buttonImprove)
         {
-            if (button == canvasHouse.buttonInfo || button == canvasHouse.buttonImprove)
-            {
-                getTouch0.STOP = true;
-                GetDtaForPanel(button);
-            }
+            getTouch0.STOP = true;
+            GetDtaForPanel(button);
+        }
 
-            if (button == canvasHouse.buttonImprovePrice)
+        if (button == canvasHouse.buttonImprovePrice)
+        {
+            if (button.image.color != ColorsStatic.colorDefoltInShop)
             {
-                if (button.image.color != ColorsStatic.colorDefoltInShop)
-                {
-                    money.ChangeMoney(-TakeObjects._house.dataTextOnHouse.priceImprove, TakeObjects._house.houseTextOnShop.typeMoney);
-                    StartCoroutine(animTimeBuild.BeginBuildHouse((MainHouse)TakeObjects._house, true));
-                    StartCoroutine(StopTouch());
-                }
-                else
-                {
-                    Debug.Log("не хватает денег для улучшения");  //  потом notification
-                    return;
-                }
-            }
-
-            if (button == canvasHouse.buttonBackPanel)
-            {
+                money.ChangeMoney(-TakeObjects._house.dataTextOnHouse.priceImprove, TakeObjects._house.houseTextOnShop.typeMoney);
+                StartCoroutine(animTimeBuild.BeginBuildHouse((MainHouse)TakeObjects._house, true));
                 StartCoroutine(StopTouch());
             }
-        });
+            else
+            {
+                Debug.Log("не хватает денег для улучшения");  //  потом notification
+                return;
+            }
+        }
+
+        if (button == canvasHouse.buttonBackPanel)
+        {
+            StartCoroutine(StopTouch());
+        }
 
         IEnumerator StopTouch()
         {

@@ -3994,6 +3994,7 @@ GameObject:
   - component: {fileID: 1139755756}
   - component: {fileID: 1139755760}
   - component: {fileID: 1139755761}
+  - component: {fileID: 1139755762}
   m_Layer: 5
   m_Name: MainCanvas
   m_TagString: Untagged
@@ -4106,9 +4107,8 @@ MonoBehaviour:
   buttonBackShop: {fileID: 1539606656}
   shopCanvas: {fileID: 1556870077}
   shop: {fileID: 699185502}
-  canvasHouse: {fileID: 417757216}
-  canvasHouseStart: {fileID: 1643218885}
   uIPanel: {fileID: 1139755761}
+  canvasHouseStart: {fileID: 1139755762}
 --- !u!114 &1139755761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4123,10 +4123,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panelCanvas: {fileID: 1117375746}
   buttonBackPanel: {fileID: 1811240857}
+  canvasHouse: {fileID: 417757216}
   getTouch0: {fileID: 2021051346}
   animTimeBuild: {fileID: 7434120174395539828}
-  canvasHouse: {fileID: 417757216}
   money: {fileID: 682235033}
+--- !u!114 &1139755762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1139755755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a95c0ca1b3e925d46b69a12d3e68cab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonCanvasStartYes: {fileID: 1249470693}
+  buttonCanvasStartNo: {fileID: 487027371}
+  animTimeBuild: {fileID: 7434120174395539828}
+  money: {fileID: 682235033}
+  canvasHouseStart: {fileID: 1643218888}
 --- !u!1 &1185825025
 GameObject:
   m_ObjectHideFlags: 0
@@ -5473,7 +5490,6 @@ GameObject:
   - component: {fileID: 1643218888}
   - component: {fileID: 1643218887}
   - component: {fileID: 1643218886}
-  - component: {fileID: 1643218885}
   m_Layer: 5
   m_Name: ForHouseStart
   m_TagString: Untagged
@@ -5502,23 +5518,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1643218885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1643218883}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a95c0ca1b3e925d46b69a12d3e68cab3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttonCanvasStartYes: {fileID: 1249470693}
-  buttonCanvasStartNo: {fileID: 487027371}
-  animTimeBuild: {fileID: 7434120174395539828}
-  money: {fileID: 682235033}
-  canvasHouseStart: {fileID: 1643218888}
 --- !u!114 &1643218886
 MonoBehaviour:
   m_ObjectHideFlags: 0
