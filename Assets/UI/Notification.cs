@@ -17,9 +17,9 @@ public class Notification : MonoBehaviour
             textNotification.color = new Color(textNotification.color.r, textNotification.color.g, textNotification.color.b, (float)i /10f);
             yield return new WaitForSeconds(1f / 50);
         }
-        for (int i = 0; i < 100; i++)
+        for (int i = 1; i <= 100; i++)
         {
-            textNotification.color = new Color(textNotification.color.r, textNotification.color.g, textNotification.color.b, (float)(99 - Mathf.Sqrt(i))/100f);
+            textNotification.color = new Color(textNotification.color.r, textNotification.color.g, textNotification.color.b, (float)((100 - i)/100f));
             yield return new WaitForSeconds(1f / 50);
         }
     }

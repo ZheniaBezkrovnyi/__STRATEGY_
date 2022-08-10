@@ -64,10 +64,7 @@ public class AnimTimeBuild : MonoBehaviour
 
         float timeStart = Time.time - 1;
         for (; remainsSeconds > 0; )
-        {
-            Debug.Log("в циклі");
-
-            
+        {          
             if (Time.time - timeStart >= 1)
             {
                 timeStart++;
@@ -76,10 +73,8 @@ public class AnimTimeBuild : MonoBehaviour
 
                 _timeBuild = TimeBuild.WithSecondsToTime(remainsSeconds);
                 _textTime.text = TimeBuild.ToString(_timeBuild);
-                Debug.Log("конец цикла");
             }
             yield return new WaitForSeconds(1f);
-            Debug.Log("конец цикла2");
         }
 
         IfTimeIsUp(_house, rectCanvasSlider,true);

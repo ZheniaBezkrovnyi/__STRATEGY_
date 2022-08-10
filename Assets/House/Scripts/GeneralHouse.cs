@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-
+using System;
 
 
 public enum StateHouse
@@ -31,9 +31,7 @@ public class GeneralHouse : Touch, IPointerClickHandler, IPointerDownHandler
     [SerializeField] private Vector2Int sides;
     public Vector2Int Sides { get { return sides; } }
 
-    private ColorsObjects colorsObjects;
-    [SerializeField] private Color clickColor;
-    [SerializeField] private Color redColor;
+    [SerializeField] private ColorsObjects colorsObjects;
 
     [HideInInspector] public ExistOrNot existOrNot;
     private int neParniX;
@@ -43,6 +41,17 @@ public class GeneralHouse : Touch, IPointerClickHandler, IPointerDownHandler
 
     [HideInInspector] public StateColor currentColor;
     private StateColor _currentColor = StateColor.Default;
+
+    public bool End;
+    private void OnEnable()
+    {
+        colorsObjects.OnStart();
+        __house = this;
+        colorsObjects.InitColor(StateColor.Normal,this);
+        stateHouse = StateHouse.NotActive;
+        neParniX = sides.x % 2 == 1 ? 1 : 0;
+        neParniZ = sides.y % 2 == 1 ? 1 : 0;
+    }
     private bool ChangeColor
     {
         get
@@ -57,21 +66,12 @@ public class GeneralHouse : Touch, IPointerClickHandler, IPointerDownHandler
             }
         }
     }
-    private void OnEnable()
-    {
-        colorsObjects = new ColorsObjects();
-        __house = this;
-        InitColor(StateColor.Normal);
-        stateHouse = StateHouse.NotActive;
-        neParniX = sides.x % 2 == 1 ? 1 : 0;
-        neParniZ = sides.y % 2 == 1 ? 1 : 0;
-    }
     private void Update()
     {
         if (ChangeColor)
         {
             _currentColor = currentColor;
-            InitColor(_currentColor);
+            colorsObjects.InitColor(_currentColor, this);
         }
         Upd();
     }
@@ -83,27 +83,6 @@ public class GeneralHouse : Touch, IPointerClickHandler, IPointerDownHandler
             Posit.InitInPosit(_house.dataHouse.posit.x, _house.dataHouse.posit.z, _house).y
         );
     }
-    #region Colors
-    private void InitColor(StateColor stateColor)
-    {
-        if (stateColor == StateColor.Green)
-        {
-            colorsObjects.InitColor(clickColor, this);
-        }
-        else if (stateColor == StateColor.Red)
-        {
-            colorsObjects.InitColor(redColor, this);
-        }
-        else if (stateColor == StateColor.Blue)
-        {
-            colorsObjects.InitColor(new Color(0, 0, 1), this);
-        }
-        else if (stateColor == StateColor.Normal)
-        {
-            colorsObjects.ReturnOrInitColor(this.transform);
-        }
-    }
-    #endregion
     #region Pointers
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -142,24 +121,28 @@ public class GeneralHouse : Touch, IPointerClickHandler, IPointerDownHandler
 }
 
 
-
+[Serializable]
 public class ColorsObjects
 {
     private List<Color> listStartColor;
-    public ColorsObjects()
+
+    [SerializeField] private GameObject plane;
+    [SerializeField] private Color clickColor;
+    [SerializeField] private Color redColor;
+    public void OnStart()
     {
         listStartColor = new List<Color>();
     }
 
     public void ReturnOrInitColor(Transform trnsf)
     {
-        InitializeOrReturnColor(trnsf, Color.white);
+        InitializeOrReturnColor(Color.white);
     }
     public void InitColor(Color _clickColor, GeneralHouse house)
     {
-        InitializeOrReturnColor(house.transform, _clickColor);
+        InitializeOrReturnColor(_clickColor);
     }
-    private void InitializeOrReturnColor(Transform trnsf, Color _color)
+    private void InitializeOrReturnColor(Color _color)
     {
         bool emptyList = false;
         int countChild = 0;
@@ -167,59 +150,80 @@ public class ColorsObjects
         {
             emptyList = true;
         }
-        Init(trnsf, _color);
-        void Init(Transform _trnsf, Color _color_)
+        Init(_color);
+        void Init(Color _color_)
         {
-            if (_trnsf.childCount != 0)
+            #region Comment
+            /*for (int i = 0; i < _trnsf.childCount; i++)
             {
-                #region Comment
-                /*for (int i = 0; i < _trnsf.childCount; i++)
+                if (emptyList)
                 {
-                    if (emptyList)
+                    //Debug.Log("AddList");
+                    listStartColor.Add(_trnsf.GetChild(i).GetComponent<Renderer>().material.color);
+                }
+                else
+                {
+                    if (_color_ == Color.white)
                     {
-                        //Debug.Log("AddList");
-                        listStartColor.Add(_trnsf.GetChild(i).GetComponent<Renderer>().material.color);
+                        if (listStartColor[countChild] != null)
+                        {
+                            _trnsf.GetChild(i).GetComponent<Renderer>().material.color = listStartColor[countChild];
+                        }
                     }
                     else
                     {
-                        if (_color_ == Color.white)
-                        {
-                            if (listStartColor[countChild] != null)
-                            {
-                                _trnsf.GetChild(i).GetComponent<Renderer>().material.color = listStartColor[countChild];
-                            }
-                        }
-                        else
-                        {
-                            _trnsf.GetChild(i).GetComponent<Renderer>().material.color = _color_;
-                        }
+                        _trnsf.GetChild(i).GetComponent<Renderer>().material.color = _color_;
                     }
-                    countChild++;
-                    Init(_trnsf.GetChild(i), _color_);
-                }*/
-                #endregion
-                for (int i = 0; i < 1; i++)
+                }
+                countChild++;
+                Init(_trnsf.GetChild(i), _color_);
+            }*/
+            #endregion
+            for (int i = 0; i < 1; i++)
+            {
+                if (emptyList)
                 {
-                    if (emptyList)
+                    listStartColor.Add(plane.GetComponent<Renderer>().material.color);
+                }
+                else
+                {
+                    if (_color_ == Color.white)
                     {
-                        listStartColor.Add(_trnsf.GetChild(i).GetComponent<Renderer>().material.color);
+                        if (listStartColor[countChild] != null)
+                        {
+                            plane.GetComponent<Renderer>().material.color = listStartColor[countChild];
+                        }
                     }
                     else
                     {
-                        if (_color_ == Color.white)
-                        {
-                            if (listStartColor[countChild] != null)
-                            {
-                                _trnsf.GetChild(i).GetComponent<Renderer>().material.color = listStartColor[countChild];
-                            }
-                        }
-                        else
-                        {
-                            _trnsf.GetChild(i).GetComponent<Renderer>().material.color = _color_;
-                        }
+                        plane.GetComponent<Renderer>().material.color = _color_;
                     }
                 }
             }
         }
     }
+
+
+    public void InitColor(StateColor stateColor,GeneralHouse house)
+    {
+        if (stateColor == StateColor.Green)
+        {
+            InitColor(clickColor, house);
+        }
+        else if (stateColor == StateColor.Red)
+        {
+            InitColor(redColor, house);
+        }
+        else if (stateColor == StateColor.Blue)
+        {
+            InitColor(new Color(0, 0, 1), house);
+        }
+        else if (stateColor == StateColor.Normal)
+        {
+            ReturnOrInitColor(house.transform);
+        }
+    }
+
+
+
 }

@@ -77,7 +77,18 @@ public class TakeObjects : MonoBehaviour
         CheckPosTakeHouse(ref x, ref z);
         Debug.Log(x + " "+ z + "startPos");
         myHouse.dataHouse.posit = new Posit(x,z);
-        myHouse.transform.position += new Vector3(x * SizeOneCell + MyTerrain.xMin * SizeOneCell + (float)myHouse.NeParniX / 2f* SizeOneCell, myHouse.transform.localScale.y / 2, z * SizeOneCell + MyTerrain.zMin * SizeOneCell + (float)myHouse.NeParniZ / 2f * SizeOneCell);
+
+        float Y;
+        if (house.transform.GetChild(0).GetComponent<BoxCollider>())
+        {
+            Y = myHouse.transform.localScale.y / 2;
+        }
+        else
+        {
+            Y = myHouse.transform.position.y;
+        }
+
+        myHouse.transform.position = new Vector3(x * SizeOneCell + MyTerrain.xMin * SizeOneCell + (float)myHouse.NeParniX / 2f* SizeOneCell, Y, z * SizeOneCell + MyTerrain.zMin * SizeOneCell + (float)myHouse.NeParniZ / 2f * SizeOneCell);
         myHouse.stateHouse = StateHouse.InBlue;
         myHouse.currentColor = StateColor.Blue;
 
@@ -196,6 +207,7 @@ public class TakeObjects : MonoBehaviour
     }
     public static void End(int X, int Z, GeneralHouse _house__, bool fullEndNotSave, bool saveJson = true)
     {
+        _house__.End = true;
         if (fullEndNotSave)
         {
             if (_house__.currentColor == StateColor.Red)

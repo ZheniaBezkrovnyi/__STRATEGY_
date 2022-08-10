@@ -75,9 +75,21 @@ public class ReturnAllOnStart : MonoBehaviour
                     house.dataHouse.myIndexOnSave = I;
                     int x = allData.allDataHouses[I].dataHouse.posit.x;
                     int z = allData.allDataHouses[I].dataHouse.posit.z;
+
+                    float Y;
+                    if (house.transform.GetChild(0).GetComponent<BoxCollider>())
+                    {
+                        Y = house.transform.localScale.y / 2;
+                    }
+                    else
+                    {
+                        Y = allHousePrefab.listHouse[i][allData.allDataHouses[I].dataHouse.levelHouse - 1 + diffLevel].transform.position.y;
+                    }
+
+
                     house.transform.position = new Vector3(
-                        Posit.InitInPosit(x, z, house).x, 
-                        house.transform.localScale.y / 2,
+                        Posit.InitInPosit(x, z, house).x,
+                        Y,
                         Posit.InitInPosit(x, z, house).y
                     );
                     house.dataHouse.dataAnimBuildHouse.timeEndBuild = allData.allDataHouses[I].dataHouse.dataAnimBuildHouse.timeEndBuild;
@@ -108,10 +120,6 @@ public class ReturnAllOnStart : MonoBehaviour
             {
                 _house.houseTextOnShop.dataHouseChangeOnText = allData.allDataHouses[i].dataHouseChangeOnText;
                 break;
-            }
-            if (i == 0)
-            {
-                Debug.Log(i + " не знайшов по імені хаус, тому дані для кнопки не дав");
             }
         }
     }

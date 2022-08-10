@@ -7,8 +7,8 @@ using System.Linq;
 public enum NameHouse
 {
     A,
-    B,
-    C,
+    PVO,
+    Meria,
     D,
     Wall,
 }
