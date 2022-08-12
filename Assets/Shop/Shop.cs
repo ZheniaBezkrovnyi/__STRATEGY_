@@ -11,13 +11,13 @@ public enum NameHouse
     Meria,
     D,
     Wall,
+    HouseHeroes
 }
 public class Shop : MonoBehaviour
 {
     [SerializeField] private RectTransform content;
     [SerializeField] private Canvas canvasShop; // процент влияет на pos
     [SerializeField] private RectTransform canvas;
-    [SerializeField] private CameraMove cameraMove;
     [SerializeField] private RectTransform panelPrefab;
     [SerializeField] private List<NameHouse> listShop;
     [SerializeField] private ReturnAllOnStart returnAllStart;

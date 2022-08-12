@@ -7,7 +7,8 @@ public class CanvasHouse : MonoBehaviour
 {
     [SerializeField] private Canvas canvasHouse;
     [SerializeField] private Canvas canvasHouseOnlyStart;
-    public Button buttonImprove, buttonInfo, buttonEnd, buttonImprovePrice,buttonBackPanel;
+    public Canvas createHeroesCanvas;
+    public Button buttonImprove, buttonInfo, buttonCreateHeroes, buttonCreateHeroesBack, buttonEnd, buttonImprovePrice,buttonBackPanel;
     [SerializeField] private PanelCanvasHouse panelCanvasHouse;
     [SerializeField] private RectTransform canvas;
     public void OpenCanvasHouse(GeneralHouse _house)
@@ -67,6 +68,9 @@ public class CanvasHouse : MonoBehaviour
                     break;
                 case TypeHouse.Resources: Build(InfoImprove.Info, InfoImprove.Improve);
                     break;
+                case TypeHouse.CreateHeroes:
+                    Build(InfoImprove.Info, InfoImprove.Improve,InfoImprove.CreateHeroes);
+                    break;
             }
         }
         else
@@ -79,6 +83,8 @@ public class CanvasHouse : MonoBehaviour
                     break;
                 case TypeHouse.Resources: Build(InfoImprove.Info, InfoImprove.End);
                     break;
+                case TypeHouse.CreateHeroes: Build(InfoImprove.Info, InfoImprove.End, InfoImprove.CreateHeroes);
+                    break;
             }
         }
 
@@ -88,8 +94,8 @@ public class CanvasHouse : MonoBehaviour
         {
             heightCanvas = canvas.rect.height * canvas.localScale.y;
             widthCanvas = canvas.rect.width * canvas.localScale.x;
-            int count = infoImprove.Length;
-            for(int i = 0; i < count; i++)
+
+            for(int i = 0; i < infoImprove.Length; i++)
             {
                 switch (infoImprove[i])
                 {
@@ -99,6 +105,9 @@ public class CanvasHouse : MonoBehaviour
                         break;
                     case InfoImprove.End: CreateRect(i, buttonEnd);
                         break;
+                    case InfoImprove.CreateHeroes:
+                        CreateRect(i, buttonCreateHeroes);
+                        break;
                 }
             }
 
@@ -106,7 +115,7 @@ public class CanvasHouse : MonoBehaviour
             {
                 activeButton.Add(_button);
                 RectTransform rectButton = _button.GetComponent<RectTransform>();
-                float sumWidth = (widthOne + 10)*count - 10;
+                float sumWidth = (widthOne + 10)* infoImprove.Length - 10;
                 float startWidthLeft = (widthCanvas - sumWidth) / 2;
                 rectButton.gameObject.SetActive(true);
                 rectButton.position = new Vector3(startWidthLeft + widthOne/2 + I * (widthOne + 10), heightCanvas * ((0.07f + 0.23f) / 2), 0);

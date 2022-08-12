@@ -60,7 +60,7 @@ MonoBehaviour:
       spriteHouse: {fileID: 0}
   houseTextOnShop:
     dataHouseChangeOnText:
-      currentBuildThisHouse: 2
+      currentBuildThisHouse: 1
     MaxCountBuild: 1
     priceForBuild: 1110
     typeMoney: 2
@@ -93,8 +93,8 @@ MonoBehaviour:
     redColor: {r: 1, g: 0.989954, b: 0, a: 0}
   existOrNot: 0
   currentColor: 0
-  housesNextPrefab: {fileID: 7899858028413254929, guid: eeed27513eb4b1443bcf551f994d6cb4,
-    type: 3}
+  End: 0
+  housesNextPrefab: {fileID: 4879250550566035031}
 --- !u!65 &6388289331397884114
 BoxCollider:
   m_ObjectHideFlags: 0

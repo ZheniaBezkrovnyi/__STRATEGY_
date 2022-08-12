@@ -12,7 +12,7 @@ public class AllHousePrefab : ScriptableObject
     [SerializeField] private List<GeneralHouse> list2;
     [SerializeField] private List<GeneralHouse> list3;
     [SerializeField] private List<GeneralHouse> list4;
-
+    [SerializeField] private List<GeneralHouse> list5;
     public void FillInList()
     {
         listHouse = new List<List<GeneralHouse>>();
@@ -21,7 +21,8 @@ public class AllHousePrefab : ScriptableObject
         listHouse.Add(list2);
         listHouse.Add(list3);
         listHouse.Add(list4);
-        if(listHouse.Count > CountEnum())
+        listHouse.Add(list5);
+        if (listHouse.Count > CountEnum())
         {
             Debug.LogError("не верное количество листов префабов,добавь лист");
         }

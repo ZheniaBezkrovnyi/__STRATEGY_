@@ -8,7 +8,8 @@ public enum InfoImprove
 {
     Info,
     Improve,
-    End
+    End,
+    CreateHeroes
 }
 public class PanelCanvasHouse : MonoBehaviour // у Improve треба зробить те що плюсується, і картинки до полосок, але то другим
 {
@@ -29,19 +30,19 @@ public class PanelCanvasHouse : MonoBehaviour // у Improve треба зроб�
 }
 public class InitPanelHouse : MonoBehaviour  // панель не буду стирать, потому что и так другой клик заменит содержимое
 {
-    private RectTransform panel,sliderButton, buttonPrice,canvas;
+    private RectTransform panel, sliderButton, buttonPrice, canvas;
     private Image image;
-    private Text message,timeImprove;
+    private Text message, timeImprove;
     private List<GameObject> allObj;
     private Money money;
-    public InitPanelHouse(RectTransform _panel, Image _image, RectTransform _sliderButton, RectTransform _buttonPrice, 
+    public InitPanelHouse(RectTransform _panel, Image _image, RectTransform _sliderButton, RectTransform _buttonPrice,
         RectTransform _canvas, Text _message, Text _timeImprove, List<GameObject> _allObj, Money _money)
     {
         money = _money;
         allObj = _allObj;
-        if(allObj.Count != 0)
+        if (allObj.Count != 0)
         {
-            for(int i = allObj.Count - 1; i >= 0; i--)
+            for (int i = allObj.Count - 1; i >= 0; i--)
             {
                 Destroy(allObj[i]);
                 allObj.RemoveAt(i);
@@ -60,7 +61,7 @@ public class InitPanelHouse : MonoBehaviour  // панель не буду ст�
         widthPanel = panel.rect.width * canvas.localScale.x;
         heightPanel = panel.rect.height * canvas.localScale.y;
     }
-    public void InitPanel(GeneralHouse _house,InfoImprove infoImprove)
+    public void InitPanel(GeneralHouse _house, InfoImprove infoImprove)
     {
         InitImage(_house);
         switch (infoImprove)
@@ -131,28 +132,24 @@ public class InitPanelHouse : MonoBehaviour  // панель не буду ст�
     {
         float x = widthCanvas * panel.anchorMin.x;
         float y = heightCanvas * panel.anchorMax.y;
-        return new Vector2(x,y);
+        return new Vector2(x, y);
     }
 
     private void InitSliderButton(RectTransform _sliderButton, int number)
     {
-        RectTransform[] sliders = new RectTransform[2];
-        for(int i = 0; i < sliders.Length; i++)
-        {
-            sliders[i] = Instantiate(_sliderButton);
-            allObj.Add(sliders[i].gameObject);
-            sliders[i].gameObject.SetActive(true);
-            sliders[i].SetParent(panel);
-            sliders[i].localScale = new Vector3(1,1,1);
-            sliders[i].position = new Vector3(
-                ZeroPositPanel().x + widthPanel - sliders[i].rect.width * canvas.localScale.x * 0.7f,
-                ZeroPositPanel().y - (sliders[i].rect.height*2 + number * (sliders[i].rect.height*2)) * canvas.localScale.y, 
-                0
-            );
-        }
-
-
+        RectTransform slider;
+        slider = Instantiate(_sliderButton);
+        allObj.Add(slider.gameObject);
+        slider.gameObject.SetActive(true);
+        slider.SetParent(panel);
+        slider.localScale = new Vector3(1, 1, 1);
+        slider.position = new Vector3(
+            ZeroPositPanel().x + widthPanel - slider.rect.width * canvas.localScale.x * 0.7f,
+            ZeroPositPanel().y - (slider.rect.height * 2 + number * (slider.rect.height * 2)) * canvas.localScale.y,
+            0
+        );
     }
+
     private void InitPriceAndTimeButton(GeneralHouse _house)
     {
         buttonPrice.gameObject.SetActive(true); //баттон инит в UIStartScene

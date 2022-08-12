@@ -18,6 +18,10 @@ public class UIStartScene : MonoBehaviour
         ActiveOrNotShop(uIPanel.canvasHouse.buttonInfo, true, uIPanel.panelCanvas);
         ActiveOrNotShop(uIPanel.buttonBackPanel, false, uIPanel.panelCanvas);
         ActiveOrNotShop(uIPanel.canvasHouse.buttonImprovePrice, false, uIPanel.panelCanvas);
+
+        ActiveOrNotShop(uIPanel.canvasHouse.buttonCreateHeroes, true, uIPanel.canvasHouse.createHeroesCanvas);
+        ActiveOrNotShop(uIPanel.canvasHouse.buttonCreateHeroesBack, false, uIPanel.canvasHouse.createHeroesCanvas);
+
         ActiveOrNotShop(canvasHouseStart.buttonCanvasStartYes, false, canvasHouseStart.canvasHouseStart);
         ActiveOrNotShop(canvasHouseStart.buttonCanvasStartNo, false, canvasHouseStart.canvasHouseStart);
     }

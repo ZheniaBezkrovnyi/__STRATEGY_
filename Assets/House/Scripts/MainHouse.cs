@@ -8,6 +8,7 @@ public enum TypeHouse
     JustHouse,
     Defence,
     Resources,
+    CreateHeroes
 }
 public class MainHouse : GeneralHouse
 {
