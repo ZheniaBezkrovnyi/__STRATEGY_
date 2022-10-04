@@ -234,8 +234,9 @@ public class TakeObjects : MonoBehaviour
         {
             for (int z = Z - _house__.Sides.y / 2; z < Z + _house__.Sides.y / 2 + _house__.NeParniZ; z++)
             {
-                //Debug.Log(x + " " + z + "end");
+                Debug.Log(x + " " + z + "end");
                 _setMap[x, z] = 1;
+                 
             }
         }
         if (saveJson)

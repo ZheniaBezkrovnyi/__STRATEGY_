@@ -18,7 +18,7 @@ public class ReturnAllOnStart : MonoBehaviour
     [SerializeField] private CanvasHouse canvasHouse;
     [SerializeField] private AnimTimeBuild animTimeBuild;
     [SerializeField] private Notification notification;
-    void Awake()
+    void Start()
     {
         allHousePrefab.FillInList();
         json = new JSON(notification);

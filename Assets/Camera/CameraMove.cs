@@ -19,7 +19,9 @@ public class CameraMove : MonoBehaviour
     {
         angleY = transform.rotation.eulerAngles.y;
         SizeCell = MyTerrain.sizeOneCell;
-        yMin = 15 * SizeCell / 2;
+        if (SizeCell == 0)
+        { SizeCell = 6; }
+        yMin = 15 * SizeCell / 2;       
         yMax = yMin * 5;
         localScaleCanvasX = canvas.localScale.x;
         localScaleCanvasY = canvas.localScale.y;

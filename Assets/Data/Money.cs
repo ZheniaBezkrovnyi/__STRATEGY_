@@ -21,8 +21,9 @@ public class Money : MonoBehaviour
     [SerializeField] private DataMoney dataMoneySilver;
     [SerializeField] private DataMoney dataMoneyGold;
     [SerializeField] private Sliders sliders;
-    private void Start() // для инициализации
+    private IEnumerator Start() // для инициализации
     {
+        yield return null;
         InitColor();
         for(int i = 0; i < 3; i++) {
             Init((TypeMoney)i);
